@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1a0e10" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -11,8 +11,8 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238B1A3B'/%3E%3Ccircle cx='24' cy='38' r='14' fill='%23F4C9D1'/%3E%3Ccircle cx='42' cy='34' r='12' fill='%23FAF6EF'/%3E%3Cpath d='M30 16 q4 -8 12 -4' stroke='%23B89B5E' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@04f46c6a0708418cb7b96fc563eacae0fbf77674/qrcode.min.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -376,7 +376,7 @@
         <div class="mt-5">
           <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Empfehlungscode</label>
           <div class="mt-2 flex gap-2">
-            <input id="ref-input" class="input" placeholder="BERRY-FRIEND-1A2B" autocomplete="off" inputmode="text" autocapitalize="characters" />
+            <input id="ref-input" class="input" placeholder="BERRY-FRIEND-1A2B" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" autocapitalize="characters" />
             <button id="ref-apply" class="px-4 rounded-2xl bg-espresso text-cream font-medium">Einlösen</button>
           </div>
           <p id="ref-msg" class="text-xs mt-2 text-espresso/60"></p>
@@ -540,10 +540,11 @@
     </div>
 
     <!-- Email confirmation -->
-    <a id="email-link" class="mt-5 w-full block text-center rounded-2xl py-3.5 bg-espresso text-cream font-medium" href="#">
-      <i data-lucide="mail" class="w-4 h-4 inline-block align-[-2px] mr-1.5"></i>
-      Bestellbestätigung per E-Mail senden
+    <a id="email-link" class="mt-5 w-full btn-premium rounded-2xl py-4 px-5 flex items-center justify-center gap-2 font-medium relative z-10" href="#">
+      <i data-lucide="mail" class="w-5 h-5 relative z-10"></i>
+      <span class="relative z-10">Bestellung an Shop senden</span>
     </a>
+    <p class="text-[11px] text-center text-espresso/55 mt-2">Öffnet deine Mail-App mit fertiger Bestellung an den Shop</p>
 
     <button id="new-order" class="mt-3 w-full rounded-2xl py-3.5 border border-espresso/15 font-medium">Neue Bestellung</button>
     <p class="text-[11px] text-center text-espresso/45 mt-4">Berry's Delights · Sanitas Hauptsitz · Made in Switzerland</p>
@@ -948,9 +949,8 @@
     $('#conf-total').textContent  = fmt(p.grandTotal);
     $('#conf-refcode').textContent = order.refCode;
 
-    // Auto-prepare order email & auto-trigger
-    const mailto = buildMailto(order);
-    $('#email-link').href = mailto;
+    // Prepare order email (one-tap send from confirmation screen)
+    $('#email-link').href = buildMailto(order);
     /*
     // ─────────────── EmailJS Alternative (no mailto, fully automatic) ───────────────
     // 1) Add the SDK in <head>:
@@ -969,8 +969,6 @@
     // });
     // ─────────────────────────────────────────────────────────────────────────────
     */
-    // Auto-trigger after a brief delay (best-effort, requires user gesture in many browsers)
-    setTimeout(() => { try { window.location.href = mailto; } catch(_){} }, 1200);
 
     lucide.createIcons();
   }
@@ -1029,7 +1027,7 @@
     const btn = e.target.closest('.share-btn');
     if (!btn) return;
     const code = $('#conf-refcode').textContent;
-    const msg = encodeURIComponent(`Probier Berry's Delights – Premium High-Protein Eiscreme. Mit Code ${code} bekommst du 10% Rabatt auf deine erste Bestellung 🍓`);
+    const msg = encodeURIComponent(`Probier Berry's Delights – Premium High-Protein Eiscreme. Mit Code ${code} bekommst du 15% Rabatt auf deine Bestellung 🍓`);
     const type = btn.dataset.share;
     if (type === 'whatsapp') window.open(`https://wa.me/?text=${msg}`, '_blank');
     else if (type === 'sms') window.location.href = `sms:?body=${msg}`;
@@ -1052,6 +1050,11 @@
     document.body.style.overflow = '';
     renderAll();
     window.scrollTo({ top:0, behavior:'smooth' });
+  });
+
+  // Clear error state when user starts typing
+  document.addEventListener('input', (e) => {
+    if (e.target instanceof HTMLInputElement) e.target.classList.remove('error');
   });
 
   // ===== QR Code =====

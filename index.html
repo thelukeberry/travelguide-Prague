@@ -436,7 +436,7 @@
           <span class="twint-mark"></span>
           <span>Jetzt mit TWINT bezahlen</span>
         </button>
-        <p class="text-[11px] text-center text-espresso/50 mt-2">Sichere Zahlung an +41 78 919 98 38</p>
+        <p class="text-[11px] text-center text-espresso/50 mt-2">Öffnet die TWINT-App · Zahlung an +41 78 919 98 38</p>
       </div>
     </div>
   </div>
@@ -542,9 +542,9 @@
     <!-- Email confirmation -->
     <a id="email-link" class="mt-5 w-full btn-premium rounded-2xl py-4 px-5 flex items-center justify-center gap-2 font-medium relative z-10" href="#">
       <i data-lucide="mail" class="w-5 h-5 relative z-10"></i>
-      <span class="relative z-10">Bestellung an Shop senden</span>
+      <span class="relative z-10">Bestellbestätigung jetzt senden</span>
     </a>
-    <p class="text-[11px] text-center text-espresso/55 mt-2">Öffnet deine Mail-App mit fertiger Bestellung an den Shop</p>
+    <p class="text-[11px] text-center text-espresso/55 mt-2">Geht an dich (E-Mail) und an den Shop · ein Tap</p>
 
     <button id="new-order" class="mt-3 w-full rounded-2xl py-3.5 border border-espresso/15 font-medium">Neue Bestellung</button>
     <p class="text-[11px] text-center text-espresso/45 mt-4">Berry's Delights · Sanitas Hauptsitz · Made in Switzerland</p>
@@ -860,6 +860,18 @@
     renderAll();
   }
 
+  // ===== TWINT Deep Link =====
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+  function openTwintApp() {
+    if (!isMobile) return;
+    const a = document.createElement('a');
+    a.href = 'twint://';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => a.remove(), 100);
+  }
+
   // ===== Checkout =====
   $('#pay-twint').addEventListener('click', async () => {
     // iOS keyboard collapse
@@ -884,6 +896,10 @@
 
     const btn = $('#pay-twint');
     btn.disabled = true;
+
+    // Mobile: open TWINT app immediately (must be within user gesture)
+    openTwintApp();
+
     closeCart();
     await runPayment(p);
 
@@ -952,13 +968,12 @@
     // Prepare order email (one-tap send from confirmation screen)
     $('#email-link').href = buildMailto(order);
     /*
-    // ─────────────── EmailJS Alternative (no mailto, fully automatic) ───────────────
+    // ─────────────── EmailJS Alternative (no mailto, fully automatic dual send) ───
     // 1) Add the SDK in <head>:
     //    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"><\/script>
     // 2) emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
-    // 3) Send the order silently:
-    // emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-    //   to_email: ORDER_EMAIL,
+    // 3) Send the same order to BOTH customer + shop (no user tap needed):
+    // const params = {
     //   order_id: order.id,
     //   customer_name: order.name,
     //   customer_email: order.email,
@@ -966,7 +981,10 @@
     //   items: orderItemsToText(order),
     //   total: fmt(order.pricing.grandTotal),
     //   referral_code: order.refCode,
-    // });
+    //   shop_email: ORDER_EMAIL,
+    // };
+    // emailjs.send('YOUR_SERVICE_ID', 'TEMPLATE_CUSTOMER', { ...params, to_email: order.email });
+    // emailjs.send('YOUR_SERVICE_ID', 'TEMPLATE_SHOP',     { ...params, to_email: ORDER_EMAIL });
     // ─────────────────────────────────────────────────────────────────────────────
     */
 
@@ -981,16 +999,17 @@
 
   function buildMailto(order) {
     const p = order.pricing;
-    const subject = `Neue Bestellung ${order.id} — Berry's Delights`;
+    const firstName = order.name.split(' ')[0];
+    const subject = `Bestellbestätigung ${order.id} — Berry's Delights`;
     const lines = [
-      `NEUE BESTELLUNG · Berry's Delights`,
+      `Hallo ${firstName},`,
+      ``,
+      `vielen Dank für deine Bestellung bei Berry's Delights!`,
+      `Diese E-Mail dient gleichzeitig dir als Bestätigung und dem Shop als Bestelleingang.`,
+      ``,
+      `── BESTELLUNG ──`,
       `Bestell-Nr: ${order.id}`,
       `Datum: ${order.timestamp.toLocaleString('de-CH')}`,
-      ``,
-      `── KUNDE ──`,
-      `Name: ${order.name}`,
-      `E-Mail: ${order.email}`,
-      `Telefon: ${order.phone}`,
       ``,
       `── ARTIKEL ──`,
       orderItemsToText(order),
@@ -1005,14 +1024,24 @@
       ``,
       `── ABHOLUNG ──`,
       `Standort: ${PICKUP_LOCATION}`,
-      `Bitte Kunde per SMS/E-Mail benachrichtigen, sobald abholbereit.`,
+      `Du erhältst eine SMS oder E-Mail, sobald die Bestellung abholbereit ist.`,
       ``,
       `── ZAHLUNG ──`,
-      `TWINT an ${MERCHANT_TWINT}`,
+      `TWINT an ${MERCHANT_TWINT} · bestätigt`,
       ``,
-      `Neuer Empfehlungscode des Kunden: ${order.refCode}`,
+      `── DEIN PERSÖNLICHER CODE ──`,
+      `${order.refCode}`,
+      `Teile diesen Code mit Freunden. Sobald sie damit bestellen, erhältst du 15% Rabatt auf deine nächste Bestellung.`,
+      ``,
+      `── KUNDENDATEN ──`,
+      `Name: ${order.name}`,
+      `E-Mail: ${order.email}`,
+      `Telefon: ${order.phone}`,
+      ``,
+      `Berry's Delights · Sanitas Hauptsitz · Made in Switzerland`,
     ].filter(Boolean).join('\n');
-    return `mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines)}`;
+    // Customer is TO, shop is CC — single tap, both get the order
+    return `mailto:${encodeURIComponent(order.email)}?cc=${encodeURIComponent(ORDER_EMAIL)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines)}`;
   }
 
   // Copy

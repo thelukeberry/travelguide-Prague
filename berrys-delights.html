@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1a0e10" />
+<title>Berry's Delights — Premium High Protein Ice Cream</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Fraunces"', 'serif'],
+          sans:    ['"Inter"', 'system-ui', 'sans-serif'],
+        },
+        colors: {
+          cream:    '#FAF6EF',
+          ivory:    '#F2EBE0',
+          espresso: '#1A0E10',
+          berry:    '#8B1A3B',
+          berryd:   '#5C0E27',
+          blush:    '#F4C9D1',
+          gold:     '#B89B5E',
+        },
+        boxShadow: {
+          card: '0 30px 60px -30px rgba(92, 14, 39, 0.25), 0 12px 30px -15px rgba(26, 14, 16, 0.12)',
+          soft: '0 8px 24px -10px rgba(26, 14, 16, 0.18)',
+        },
+        keyframes: {
+          pop:    { '0%': { transform:'scale(.85)', opacity:0 }, '60%':{ transform:'scale(1.05)' }, '100%':{ transform:'scale(1)', opacity:1 } },
+          fade:   { from:{ opacity:0, transform:'translateY(8px)' }, to:{ opacity:1, transform:'translateY(0)' } },
+          shine:  { '0%':{ backgroundPosition:'-200% 0' }, '100%':{ backgroundPosition:'200% 0' } },
+          spin360:{ to: { transform:'rotate(360deg)' } },
+          checkdraw:{ to:{ strokeDashoffset:0 } },
+        },
+        animation: {
+          pop:    'pop .35s cubic-bezier(.2,.8,.2,1) both',
+          fade:   'fade .5s ease-out both',
+          shine:  'shine 3s linear infinite',
+          spin360:'spin360 1s linear infinite',
+        },
+      },
+    },
+  };
+</script>
+<style>
+  html, body { background: #FAF6EF; color: #1A0E10; }
+  body { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .font-display { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-variation-settings: "opsz" 96; }
+
+  /* Grainy texture for premium feel */
+  body::before {
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+    background-image: radial-gradient(rgba(26,14,16,.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+  }
+
+  /* Hero gradient */
+  .hero-grad {
+    background:
+      radial-gradient(120% 80% at 80% 0%, #F4C9D1 0%, transparent 55%),
+      radial-gradient(80% 60% at 10% 100%, #B89B5E33 0%, transparent 55%),
+      linear-gradient(180deg, #FAF6EF 0%, #F2EBE0 100%);
+  }
+
+  /* Flavor card gradients */
+  .grad-choco   { background: radial-gradient(120% 100% at 30% 20%, #5C2A1B 0%, #2C140C 70%); }
+  .grad-vanilla { background: radial-gradient(120% 100% at 30% 20%, #F0DCB7 0%, #C9A971 75%); }
+  .grad-caramel { background: radial-gradient(120% 100% at 30% 20%, #C57736 0%, #6B3410 75%); }
+
+  /* Premium chip */
+  .chip {
+    display:inline-flex; align-items:center; gap:.4rem;
+    padding:.35rem .7rem; border:1px solid rgba(26,14,16,.12);
+    border-radius:999px; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+    background: rgba(255,255,255,.6); backdrop-filter: blur(8px);
+  }
+
+  /* Quantity button */
+  .qty-btn {
+    width:36px; height:36px; border-radius:999px;
+    display:inline-flex; align-items:center; justify-content:center;
+    border:1px solid rgba(26,14,16,.12); background:#fff;
+    transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .qty-btn:hover { transform: scale(1.08); }
+  .qty-btn:active { transform: scale(.95); }
+  .qty-btn.primary { background:#1A0E10; color:#fff; border-color:#1A0E10; }
+  .qty-btn.primary:hover { background:#8B1A3B; border-color:#8B1A3B; }
+
+  /* Animated count */
+  .count {
+    font-variant-numeric: tabular-nums;
+    transition: transform .25s cubic-bezier(.2,.8,.2,1);
+  }
+  .count.bump { transform: translateY(-2px) scale(1.12); }
+
+  /* Sticky cart bar */
+  .cart-bar { box-shadow: 0 -20px 40px -20px rgba(26,14,16,.25); }
+
+  /* Bottom sheet */
+  .sheet {
+    position: fixed; left:0; right:0; bottom:0; top:0;
+    background: rgba(26,14,16,.55); backdrop-filter: blur(6px);
+    display:flex; align-items:flex-end; justify-content:center;
+    z-index:60; opacity:0; pointer-events:none; transition: opacity .3s ease;
+  }
+  .sheet.open { opacity:1; pointer-events:auto; }
+  .sheet-panel {
+    width:100%; max-width:560px; background:#FAF6EF;
+    border-top-left-radius:28px; border-top-right-radius:28px;
+    transform: translateY(100%); transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    max-height: 92vh; display:flex; flex-direction:column; overflow:hidden;
+  }
+  .sheet.open .sheet-panel { transform: translateY(0); }
+
+  /* Smooth section reveal */
+  .reveal { animation: fade .6s ease-out both; }
+
+  /* Premium button shine */
+  .btn-premium {
+    position:relative; overflow:hidden;
+    background: linear-gradient(180deg, #1A0E10 0%, #2C141A 100%);
+    color:#FAF6EF;
+  }
+  .btn-premium::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(110deg, transparent 30%, rgba(244,201,209,.25) 50%, transparent 70%);
+    background-size: 200% 100%;
+    animation: shine 4s linear infinite;
+    pointer-events:none;
+  }
+  .btn-berry { background: linear-gradient(180deg, #8B1A3B 0%, #5C0E27 100%); color:#FAF6EF; }
+  .btn-berry:hover { filter: brightness(1.05); }
+
+  /* TWINT brand color */
+  .btn-twint { background: #000; color:#fff; }
+  .twint-mark {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:44px; height:28px; border-radius:6px;
+    background:#fff; color:#000;
+    font-weight:800; letter-spacing:.05em; font-size:.7rem;
+  }
+  .twint-mark::before { content:'TWINT'; }
+
+  /* Loading dots */
+  .dot { width:6px; height:6px; border-radius:999px; background:#FAF6EF; opacity:.4; }
+  .dots .dot:nth-child(1){ animation: pop 1.2s ease-in-out infinite; }
+  .dots .dot:nth-child(2){ animation: pop 1.2s ease-in-out .2s infinite; }
+  .dots .dot:nth-child(3){ animation: pop 1.2s ease-in-out .4s infinite; }
+
+  /* Success check */
+  .check-circle { width:96px; height:96px; }
+  .check-circle circle { fill:none; stroke:#8B1A3B; stroke-width:3; stroke-dasharray:283; stroke-dashoffset:283; animation: checkdraw .7s ease-out forwards; }
+  .check-circle path { fill:none; stroke:#8B1A3B; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation: checkdraw .5s .6s ease-out forwards; }
+
+  /* Spinner */
+  .spinner {
+    width:64px; height:64px; border-radius:999px;
+    border:3px solid rgba(250,246,239,.18);
+    border-top-color: #F4C9D1;
+    animation: spin360 1s linear infinite;
+  }
+
+  /* Pill input */
+  .input {
+    width:100%; padding:.85rem 1.1rem;
+    border:1px solid rgba(26,14,16,.14); border-radius:14px;
+    background:#fff; font-size:1rem; transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .input:focus { outline:none; border-color:#8B1A3B; box-shadow: 0 0 0 4px rgba(139,26,59,.1); }
+  .input.error { border-color:#8B1A3B; box-shadow: 0 0 0 4px rgba(139,26,59,.1); }
+
+  /* Tag badges */
+  .badge { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px; font-size:.65rem; font-weight:600; letter-spacing:.04em; }
+  .badge-bundle { background:#F4C9D1; color:#5C0E27; }
+  .badge-pack   { background:#1A0E10; color:#F4C9D1; }
+  .badge-ref    { background:#B89B5E; color:#1A0E10; }
+
+  /* Subtle line divider */
+  .hairline { height:1px; background: linear-gradient(90deg, transparent, rgba(26,14,16,.15), transparent); }
+
+  /* Hide scrollbar in sheet */
+  .scroll-y::-webkit-scrollbar { width:6px; }
+  .scroll-y::-webkit-scrollbar-thumb { background: rgba(26,14,16,.18); border-radius:999px; }
+
+  /* iOS safe area */
+  .pb-safe { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+
+  /* Hover lift */
+  .lift { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease; }
+  .lift:hover { transform: translateY(-4px); }
+
+  /* Pint mockup */
+  .pint {
+    position: relative; width: 120px; height: 150px; margin: 0 auto;
+    border-radius: 18px 18px 22px 22px;
+    box-shadow: 0 24px 40px -16px rgba(0,0,0,.45), inset 0 -10px 30px rgba(0,0,0,.25), inset 0 6px 12px rgba(255,255,255,.15);
+  }
+  .pint::before {
+    content:''; position:absolute; left:8px; right:8px; top:18px; height:80px;
+    background: rgba(255,255,255,.85); border-radius:6px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .pint::after {
+    content:''; position:absolute; left:-6px; right:-6px; top:-6px; height:12px;
+    background:#1A0E10; border-radius: 12px;
+  }
+  .pint-label { position:absolute; left:0; right:0; top:32px; text-align:center; font-family:'Fraunces',serif; font-weight:600; color:#1A0E10; font-size:.78rem; line-height:1.1; padding:0 14px; }
+  .pint-label small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.55rem; letter-spacing:.18em; color:#8B1A3B; text-transform:uppercase; margin-top:4px; }
+</style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden">
+
+<!-- ============= APP ============= -->
+<main id="app" class="relative z-10 max-w-xl mx-auto pb-40">
+
+  <!-- ============= HERO ============= -->
+  <section class="hero-grad px-6 pt-10 pb-12 rounded-b-[36px]">
+    <header class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-full bg-berry flex items-center justify-center shadow-soft">
+          <i data-lucide="cherry" class="w-5 h-5 text-cream"></i>
+        </div>
+        <span class="font-display text-xl font-semibold tracking-tight">Berry's Delights</span>
+      </div>
+      <button id="open-cart-top" class="relative w-10 h-10 rounded-full bg-white/80 backdrop-blur flex items-center justify-center shadow-soft" aria-label="Warenkorb öffnen">
+        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+        <span id="cart-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-berry text-cream text-[10px] font-semibold flex items-center justify-center">0</span>
+      </button>
+    </header>
+
+    <div class="mt-10">
+      <span class="chip"><span class="w-1.5 h-1.5 rounded-full bg-berry"></span> High Protein · Low Sugar</span>
+      <h1 class="font-display text-[2.6rem] leading-[1.05] font-semibold tracking-tight mt-4">
+        Eiscreme,<br/>
+        die <em class="italic text-berry">leistet</em>.
+      </h1>
+      <p class="mt-3 text-espresso/70 max-w-md">
+        ~40&nbsp;g Protein. Unter 500&nbsp;kcal pro Pint. Hergestellt mit echten Beeren,
+        Schweizer Milch und ohne Kompromisse beim Geschmack.
+      </p>
+
+      <div class="mt-6 grid grid-cols-3 gap-3">
+        <div class="bg-white/70 backdrop-blur rounded-2xl p-3 text-center shadow-soft">
+          <div class="font-display text-2xl font-semibold">40<span class="text-sm text-espresso/60">g</span></div>
+          <div class="text-[10px] uppercase tracking-widest text-espresso/60 mt-1">Protein</div>
+        </div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl p-3 text-center shadow-soft">
+          <div class="font-display text-2xl font-semibold">&lt;500</div>
+          <div class="text-[10px] uppercase tracking-widest text-espresso/60 mt-1">kcal · Pint</div>
+        </div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl p-3 text-center shadow-soft">
+          <div class="font-display text-2xl font-semibold">100<span class="text-sm text-espresso/60">%</span></div>
+          <div class="text-[10px] uppercase tracking-widest text-espresso/60 mt-1">Natürlich</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= FLAVORS ============= -->
+  <section class="px-6 pt-10">
+    <div class="flex items-end justify-between">
+      <div>
+        <span class="text-[11px] tracking-[.2em] uppercase text-berry font-medium">Unsere Sorten</span>
+        <h2 class="font-display text-3xl font-semibold mt-1">Drei Charaktere.</h2>
+      </div>
+      <span class="text-sm text-espresso/60">12.50&nbsp;CHF / Pint</span>
+    </div>
+
+    <div id="flavor-grid" class="mt-6 space-y-5"></div>
+
+    <!-- Promo Box -->
+    <div class="mt-8 rounded-3xl border border-espresso/10 p-5 bg-white shadow-soft">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-blush flex items-center justify-center shrink-0">
+          <i data-lucide="sparkles" class="w-5 h-5 text-berryd"></i>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-semibold">Automatische Vorteile</h3>
+          <ul class="mt-2 space-y-1.5 text-sm text-espresso/75">
+            <li class="flex gap-2"><span class="badge badge-bundle">3-Mix</span> 1× von jeder Sorte = 10% Bundle-Rabatt</li>
+            <li class="flex gap-2"><span class="badge badge-pack">5er</span> 5 Stück einer Sorte = 15% Mengen-Rabatt</li>
+            <li class="flex gap-2"><span class="badge badge-ref">Code</span> Empfehlungscode = bis zu 15% zusätzlich</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============= STICKY CART BAR ============= -->
+<div id="cart-bar" class="cart-bar fixed bottom-0 inset-x-0 z-40 bg-cream/85 backdrop-blur-xl border-t border-espresso/10 pb-safe pt-3 px-5 hidden">
+  <button id="open-cart" class="w-full flex items-center justify-between gap-3 btn-premium rounded-2xl px-5 py-3.5 text-left">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <i data-lucide="shopping-bag" class="w-5 h-5 text-cream"></i>
+        <span id="cart-count" class="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-berry text-cream text-[10px] font-semibold flex items-center justify-center">0</span>
+      </div>
+      <div>
+        <div class="text-[10px] uppercase tracking-widest text-cream/60">Warenkorb</div>
+        <div id="cart-summary" class="text-sm font-medium text-cream">0 Pints</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 relative z-10">
+      <span class="text-[10px] uppercase tracking-widest text-cream/60">Total</span>
+      <span id="cart-total" class="font-display text-lg font-semibold text-cream">0.00 CHF</span>
+      <i data-lucide="arrow-right" class="w-4 h-4 text-cream"></i>
+    </div>
+  </button>
+</div>
+
+<!-- ============= CART SHEET ============= -->
+<div id="cart-sheet" class="sheet">
+  <div class="sheet-panel">
+    <div class="flex items-center justify-between px-6 pt-5 pb-2">
+      <div>
+        <div class="w-10 h-1 rounded-full bg-espresso/15 mx-auto mb-3"></div>
+        <h3 class="font-display text-2xl font-semibold">Dein Warenkorb</h3>
+      </div>
+      <button id="close-cart" class="w-9 h-9 rounded-full hover:bg-espresso/5 flex items-center justify-center" aria-label="Schliessen">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="scroll-y overflow-y-auto px-6 pb-6 flex-1">
+      <div id="cart-items" class="space-y-3 mt-2"></div>
+
+      <div id="cart-empty" class="text-center py-12">
+        <div class="w-16 h-16 mx-auto rounded-full bg-blush flex items-center justify-center">
+          <i data-lucide="ice-cream-cone" class="w-8 h-8 text-berryd"></i>
+        </div>
+        <p class="mt-4 font-display text-lg">Noch leer.</p>
+        <p class="text-sm text-espresso/60">Wähle deine Lieblings-Pints und sichere dir automatisch die besten Rabatte.</p>
+      </div>
+
+      <div id="cart-detail" class="hidden">
+        <!-- Referral -->
+        <div class="mt-6">
+          <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Empfehlungscode</label>
+          <div class="mt-2 flex gap-2">
+            <input id="ref-input" class="input" placeholder="z.B. BERRY-FRIEND-1A2B" autocomplete="off" />
+            <button id="ref-apply" class="px-4 rounded-2xl bg-espresso text-cream font-medium hover:bg-berry transition-colors">Einlösen</button>
+          </div>
+          <p id="ref-msg" class="text-xs mt-2 text-espresso/60"></p>
+        </div>
+
+        <!-- Discount summary -->
+        <div class="mt-6 rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+          <div id="discount-lines" class="space-y-2 text-sm"></div>
+          <div class="hairline my-3"></div>
+          <div class="flex items-center justify-between">
+            <span class="text-espresso/70">Zwischensumme</span>
+            <span id="subtotal" class="font-medium">0.00 CHF</span>
+          </div>
+          <div id="discount-total-line" class="hidden flex items-center justify-between mt-1">
+            <span class="text-berry">Rabatt</span>
+            <span id="discount-total" class="font-medium text-berry">−0.00 CHF</span>
+          </div>
+          <div class="hairline my-3"></div>
+          <div class="flex items-end justify-between">
+            <span class="font-display text-lg">Total</span>
+            <span id="grand-total" class="font-display text-2xl font-semibold">0.00 CHF</span>
+          </div>
+          <p id="save-note" class="hidden text-xs text-berry mt-1 text-right">Du sparst <span id="save-amount">0.00</span> CHF ✦</p>
+        </div>
+
+        <!-- Form -->
+        <h4 class="mt-7 font-display text-xl font-semibold">Lieferung</h4>
+        <div class="mt-3 space-y-3">
+          <input id="f-name"  class="input" placeholder="Vorname & Nachname" autocomplete="name" />
+          <input id="f-email" class="input" type="email" placeholder="E-Mail" autocomplete="email" />
+          <input id="f-phone" class="input" type="tel" placeholder="Telefonnummer (für SMS)" autocomplete="tel" />
+        </div>
+
+        <button id="pay-twint" class="mt-6 w-full btn-twint rounded-2xl py-4 flex items-center justify-center gap-3 font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed">
+          <span class="twint-mark"></span>
+          <span>Jetzt mit TWINT bezahlen</span>
+        </button>
+        <p class="text-[11px] text-center text-espresso/50 mt-3">Sichere Zahlung · Lieferung in 60–90 Min in Zürich</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============= PAYMENT OVERLAY ============= -->
+<div id="pay-overlay" class="fixed inset-0 z-[80] hidden items-center justify-center bg-espresso/95 backdrop-blur-md">
+  <div class="text-center px-6 max-w-sm">
+    <!-- Step 1: Connecting -->
+    <div id="pay-step-1" class="reveal">
+      <div class="flex items-center justify-center mb-6">
+        <div class="spinner"></div>
+      </div>
+      <h3 class="font-display text-2xl font-semibold text-cream">Verbindung zu TWINT…</h3>
+      <p class="text-cream/60 mt-2 text-sm">Wir leiten deine Zahlung sicher weiter.</p>
+      <div class="dots flex items-center justify-center gap-1.5 mt-6">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+    </div>
+
+    <!-- Step 2: Confirming -->
+    <div id="pay-step-2" class="reveal hidden">
+      <div class="flex items-center justify-center mb-6">
+        <div class="spinner"></div>
+      </div>
+      <h3 class="font-display text-2xl font-semibold text-cream">Zahlung wird bestätigt…</h3>
+      <p class="text-cream/60 mt-2 text-sm">Authentifizierung in der TWINT-App.</p>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div id="pay-step-3" class="reveal hidden">
+      <div class="flex items-center justify-center mb-4">
+        <svg class="check-circle" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45"></circle>
+          <path d="M30 52 L45 67 L72 38"></path>
+        </svg>
+      </div>
+      <h3 class="font-display text-2xl font-semibold text-cream">Zahlung erfolgreich!</h3>
+      <p class="text-cream/70 mt-2 text-sm">Deine Eiscreme wird vorbereitet ✦</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============= CONFIRMATION ============= -->
+<div id="confirmation" class="hidden fixed inset-0 z-[70] bg-cream overflow-y-auto">
+  <div class="max-w-xl mx-auto px-6 py-10 pb-safe">
+    <div class="flex items-center justify-center">
+      <svg class="check-circle" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45"></circle>
+        <path d="M30 52 L45 67 L72 38"></path>
+      </svg>
+    </div>
+
+    <h1 class="font-display text-3xl font-semibold text-center mt-4">Bestellung bestätigt</h1>
+    <p class="text-center text-espresso/70 mt-2" id="conf-greeting">Vielen Dank!</p>
+
+    <!-- Order summary -->
+    <div class="mt-8 rounded-3xl bg-white border border-espresso/8 p-5 shadow-card">
+      <div class="flex items-center justify-between">
+        <span class="text-[11px] tracking-[.2em] uppercase text-espresso/60">Bestellung</span>
+        <span id="conf-orderid" class="text-[11px] tracking-[.2em] uppercase text-espresso/60">#000</span>
+      </div>
+      <div id="conf-items" class="mt-4 space-y-2 text-sm"></div>
+      <div class="hairline my-4"></div>
+      <div id="conf-discounts" class="space-y-1 text-sm"></div>
+      <div class="hairline my-4"></div>
+      <div class="flex items-center justify-between">
+        <span class="font-display text-lg">Bezahlt</span>
+        <span id="conf-total" class="font-display text-2xl font-semibold">0.00 CHF</span>
+      </div>
+      <div class="mt-3 flex items-center gap-2 text-sm text-espresso/70">
+        <span class="twint-mark"></span>
+        <span>via TWINT · Status: Bezahlt</span>
+      </div>
+    </div>
+
+    <!-- Referral reward -->
+    <div class="mt-6 rounded-3xl p-5 shadow-card relative overflow-hidden" style="background: radial-gradient(120% 80% at 0% 0%, #F4C9D1 0%, transparent 60%), linear-gradient(180deg, #5C0E27 0%, #1A0E10 100%);">
+      <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-gold/20 blur-2xl"></div>
+      <span class="chip" style="background:rgba(250,246,239,.1); border-color:rgba(250,246,239,.2); color:#F4C9D1;">
+        <i data-lucide="gift" class="w-3.5 h-3.5"></i> Dein Empfehlungscode
+      </span>
+      <h2 class="font-display text-2xl font-semibold text-cream mt-3">Teile. Gewinne. Geniesse.</h2>
+      <p class="text-cream/70 text-sm mt-2">
+        Dein Freund erhält <strong class="text-blush">10% Rabatt</strong> auf seine erste Bestellung.
+        Sobald er bestellt, erhältst du einen <strong class="text-blush">15% Rabattcode</strong> per SMS/E-Mail.
+      </p>
+
+      <div class="mt-5 bg-cream rounded-2xl p-4 flex items-center justify-between gap-3">
+        <div>
+          <div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div>
+          <div id="conf-refcode" class="font-display text-lg font-semibold tracking-wider mt-0.5">BERRY-FRIEND-XXXX</div>
+        </div>
+        <button id="copy-ref" class="px-3 py-2 rounded-xl btn-berry text-sm flex items-center gap-1.5">
+          <i data-lucide="copy" class="w-4 h-4"></i> <span id="copy-label">Kopieren</span>
+        </button>
+      </div>
+
+      <div class="mt-4 grid grid-cols-3 gap-2">
+        <button class="share-btn rounded-xl bg-white/10 text-cream py-2.5 text-xs hover:bg-white/20 transition-colors flex items-center justify-center gap-1.5" data-share="whatsapp">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+        </button>
+        <button class="share-btn rounded-xl bg-white/10 text-cream py-2.5 text-xs hover:bg-white/20 transition-colors flex items-center justify-center gap-1.5" data-share="sms">
+          <i data-lucide="smartphone" class="w-4 h-4"></i> SMS
+        </button>
+        <button class="share-btn rounded-xl bg-white/10 text-cream py-2.5 text-xs hover:bg-white/20 transition-colors flex items-center justify-center gap-1.5" data-share="copy">
+          <i data-lucide="link" class="w-4 h-4"></i> Link
+        </button>
+      </div>
+    </div>
+
+    <button id="new-order" class="mt-8 w-full rounded-2xl py-4 border border-espresso/15 hover:bg-espresso/5 transition-colors font-medium">
+      Neue Bestellung
+    </button>
+    <p class="text-[11px] text-center text-espresso/45 mt-4">Berry's Delights · Made in Switzerland</p>
+  </div>
+</div>
+
+<!-- ============= SCRIPTS ============= -->
+<script>
+(() => {
+  'use strict';
+
+  // ===== Data =====
+  const PRICE = 12.50; // CHF per pint
+  const FLAVORS = [
+    {
+      id: 'chocolate',
+      name: 'Chocolate Fudge Brownie',
+      tagline: 'Dunkel · Intens · Brownie-Stücke',
+      notes: ['Belgischer Kakao', 'Brownie-Stücke', 'Hafer'],
+      gradient: 'grad-choco',
+      labelColor: '#1A0E10',
+    },
+    {
+      id: 'vanilla',
+      name: 'Vanilla Cookie Dough',
+      tagline: 'Sanft · Cremig · Cookie-Bites',
+      notes: ['Madagaskar Vanille', 'Cookie-Dough', 'Meersalz'],
+      gradient: 'grad-vanilla',
+      labelColor: '#1A0E10',
+    },
+    {
+      id: 'caramel',
+      name: 'Salted Caramel Toffee',
+      tagline: 'Butterig · Salzig · Toffee-Swirl',
+      notes: ['Karamell-Swirl', 'Toffee-Stücke', 'Fleur de Sel'],
+      gradient: 'grad-caramel',
+      labelColor: '#FAF6EF',
+    },
+  ];
+
+  // Valid referral demo codes
+  // pattern based: BERRY-FRIEND-XXXX => 10% (new customer); BERRY-EARN-XXXX => 15% (earner)
+  const REF_FRIEND = /^BERRY-FRIEND-[A-Z0-9]{3,6}$/i;
+  const REF_EARN   = /^BERRY-EARN-[A-Z0-9]{3,6}$/i;
+
+  // ===== State =====
+  const state = {
+    qty: { chocolate: 0, vanilla: 0, caramel: 0 },
+    referral: null, // { code, type: 'friend'|'earn', percent: 10|15 }
+    customer: { name:'', email:'', phone:'' },
+    lastOrder: null,
+  };
+
+  // ===== Helpers =====
+  const fmt = (n) => `${n.toFixed(2)} CHF`;
+  const $   = (sel) => document.querySelector(sel);
+  const $$  = (sel) => document.querySelectorAll(sel);
+
+  function genCode(prefix='FRIEND') {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let s = '';
+    for (let i = 0; i < 4; i++) s += chars[Math.floor(Math.random()*chars.length)];
+    return `BERRY-${prefix}-${s}`;
+  }
+
+  // ===== Pricing engine =====
+  // Returns optimal split into 5-packs, 3-mix bundles, and singles to maximize savings.
+  function priceCart() {
+    const q = state.qty;
+    const qA = q.chocolate, qB = q.vanilla, qC = q.caramel;
+    const totalItems = qA + qB + qC;
+    const subtotal = totalItems * PRICE;
+
+    // Find optimal f (number of 3-mix bundles), then take max 5-packs from remainder
+    let best = { f: 0, a: { chocolate: 0, vanilla: 0, caramel: 0 }, savings: 0 };
+    const maxF = Math.min(qA, qB, qC);
+    for (let f = 0; f <= maxF; f++) {
+      const aA = Math.floor((qA - f) / 5);
+      const aB = Math.floor((qB - f) / 5);
+      const aC = Math.floor((qC - f) / 5);
+      // Each 3-mix: 3 items × 12.50 × 10% = 3.75 saved
+      // Each 5-pack: 5 items × 12.50 × 15% = 9.375 saved
+      const savings = 3.75 * f + 9.375 * (aA + aB + aC);
+      if (savings > best.savings) {
+        best = { f, a: { chocolate: aA, vanilla: aB, caramel: aC }, savings };
+      }
+    }
+
+    const fCount = best.f;
+    const packs  = best.a;
+    const packCount = packs.chocolate + packs.vanilla + packs.caramel;
+    const itemsInPacks   = 5 * packCount;
+    const itemsInBundles = 3 * fCount;
+    const itemsAsSingles = totalItems - itemsInPacks - itemsInBundles;
+
+    const bundleDiscount = fCount * 3 * PRICE * 0.10;
+    const packDiscount   = packCount * 5 * PRICE * 0.15;
+
+    // Referral applies additively (% of subtotal)
+    const refPct = state.referral ? state.referral.percent / 100 : 0;
+    const refDiscount = subtotal * refPct;
+
+    const totalDiscount = bundleDiscount + packDiscount + refDiscount;
+    const grandTotal    = Math.max(0, subtotal - totalDiscount);
+
+    return {
+      subtotal, totalDiscount, grandTotal,
+      fCount, packs, packCount, itemsAsSingles,
+      bundleDiscount, packDiscount, refDiscount,
+      totalItems,
+    };
+  }
+
+  // ===== Render: Flavor cards =====
+  function renderFlavors() {
+    const grid = $('#flavor-grid');
+    grid.innerHTML = FLAVORS.map(f => `
+      <article class="lift bg-white rounded-3xl p-5 shadow-card border border-espresso/5">
+        <div class="flex gap-5 items-center">
+          <div class="${f.gradient} rounded-2xl w-28 h-32 shrink-0 relative overflow-hidden flex items-center justify-center">
+            <div class="pint">
+              <div class="pint-label" style="color:${f.labelColor}">
+                Berry's
+                <small>${f.id.toUpperCase()}</small>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <h3 class="font-display text-xl font-semibold leading-tight">${f.name}</h3>
+            <p class="text-xs text-espresso/60 mt-1">${f.tagline}</p>
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              ${f.notes.map(n => `<span class="text-[10px] px-2 py-0.5 rounded-full bg-ivory text-espresso/70 border border-espresso/8">${n}</span>`).join('')}
+            </div>
+            <div class="mt-4 flex items-center justify-between gap-3">
+              <span class="font-display text-lg font-semibold">${fmt(PRICE)}</span>
+              <div class="flex items-center gap-2.5" data-qty-controls="${f.id}">
+                <button class="qty-btn" data-act="dec" data-id="${f.id}" aria-label="Weniger">
+                  <i data-lucide="minus" class="w-4 h-4"></i>
+                </button>
+                <span class="count font-display text-lg font-semibold w-6 text-center" data-count="${f.id}">0</span>
+                <button class="qty-btn primary" data-act="inc" data-id="${f.id}" aria-label="Mehr">
+                  <i data-lucide="plus" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    `).join('');
+    lucide.createIcons();
+
+    grid.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-act]');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      const act = btn.dataset.act;
+      if (act === 'inc') state.qty[id]++;
+      else if (act === 'dec' && state.qty[id] > 0) state.qty[id]--;
+      bumpCount(id);
+      renderAll();
+    });
+  }
+
+  function bumpCount(id) {
+    const el = document.querySelector(`[data-count="${id}"]`);
+    if (!el) return;
+    el.classList.add('bump');
+    setTimeout(() => el.classList.remove('bump'), 220);
+  }
+
+  // ===== Render: Cart bar + sheet =====
+  function renderAll() {
+    const p = priceCart();
+
+    // Update flavor counts
+    FLAVORS.forEach(f => {
+      const el = document.querySelector(`[data-count="${f.id}"]`);
+      if (el) el.textContent = state.qty[f.id];
+    });
+
+    // Cart bar visibility + content
+    const bar = $('#cart-bar');
+    if (p.totalItems > 0) bar.classList.remove('hidden');
+    else bar.classList.add('hidden');
+
+    $('#cart-count').textContent = p.totalItems;
+    $('#cart-summary').textContent = `${p.totalItems} ${p.totalItems === 1 ? 'Pint' : 'Pints'}`;
+    $('#cart-total').textContent = fmt(p.grandTotal);
+
+    const badge = $('#cart-badge');
+    if (p.totalItems > 0) { badge.classList.remove('hidden'); badge.textContent = p.totalItems; }
+    else badge.classList.add('hidden');
+
+    // Cart sheet contents
+    const cartEmpty = $('#cart-empty');
+    const cartDetail = $('#cart-detail');
+    if (p.totalItems === 0) {
+      cartEmpty.classList.remove('hidden');
+      cartDetail.classList.add('hidden');
+      $('#cart-items').innerHTML = '';
+    } else {
+      cartEmpty.classList.add('hidden');
+      cartDetail.classList.remove('hidden');
+      renderCartItems();
+      renderDiscountLines(p);
+    }
+  }
+
+  function renderCartItems() {
+    const wrap = $('#cart-items');
+    wrap.innerHTML = FLAVORS
+      .filter(f => state.qty[f.id] > 0)
+      .map(f => `
+        <div class="flex items-center gap-3 bg-white rounded-2xl p-3 border border-espresso/8">
+          <div class="${f.gradient} w-12 h-14 rounded-xl shrink-0"></div>
+          <div class="flex-1 min-w-0">
+            <div class="font-medium text-sm truncate">${f.name}</div>
+            <div class="text-xs text-espresso/55 mt-0.5">${fmt(PRICE)} · Pint</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="qty-btn" data-act="dec" data-id="${f.id}" aria-label="Weniger">
+              <i data-lucide="minus" class="w-4 h-4"></i>
+            </button>
+            <span class="count w-5 text-center text-sm font-semibold">${state.qty[f.id]}</span>
+            <button class="qty-btn primary" data-act="inc" data-id="${f.id}" aria-label="Mehr">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    lucide.createIcons();
+
+    wrap.querySelectorAll('[data-act]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id, act = btn.dataset.act;
+        if (act === 'inc') state.qty[id]++;
+        else if (act === 'dec' && state.qty[id] > 0) state.qty[id]--;
+        renderAll();
+      });
+    });
+  }
+
+  function renderDiscountLines(p) {
+    const lines = [];
+    if (p.fCount > 0) {
+      lines.push(`
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-2"><span class="badge badge-bundle">3-Mix · ×${p.fCount}</span><span class="text-espresso/65">10% Bundle</span></span>
+          <span class="text-berry font-medium">−${p.bundleDiscount.toFixed(2)} CHF</span>
+        </div>`);
+    }
+    if (p.packCount > 0) {
+      const labels = [];
+      if (p.packs.chocolate) labels.push(`Chocolate ×${p.packs.chocolate}`);
+      if (p.packs.vanilla)   labels.push(`Vanilla ×${p.packs.vanilla}`);
+      if (p.packs.caramel)   labels.push(`Caramel ×${p.packs.caramel}`);
+      lines.push(`
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-2"><span class="badge badge-pack">5er · ${labels.join(', ')}</span><span class="text-espresso/65">15% Menge</span></span>
+          <span class="text-berry font-medium">−${p.packDiscount.toFixed(2)} CHF</span>
+        </div>`);
+    }
+    if (p.refDiscount > 0 && state.referral) {
+      lines.push(`
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-2"><span class="badge badge-ref">Code</span><span class="text-espresso/65">${state.referral.percent}% Empfehlung</span></span>
+          <span class="text-berry font-medium">−${p.refDiscount.toFixed(2)} CHF</span>
+        </div>`);
+    }
+    const dl = $('#discount-lines');
+    dl.innerHTML = lines.join('');
+    dl.classList.toggle('hidden', lines.length === 0);
+
+    $('#subtotal').textContent    = fmt(p.subtotal);
+    $('#grand-total').textContent = fmt(p.grandTotal);
+
+    const totalLine = $('#discount-total-line');
+    if (p.totalDiscount > 0) {
+      totalLine.classList.remove('hidden');
+      totalLine.classList.add('flex');
+      $('#discount-total').textContent = `−${p.totalDiscount.toFixed(2)} CHF`;
+      $('#save-note').classList.remove('hidden');
+      $('#save-amount').textContent = p.totalDiscount.toFixed(2);
+    } else {
+      totalLine.classList.add('hidden');
+      totalLine.classList.remove('flex');
+      $('#save-note').classList.add('hidden');
+    }
+  }
+
+  // ===== Cart sheet open/close =====
+  function openCart() {
+    $('#cart-sheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCart() {
+    $('#cart-sheet').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  $('#open-cart').addEventListener('click', openCart);
+  $('#open-cart-top').addEventListener('click', openCart);
+  $('#close-cart').addEventListener('click', closeCart);
+  $('#cart-sheet').addEventListener('click', (e) => { if (e.target === $('#cart-sheet')) closeCart(); });
+
+  // ===== Referral =====
+  $('#ref-apply').addEventListener('click', applyReferral);
+  $('#ref-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') applyReferral(); });
+
+  function applyReferral() {
+    const input = $('#ref-input');
+    const msg = $('#ref-msg');
+    const code = input.value.trim().toUpperCase();
+    if (!code) return;
+    let result = null;
+    if (REF_FRIEND.test(code)) result = { code, type:'friend', percent:10 };
+    else if (REF_EARN.test(code)) result = { code, type:'earn', percent:15 };
+
+    if (!result) {
+      input.classList.add('error');
+      msg.textContent = 'Code ungültig. Format: BERRY-FRIEND-XXXX oder BERRY-EARN-XXXX';
+      msg.className = 'text-xs mt-2 text-berry';
+      state.referral = null;
+      renderAll();
+      return;
+    }
+    input.classList.remove('error');
+    state.referral = result;
+    input.value = code;
+    msg.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · ${result.percent}% Rabatt auf deine Bestellung`;
+    msg.className = 'text-xs mt-2 text-espresso/70';
+    renderAll();
+  }
+
+  // ===== Checkout / TWINT =====
+  $('#pay-twint').addEventListener('click', async () => {
+    const name  = $('#f-name').value.trim();
+    const email = $('#f-email').value.trim();
+    const phone = $('#f-phone').value.trim();
+
+    if (!name || !email || !phone) {
+      [['f-name', name], ['f-email', email], ['f-phone', phone]].forEach(([id, v]) => {
+        const el = $('#' + id);
+        if (!v) el.classList.add('error'); else el.classList.remove('error');
+      });
+      return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      $('#f-email').classList.add('error');
+      return;
+    }
+
+    state.customer = { name, email, phone };
+
+    const p = priceCart();
+    if (p.totalItems === 0) return;
+
+    const btn = $('#pay-twint');
+    btn.disabled = true;
+
+    closeCart();
+    await runPayment();
+
+    // Generate order
+    const order = {
+      id: '#' + Math.floor(100000 + Math.random()*900000),
+      ...state.customer,
+      qty: { ...state.qty },
+      pricing: p,
+      referral: state.referral,
+      refCode: genCode('FRIEND'),
+      timestamp: new Date(),
+    };
+    state.lastOrder = order;
+    renderConfirmation(order);
+
+    btn.disabled = false;
+  });
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function runPayment() {
+    const ov = $('#pay-overlay');
+    ov.classList.remove('hidden');
+    ov.classList.add('flex');
+
+    $('#pay-step-1').classList.remove('hidden');
+    $('#pay-step-2').classList.add('hidden');
+    $('#pay-step-3').classList.add('hidden');
+
+    await sleep(1400);
+    $('#pay-step-1').classList.add('hidden');
+    $('#pay-step-2').classList.remove('hidden');
+
+    await sleep(1500);
+    $('#pay-step-2').classList.add('hidden');
+    $('#pay-step-3').classList.remove('hidden');
+
+    await sleep(1500);
+    ov.classList.add('hidden');
+    ov.classList.remove('flex');
+  }
+
+  function renderConfirmation(order) {
+    const view = $('#confirmation');
+    view.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    $('#conf-greeting').textContent = `Vielen Dank, ${order.name.split(' ')[0]}! Wir liefern dich in 60–90 Minuten.`;
+    $('#conf-orderid').textContent  = order.id;
+
+    const itemsHtml = FLAVORS
+      .filter(f => order.qty[f.id] > 0)
+      .map(f => `
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="${f.gradient} w-8 h-9 rounded-md"></div>
+            <span>${order.qty[f.id]}× ${f.name}</span>
+          </div>
+          <span class="text-espresso/70">${fmt(order.qty[f.id] * PRICE)}</span>
+        </div>`).join('');
+    $('#conf-items').innerHTML = itemsHtml;
+
+    const p = order.pricing;
+    const disc = [];
+    disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Zwischensumme</span><span>${fmt(p.subtotal)}</span></div>`);
+    if (p.bundleDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>3-Mix Bundle (10%)</span><span>−${p.bundleDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.packDiscount > 0)   disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (15%)</span><span>−${p.packDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.refDiscount > 0 && order.referral) disc.push(`<div class="flex justify-between text-berry"><span>Empfehlung (${order.referral.percent}%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
+    $('#conf-discounts').innerHTML = disc.join('');
+
+    $('#conf-total').textContent  = fmt(p.grandTotal);
+    $('#conf-refcode').textContent = order.refCode;
+    lucide.createIcons();
+  }
+
+  // Copy / share
+  $('#copy-ref').addEventListener('click', async () => {
+    const code = $('#conf-refcode').textContent;
+    try { await navigator.clipboard.writeText(code); }
+    catch { /* ignore */ }
+    const label = $('#copy-label');
+    label.textContent = 'Kopiert ✓';
+    setTimeout(() => { label.textContent = 'Kopieren'; }, 1800);
+  });
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.share-btn');
+    if (!btn) return;
+    const code = $('#conf-refcode').textContent;
+    const msg = encodeURIComponent(`Probier Berry's Delights – Premium High-Protein Eiscreme aus Zürich. Mit Code ${code} bekommst du 10% Rabatt auf deine erste Bestellung 🍓`);
+    const type = btn.dataset.share;
+    if (type === 'whatsapp') window.open(`https://wa.me/?text=${msg}`, '_blank');
+    else if (type === 'sms') window.location.href = `sms:?body=${msg}`;
+    else if (type === 'copy') {
+      navigator.clipboard?.writeText(`Berry's Delights · Code ${code}`);
+      btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Kopiert';
+      lucide.createIcons();
+    }
+  });
+
+  $('#new-order').addEventListener('click', () => {
+    state.qty = { chocolate: 0, vanilla: 0, caramel: 0 };
+    state.referral = null;
+    state.customer = { name:'', email:'', phone:'' };
+    $('#ref-input').value = '';
+    $('#ref-msg').textContent = '';
+    $('#f-name').value = $('#f-email').value = $('#f-phone').value = '';
+    $('#confirmation').classList.add('hidden');
+    document.body.style.overflow = '';
+    renderAll();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ===== Init =====
+  renderFlavors();
+  renderAll();
+  lucide.createIcons();
+})();
+</script>
+</body>
+</html>

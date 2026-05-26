@@ -60,7 +60,7 @@
 <style>
   /* ==== Smartphone & iOS strict optimizations ==== */
   * { -webkit-tap-highlight-color: transparent; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
   body {
     background:#FAF6EF; color:#1A0E10;
     font-family: 'Inter', system-ui, sans-serif;
@@ -248,10 +248,11 @@
     </header>
 
     <div class="mt-7">
-      <span class="chip"><span class="w-1.5 h-1.5 rounded-full bg-berry"></span> High Protein · Low Sugar</span>
+      <span class="chip"><span class="w-1.5 h-1.5 rounded-full bg-berry"></span> Premium High Protein Ice Cream</span>
       <h1 class="font-display text-[2.2rem] leading-[1.05] font-semibold tracking-tight mt-3">
-        Eiscreme,<br/><em class="italic text-berry">die leistet.</em>
+        Treat-Day,<br/><em class="italic text-berry">jeden Tag.</em>
       </h1>
+      <p class="mt-3 text-sm text-espresso/70 max-w-md">~40&thinsp;g Protein. Sättigende Ballaststoffe. Unter 500&thinsp;kcal pro Pint. Genuss, der deine Ziele <em>nicht</em> sabotiert.</p>
       <div class="mt-4 grid grid-cols-3 gap-2">
         <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
           <div class="font-display text-xl font-semibold">40<span class="text-xs text-espresso/60">g</span></div>
@@ -262,37 +263,53 @@
           <div class="text-[9px] uppercase tracking-widest text-espresso/60">kcal · Pint</div>
         </div>
         <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
-          <div class="font-display text-xl font-semibold">12.50</div>
+          <div class="font-display text-xl font-semibold">11.90</div>
           <div class="text-[9px] uppercase tracking-widest text-espresso/60">CHF · Pint</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3-MIX HERO CTA -->
-  <section class="px-5 mt-5">
-    <button id="add-3mix" class="w-full pack-btn justify-between btn-berry !border-transparent text-cream py-4 rounded-2xl shadow-card">
-      <span class="flex items-center gap-3">
-        <i data-lucide="package" class="w-5 h-5"></i>
-        <span class="text-left">
-          <span class="block text-[10px] uppercase tracking-widest text-cream/70">Schnellwahl</span>
-          <span class="block text-base font-semibold">3er-Mix-Set sichern</span>
-        </span>
-      </span>
-      <span class="text-right">
-        <span class="block save !text-blush">−10%</span>
-        <span class="block text-[10px] text-cream/60 mt-0.5">1× je Sorte</span>
-      </span>
-    </button>
-  </section>
-
   <!-- FLAVORS -->
-  <section class="px-5 mt-6">
+  <section class="px-5 mt-7">
     <div class="flex items-end justify-between mb-3">
-      <h2 class="font-display text-2xl font-semibold">Unsere Sorten</h2>
-      <span class="text-xs text-espresso/55">12.50 CHF · Pint</span>
+      <h2 class="font-display text-2xl font-semibold">Drei Sorten</h2>
+      <span class="text-xs text-espresso/55">11.90 CHF · Pint</span>
     </div>
     <div id="flavor-grid" class="space-y-4"></div>
+
+    <!-- Rabatt-Info -->
+    <div class="mt-5 rounded-2xl bg-white/70 border border-espresso/10 p-4 backdrop-blur">
+      <p class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Mengen-Rabatt</p>
+      <ul class="mt-2 space-y-1.5 text-sm text-espresso/80">
+        <li class="flex items-center gap-2"><span class="badge badge-bundle">5×</span> 5 vom gleichen → <strong class="text-berry">10% Rabatt</strong></li>
+        <li class="flex items-center gap-2"><span class="badge badge-pack">10×</span> 10 vom gleichen → <strong class="text-berry">15% Rabatt</strong></li>
+        <li class="flex items-center gap-2"><span class="badge badge-ref">Code</span> Empfehlung → <strong class="text-berry">+15% additiv</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ABOUT LUCAS -->
+  <section class="px-5 mt-9">
+    <div class="rounded-3xl bg-white border border-espresso/8 p-6 shadow-card">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-full bg-berry text-cream font-display text-xl font-semibold flex items-center justify-center">L</div>
+        <div>
+          <p class="text-[11px] tracking-[.2em] uppercase text-espresso/55 font-medium">Hinter der Marke</p>
+          <h2 class="font-display text-xl font-semibold">Hey, ich bin Lucas.</h2>
+        </div>
+      </div>
+      <div class="space-y-3 text-[15px] leading-relaxed text-espresso/80">
+        <p>Ich wollte einen Weg finden, jeden Tag Eiscreme zu essen — ohne meine Fitness- und Ernährungsziele zu sabotieren.</p>
+        <p>Also habe ich gesucht, getestet und perfektioniert: Premium-Eiscreme mit <strong>~40&thinsp;g Protein</strong>, sättigenden <strong>Ballaststoffen</strong> und unter <strong>500&thinsp;kcal pro Pint</strong>.</p>
+        <p>Das Ergebnis ist <em class="text-berry not-italic font-semibold">Berry's Delights</em> — Eiscreme, die deinen Tag erfüllt statt deine Disziplin testet.</p>
+      </div>
+      <div class="hairline my-5"></div>
+      <p class="text-[15px] leading-relaxed text-espresso/85">
+        <strong class="text-espresso">Deine Fitness-Journey braucht keinen Verzicht.</strong>
+        Wenn du deine Ziele mit mehr Genuss erreichen willst — willkommen. Jeder Pint bringt dich näher, nicht weiter weg.
+      </p>
+    </div>
   </section>
 </main>
 
@@ -539,12 +556,23 @@
       </div>
     </div>
 
-    <!-- Email confirmation -->
-    <a id="email-link" class="mt-5 w-full btn-premium rounded-2xl py-4 px-5 flex items-center justify-center gap-2 font-medium relative z-10" href="#">
-      <i data-lucide="mail" class="w-5 h-5 relative z-10"></i>
-      <span class="relative z-10">Bestellbestätigung jetzt senden</span>
-    </a>
-    <p class="text-[11px] text-center text-espresso/55 mt-2">Geht an dich (E-Mail) und an den Shop · ein Tap</p>
+    <!-- Email status / fallback -->
+    <div id="email-status" class="mt-5">
+      <div id="email-sent" class="hidden rounded-2xl bg-white border border-espresso/8 p-4 flex items-center gap-3 shadow-soft">
+        <div class="w-9 h-9 rounded-full bg-berry/10 flex items-center justify-center shrink-0">
+          <i data-lucide="check" class="w-5 h-5 text-berry"></i>
+        </div>
+        <div>
+          <div class="font-medium text-sm">Bestätigung gesendet</div>
+          <p class="text-xs text-espresso/60 mt-0.5">An dich und an den Shop — schau in dein Postfach.</p>
+        </div>
+      </div>
+      <a id="email-link" class="hidden w-full btn-premium rounded-2xl py-4 px-5 flex items-center justify-center gap-2 font-medium relative z-10" href="#">
+        <i data-lucide="mail" class="w-5 h-5 relative z-10"></i>
+        <span class="relative z-10">Bestätigung jetzt senden</span>
+      </a>
+      <p id="email-hint" class="hidden text-[11px] text-center text-espresso/55 mt-2">Ein Tap — geht an dich und an den Shop</p>
+    </div>
 
     <button id="new-order" class="mt-3 w-full rounded-2xl py-3.5 border border-espresso/15 font-medium">Neue Bestellung</button>
     <p class="text-[11px] text-center text-espresso/45 mt-4">Berry's Delights · Sanitas Hauptsitz · Made in Switzerland</p>
@@ -557,7 +585,7 @@
   'use strict';
 
   // ===== Constants =====
-  const PRICE = 12.50;
+  const PRICE = 11.90;
   const MERCHANT_TWINT = '+41 78 919 98 38';
   const PICKUP_LOCATION = 'Sanitas Hauptsitz';
   const ORDER_EMAIL = 'beer.lucas@hotmail.com';
@@ -592,35 +620,34 @@
   }
 
   // ===== Pricing =====
+  // Per-flavor only (no cross-flavor bundles):
+  //   - Every 10 of same flavor: -15%
+  //   - Then every 5 of same flavor: -10%
+  //   - Remainder: full price
+  // Greedy is optimal (10-pack saves more than 5-pack per item).
   function priceCart() {
-    const q = state.qty;
-    const qA = q.chocolate, qB = q.vanilla, qC = q.caramel;
-    const totalItems = qA + qB + qC;
+    const ids = ['chocolate','vanilla','caramel'];
+    const totalItems = ids.reduce((s,id) => s + state.qty[id], 0);
     const subtotal = totalItems * PRICE;
 
-    // Find optimal partition: max savings = 9.375 per 5-pack + 3.75 per 3-mix
-    let best = { f:0, a:{chocolate:0,vanilla:0,caramel:0}, savings:0 };
-    const maxF = Math.min(qA, qB, qC);
-    for (let f = 0; f <= maxF; f++) {
-      const aA = Math.floor((qA - f) / 5);
-      const aB = Math.floor((qB - f) / 5);
-      const aC = Math.floor((qC - f) / 5);
-      const savings = 3.75 * f + 9.375 * (aA + aB + aC);
-      if (savings > best.savings) best = { f, a:{chocolate:aA, vanilla:aB, caramel:aC}, savings };
+    const packs = {};
+    let tens = 0, fives = 0;
+    for (const id of ids) {
+      const n = state.qty[id];
+      const t = Math.floor(n / 10);
+      const f = Math.floor((n - 10 * t) / 5);
+      packs[id] = { tens: t, fives: f };
+      tens += t;
+      fives += f;
     }
 
-    const fCount    = best.f;
-    const packs     = best.a;
-    const packCount = packs.chocolate + packs.vanilla + packs.caramel;
+    const tenDiscount   = tens  * 10 * PRICE * 0.15;
+    const fiveDiscount  = fives *  5 * PRICE * 0.10;
+    const refPct        = state.referral ? state.referral.percent / 100 : 0;
+    const refDiscount   = subtotal * refPct;
+    const totalDiscount = tenDiscount + fiveDiscount + refDiscount;
+    const afterDiscount = Math.max(0, subtotal - totalDiscount);
 
-    const bundleDiscount = fCount * 3 * PRICE * 0.10;
-    const packDiscount   = packCount * 5 * PRICE * 0.15;
-    const refPct         = state.referral ? state.referral.percent / 100 : 0;
-    const refDiscount    = subtotal * refPct;
-    const totalDiscount  = bundleDiscount + packDiscount + refDiscount;
-    const afterDiscount  = Math.max(0, subtotal - totalDiscount);
-
-    // Tip on amount AFTER discounts
     let tipAmount = 0;
     if (state.tip.type === 'percent') tipAmount = afterDiscount * (state.tip.value / 100);
     else if (state.tip.type === 'fixed') tipAmount = Math.max(0, state.tip.value);
@@ -629,8 +656,8 @@
 
     return {
       subtotal, totalDiscount, afterDiscount, tipAmount, grandTotal,
-      fCount, packs, packCount,
-      bundleDiscount, packDiscount, refDiscount,
+      tens, fives, packs,
+      tenDiscount, fiveDiscount, refDiscount,
       totalItems,
     };
   }
@@ -659,11 +686,14 @@
             </div>
           </div>
         </div>
-        <button class="pack-btn w-full mt-3" data-pack="${f.id}">
-          <i data-lucide="plus" class="w-4 h-4"></i>
-          <span>5er-Vorteilspack</span>
-          <span class="save">−15%</span>
-        </button>
+        <div class="grid grid-cols-2 gap-2 mt-3">
+          <button class="pack-btn" data-pack="${f.id}" data-size="5">
+            <i data-lucide="plus" class="w-4 h-4"></i><span>5er-Pack</span><span class="save">−10%</span>
+          </button>
+          <button class="pack-btn" data-pack="${f.id}" data-size="10">
+            <i data-lucide="plus" class="w-4 h-4"></i><span>10er-Pack</span><span class="save">−15%</span>
+          </button>
+        </div>
       </article>
     `).join('');
     lucide.createIcons();
@@ -678,7 +708,8 @@
         bumpCount(id);
         renderAll();
       } else if (pbtn) {
-        state.qty[pbtn.dataset.pack] += 5;
+        const size = Number(pbtn.dataset.size) || 5;
+        state.qty[pbtn.dataset.pack] += size;
         bumpCount(pbtn.dataset.pack);
         renderAll();
       }
@@ -691,13 +722,6 @@
       setTimeout(() => el.classList.remove('bump'), 220);
     });
   }
-
-  // 3-Mix CTA
-  $('#add-3mix').addEventListener('click', () => {
-    state.qty.chocolate++; state.qty.vanilla++; state.qty.caramel++;
-    FLAVORS.forEach(f => bumpCount(f.id));
-    renderAll();
-  });
 
   // ===== Render everything =====
   function renderAll() {
@@ -758,20 +782,26 @@
 
   function renderDiscountLines(p) {
     const lines = [];
-    if (p.fCount > 0) lines.push(`
-      <div class="flex items-center justify-between">
-        <span class="flex items-center gap-2"><span class="badge badge-bundle">3-Mix ×${p.fCount}</span><span class="text-espresso/65">10% Bundle</span></span>
-        <span class="text-berry font-medium">−${p.bundleDiscount.toFixed(2)} CHF</span>
-      </div>`);
-    if (p.packCount > 0) {
+    if (p.tens > 0) {
       const lbl = [];
-      if (p.packs.chocolate) lbl.push(`Choco ×${p.packs.chocolate}`);
-      if (p.packs.vanilla)   lbl.push(`Vanilla ×${p.packs.vanilla}`);
-      if (p.packs.caramel)   lbl.push(`Caramel ×${p.packs.caramel}`);
+      if (p.packs.chocolate.tens) lbl.push(`Choco ×${p.packs.chocolate.tens}`);
+      if (p.packs.vanilla.tens)   lbl.push(`Vanilla ×${p.packs.vanilla.tens}`);
+      if (p.packs.caramel.tens)   lbl.push(`Caramel ×${p.packs.caramel.tens}`);
       lines.push(`
         <div class="flex items-center justify-between">
-          <span class="flex items-center gap-2"><span class="badge badge-pack">5er ${lbl.join(', ')}</span><span class="text-espresso/65">15% Pack</span></span>
-          <span class="text-berry font-medium">−${p.packDiscount.toFixed(2)} CHF</span>
+          <span class="flex items-center gap-2"><span class="badge badge-pack">10er ${lbl.join(', ')}</span><span class="text-espresso/65">15%</span></span>
+          <span class="text-berry font-medium">−${p.tenDiscount.toFixed(2)} CHF</span>
+        </div>`);
+    }
+    if (p.fives > 0) {
+      const lbl = [];
+      if (p.packs.chocolate.fives) lbl.push(`Choco ×${p.packs.chocolate.fives}`);
+      if (p.packs.vanilla.fives)   lbl.push(`Vanilla ×${p.packs.vanilla.fives}`);
+      if (p.packs.caramel.fives)   lbl.push(`Caramel ×${p.packs.caramel.fives}`);
+      lines.push(`
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-2"><span class="badge badge-bundle">5er ${lbl.join(', ')}</span><span class="text-espresso/65">10%</span></span>
+          <span class="text-berry font-medium">−${p.fiveDiscount.toFixed(2)} CHF</span>
         </div>`);
     }
     if (p.refDiscount > 0 && state.referral) lines.push(`
@@ -956,8 +986,8 @@
     const p = order.pricing;
     const disc = [];
     disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Zwischensumme</span><span>${fmt(p.subtotal)}</span></div>`);
-    if (p.bundleDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>3-Mix Bundle (10%)</span><span>−${p.bundleDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.packDiscount > 0)   disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (15%)</span><span>−${p.packDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.tenDiscount  > 0) disc.push(`<div class="flex justify-between text-berry"><span>10er-Pack (15%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.fiveDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (10%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
     if (p.refDiscount > 0 && order.referral) disc.push(`<div class="flex justify-between text-berry"><span>Empfehlung (15%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
     if (p.tipAmount > 0)      disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Trinkgeld</span><span>${fmt(p.tipAmount)}</span></div>`);
     $('#conf-discounts').innerHTML = disc.join('');
@@ -965,30 +995,29 @@
     $('#conf-total').textContent  = fmt(p.grandTotal);
     $('#conf-refcode').textContent = order.refCode;
 
-    // Prepare order email (one-tap send from confirmation screen)
+    // Pre-fill mailto link as fallback
     $('#email-link').href = buildMailto(order);
-    /*
-    // ─────────────── EmailJS Alternative (no mailto, fully automatic dual send) ───
-    // 1) Add the SDK in <head>:
-    //    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"><\/script>
-    // 2) emailjs.init({ publicKey: 'YOUR_PUBLIC_KEY' });
-    // 3) Send the same order to BOTH customer + shop (no user tap needed):
-    // const params = {
-    //   order_id: order.id,
-    //   customer_name: order.name,
-    //   customer_email: order.email,
-    //   customer_phone: order.phone,
-    //   items: orderItemsToText(order),
-    //   total: fmt(order.pricing.grandTotal),
-    //   referral_code: order.refCode,
-    //   shop_email: ORDER_EMAIL,
-    // };
-    // emailjs.send('YOUR_SERVICE_ID', 'TEMPLATE_CUSTOMER', { ...params, to_email: order.email });
-    // emailjs.send('YOUR_SERVICE_ID', 'TEMPLATE_SHOP',     { ...params, to_email: ORDER_EMAIL });
-    // ─────────────────────────────────────────────────────────────────────────────
-    */
+
+    // Hide all email-status children initially
+    $('#email-sent').classList.add('hidden');
+    $('#email-link').classList.add('hidden');
+    $('#email-hint').classList.add('hidden');
 
     lucide.createIcons();
+
+    // Try fully automatic sending via FormSubmit.co (no user tap needed)
+    sendOrderEmailAuto(order).then((ok) => {
+      if (ok) {
+        $('#email-sent').classList.remove('hidden');
+        $('#email-sent').classList.add('flex');
+      } else {
+        // Fallback: show one-tap mailto button
+        $('#email-link').classList.remove('hidden');
+        $('#email-link').classList.add('flex');
+        $('#email-hint').classList.remove('hidden');
+      }
+      lucide.createIcons();
+    });
   }
 
   function orderItemsToText(order) {
@@ -997,51 +1026,91 @@
       .join('\n');
   }
 
-  function buildMailto(order) {
+  function buildOrderText(order) {
     const p = order.pricing;
     const firstName = order.name.split(' ')[0];
-    const subject = `Bestellbestätigung ${order.id} — Berry's Delights`;
-    const lines = [
+    return [
       `Hallo ${firstName},`,
       ``,
-      `vielen Dank für deine Bestellung bei Berry's Delights!`,
-      `Diese E-Mail dient gleichzeitig dir als Bestätigung und dem Shop als Bestelleingang.`,
+      `vielen Dank für deine Bestellung bei Berry's Delights.`,
+      `Diese E-Mail bestätigt deine Bestellung — der Shop ist auf CC.`,
       ``,
-      `── BESTELLUNG ──`,
-      `Bestell-Nr: ${order.id}`,
-      `Datum: ${order.timestamp.toLocaleString('de-CH')}`,
+      `BESTELLUNG`,
+      `Nr.    ${order.id}`,
+      `Datum  ${order.timestamp.toLocaleString('de-CH')}`,
       ``,
-      `── ARTIKEL ──`,
+      `ARTIKEL`,
       orderItemsToText(order),
       ``,
-      `── ABRECHNUNG ──`,
-      `Zwischensumme: ${fmt(p.subtotal)}`,
-      p.bundleDiscount > 0 ? `3-Mix Bundle (10%): -${p.bundleDiscount.toFixed(2)} CHF` : null,
-      p.packDiscount   > 0 ? `5er-Pack (15%): -${p.packDiscount.toFixed(2)} CHF`     : null,
-      (p.refDiscount > 0 && order.referral) ? `Empfehlung (${order.referral.percent}%): -${p.refDiscount.toFixed(2)} CHF (Code: ${order.referral.code})` : null,
-      p.tipAmount      > 0 ? `Trinkgeld: ${fmt(p.tipAmount)}` : null,
-      `Total bezahlt: ${fmt(p.grandTotal)}`,
+      `ABRECHNUNG`,
+      `Zwischensumme        ${fmt(p.subtotal)}`,
+      p.tenDiscount  > 0 ? `10er-Pack (15%)    − ${p.tenDiscount.toFixed(2)} CHF`  : null,
+      p.fiveDiscount > 0 ? `5er-Pack  (10%)    − ${p.fiveDiscount.toFixed(2)} CHF` : null,
+      (p.refDiscount > 0 && order.referral) ? `Empfehlung (15%)   − ${p.refDiscount.toFixed(2)} CHF  [${order.referral.code}]` : null,
+      p.tipAmount    > 0 ? `Trinkgeld          + ${p.tipAmount.toFixed(2)} CHF`    : null,
+      `————————————————————————————`,
+      `Total bezahlt        ${fmt(p.grandTotal)}`,
       ``,
-      `── ABHOLUNG ──`,
-      `Standort: ${PICKUP_LOCATION}`,
-      `Du erhältst eine SMS oder E-Mail, sobald die Bestellung abholbereit ist.`,
+      `ABHOLUNG`,
+      `Standort  ${PICKUP_LOCATION}`,
+      `Du erhältst eine Nachricht, sobald die Bestellung abholbereit ist.`,
       ``,
-      `── ZAHLUNG ──`,
+      `ZAHLUNG`,
       `TWINT an ${MERCHANT_TWINT} · bestätigt`,
       ``,
-      `── DEIN PERSÖNLICHER CODE ──`,
+      `DEIN EMPFEHLUNGSCODE`,
       `${order.refCode}`,
-      `Teile diesen Code mit Freunden. Sobald sie damit bestellen, erhältst du 15% Rabatt auf deine nächste Bestellung.`,
+      `Teile diesen Code. Wenn jemand damit bestellt,`,
+      `erhältst du 15% Rabatt auf deine nächste Bestellung.`,
       ``,
-      `── KUNDENDATEN ──`,
-      `Name: ${order.name}`,
-      `E-Mail: ${order.email}`,
-      `Telefon: ${order.phone}`,
+      `KONTAKT`,
+      `${order.name}`,
+      `${order.email}`,
+      `${order.phone}`,
       ``,
-      `Berry's Delights · Sanitas Hauptsitz · Made in Switzerland`,
+      `——`,
+      `Berry's Delights · Premium High Protein Ice Cream`,
+      `Made in Switzerland`,
     ].filter(Boolean).join('\n');
+  }
+
+  function buildMailto(order) {
+    const subject = `Bestellbestätigung ${order.id} — Berry's Delights`;
+    const body    = buildOrderText(order);
     // Customer is TO, shop is CC — single tap, both get the order
-    return `mailto:${encodeURIComponent(order.email)}?cc=${encodeURIComponent(ORDER_EMAIL)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines)}`;
+    return `mailto:${encodeURIComponent(order.email)}?cc=${encodeURIComponent(ORDER_EMAIL)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  // Automatic, free, no-signup email via FormSubmit.co
+  // First-time activation: Lucas receives a one-time confirmation email
+  // on the first order; once he clicks the activation link, every future
+  // order auto-sends to him + the customer (as CC) without user action.
+  async function sendOrderEmailAuto(order) {
+    try {
+      const body = buildOrderText(order);
+      const subject = `Bestellbestätigung ${order.id} — Berry's Delights`;
+      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(ORDER_EMAIL), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: subject,
+          _cc: order.email,
+          _captcha: 'false',
+          _template: 'box',
+          name: order.name,
+          email: order.email,
+          phone: order.phone,
+          order_id: order.id,
+          total: fmt(order.pricing.grandTotal),
+          referral_code: order.refCode,
+          message: body,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      return !!(data && (data.success === true || data.success === 'true'));
+    } catch (_) {
+      return false;
+    }
   }
 
   // Copy

@@ -313,8 +313,8 @@
     <div class="mt-5 rounded-2xl bg-white/70 border border-espresso/10 p-4 backdrop-blur">
       <p class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Mengen-Rabatt</p>
       <ul class="mt-2 space-y-1.5 text-sm text-espresso/80">
-        <li class="flex items-center gap-2"><span class="badge badge-bundle">5×</span> 5 vom gleichen → <strong class="text-berry">10% Rabatt</strong></li>
-        <li class="flex items-center gap-2"><span class="badge badge-pack">10×</span> 10 vom gleichen → <strong class="text-berry">15% Rabatt</strong></li>
+        <li class="flex items-center gap-2"><span class="badge badge-bundle">5×</span> 5 vom gleichen → <strong class="text-berry">5% Rabatt</strong></li>
+        <li class="flex items-center gap-2"><span class="badge badge-pack">10×</span> 10 vom gleichen → <strong class="text-berry">10% Rabatt</strong></li>
         <li class="flex items-center gap-2"><span class="badge badge-ref">Code</span> Empfehlung → <strong class="text-berry">+15% additiv</strong></li>
       </ul>
     </div>
@@ -916,8 +916,8 @@
 
   // ===== Pricing =====
   // Per-flavor only (no cross-flavor bundles):
-  //   - Every 10 of same flavor: -15%
-  //   - Then every 5 of same flavor: -10%
+  //   - Every 10 of same flavor: -10%
+  //   - Then every 5 of same flavor: -5%
   //   - Remainder: full price
   // Greedy is optimal (10-pack saves more than 5-pack per item).
   function priceCart() {
@@ -936,8 +936,8 @@
       fives += f;
     }
 
-    const tenDiscount   = tens  * 10 * PRICE * 0.15;
-    const fiveDiscount  = fives *  5 * PRICE * 0.10;
+    const tenDiscount   = tens  * 10 * PRICE * 0.10;
+    const fiveDiscount  = fives *  5 * PRICE * 0.05;
     const refPct        = state.referral ? state.referral.percent / 100 : 0;
     const refDiscount   = subtotal * refPct;
     const totalDiscount = tenDiscount + fiveDiscount + refDiscount;
@@ -983,10 +983,10 @@
         </div>
         <div class="grid grid-cols-2 gap-2 mt-3">
           <button class="pack-btn" data-pack="${f.id}" data-size="5">
-            <i data-lucide="plus" class="w-4 h-4"></i><span>5er-Pack</span><span class="save">−10%</span>
+            <i data-lucide="plus" class="w-4 h-4"></i><span>5er-Pack</span><span class="save">−5%</span>
           </button>
           <button class="pack-btn" data-pack="${f.id}" data-size="10">
-            <i data-lucide="plus" class="w-4 h-4"></i><span>10er-Pack</span><span class="save">−15%</span>
+            <i data-lucide="plus" class="w-4 h-4"></i><span>10er-Pack</span><span class="save">−10%</span>
           </button>
         </div>
       </article>
@@ -1135,7 +1135,7 @@
       if (p.packs.caramel.tens)   lbl.push(`Caramel ×${p.packs.caramel.tens}`);
       lines.push(`
         <div class="flex items-center justify-between">
-          <span class="flex items-center gap-2"><span class="badge badge-pack">10er ${lbl.join(', ')}</span><span class="text-espresso/65">15%</span></span>
+          <span class="flex items-center gap-2"><span class="badge badge-pack">10er ${lbl.join(', ')}</span><span class="text-espresso/65">10%</span></span>
           <span class="text-berry font-medium">−${p.tenDiscount.toFixed(2)} CHF</span>
         </div>`);
     }
@@ -1146,7 +1146,7 @@
       if (p.packs.caramel.fives)   lbl.push(`Caramel ×${p.packs.caramel.fives}`);
       lines.push(`
         <div class="flex items-center justify-between">
-          <span class="flex items-center gap-2"><span class="badge badge-bundle">5er ${lbl.join(', ')}</span><span class="text-espresso/65">10%</span></span>
+          <span class="flex items-center gap-2"><span class="badge badge-bundle">5er ${lbl.join(', ')}</span><span class="text-espresso/65">5%</span></span>
           <span class="text-berry font-medium">−${p.fiveDiscount.toFixed(2)} CHF</span>
         </div>`);
     }
@@ -1230,7 +1230,7 @@
     input.classList.remove('error');
     state.referral = { code, percent: 15 };
     input.value = code;
-    msg.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · 15% additiv (5er-Packs → 30%)`;
+    msg.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · 15% additiv (10er-Pack → 25% gesamt)`;
     msg.className = 'text-xs mt-2 text-espresso/70';
     input.blur();
     renderAll();
@@ -1350,8 +1350,8 @@
     const p = order.pricing;
     const disc = [];
     disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Zwischensumme</span><span>${fmt(p.subtotal)}</span></div>`);
-    if (p.tenDiscount  > 0) disc.push(`<div class="flex justify-between text-berry"><span>10er-Pack (15%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.fiveDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (10%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.tenDiscount  > 0) disc.push(`<div class="flex justify-between text-berry"><span>10er-Pack (10%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.fiveDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (5%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
     if (p.refDiscount > 0 && order.referral) disc.push(`<div class="flex justify-between text-berry"><span>Empfehlung (15%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
     if (p.tipAmount > 0)      disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Trinkgeld</span><span>${fmt(p.tipAmount)}</span></div>`);
     $('#conf-discounts').innerHTML = disc.join('');
@@ -1408,8 +1408,8 @@
       ``,
       `ABRECHNUNG`,
       `Zwischensumme        ${fmt(p.subtotal)}`,
-      p.tenDiscount  > 0 ? `10er-Pack (15%)    − ${p.tenDiscount.toFixed(2)} CHF`  : null,
-      p.fiveDiscount > 0 ? `5er-Pack  (10%)    − ${p.fiveDiscount.toFixed(2)} CHF` : null,
+      p.tenDiscount  > 0 ? `10er-Pack (10%)    − ${p.tenDiscount.toFixed(2)} CHF`  : null,
+      p.fiveDiscount > 0 ? `5er-Pack  (5%)     − ${p.fiveDiscount.toFixed(2)} CHF` : null,
       (p.refDiscount > 0 && order.referral) ? `Empfehlung (15%)   − ${p.refDiscount.toFixed(2)} CHF  [${order.referral.code}]` : null,
       p.tipAmount    > 0 ? `Trinkgeld          + ${p.tipAmount.toFixed(2)} CHF`    : null,
       `————————————————————————————`,
@@ -1907,8 +1907,8 @@
       </div>`).join('');
 
     const discountLines = [];
-    if (p.tenDiscount  > 0) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>10er-Pack (15%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.fiveDiscount > 0) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>5er-Pack (10%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.tenDiscount  > 0) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>10er-Pack (10%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
+    if (p.fiveDiscount > 0) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>5er-Pack (5%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
     if (p.refDiscount > 0 && o.referral) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>Empfehlung (${o.referral.percent}%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
     if (p.tipAmount   > 0) discountLines.push(`<div class="flex justify-between text-sm"><span class="text-espresso/60">Trinkgeld</span><span>${p.tipAmount.toFixed(2)} CHF</span></div>`);
 

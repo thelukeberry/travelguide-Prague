@@ -16,16 +16,21 @@ import { getDatabase, ref, onValue, set, update, get, push, remove,
   from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
 // ─────────────────────────────────────────────────────────────────────
-// Paste your config from Firebase Console -> Project Settings -> "Your apps"
+// LIVE-Konfig — Berry's Delights Firebase Projekt.
+// Hinweis Sicherheit: Der apiKey ist KEIN Geheimnis. Firebase Web-SDKs
+// brauchen ihn im Client-Code, damit der Browser die Cloud erreichen kann.
+// Der echte Schutz läuft über database.rules.json (Security Rules) und
+// Firebase Authentication — beides ist in diesem Projekt aktiv.
 // ─────────────────────────────────────────────────────────────────────
 export const firebaseConfig = {
-  apiKey:            "HIER_MEIN_API_KEY",
-  authDomain:        "HIER_MEINE_AUTH_DOMAIN",
-  databaseURL:       "HIER_MEINE_DATABASE_URL",
-  projectId:         "HIER_MEIN_PROJECT_ID",
-  storageBucket:     "HIER_MEIN_STORAGE_BUCKET",
-  messagingSenderId: "HIER_MEIN_MESSAGING_SENDER_ID",
-  appId:             "HIER_MEIN_APP_ID"
+  apiKey:            "AIzaSyC1kN3B7PKyzbTi3rwAkdw1wtXwWQViTII",
+  authDomain:        "berrys-delights.firebaseapp.com",
+  databaseURL:       "https://berrys-delights-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:         "berrys-delights",
+  storageBucket:     "berrys-delights.firebasestorage.app",
+  messagingSenderId: "158428724467",
+  appId:             "1:158428724467:web:f56e67d7f9e523aad90b86",
+  measurementId:     "G-W261HPJEF5"
 };
 
 // Cloud mode active only when real keys are provided

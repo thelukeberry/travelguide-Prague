@@ -6,18 +6,13 @@
 <meta name="theme-color" content="#1a0e10" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<title>Berry's Delights — Bestellen</title>
+<title>Berry's Delights — Premium High Protein Ice Cream</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238B1A3B'/%3E%3Ccircle cx='24' cy='38' r='14' fill='%23F4C9D1'/%3E%3Ccircle cx='42' cy='34' r='12' fill='%23FAF6EF'/%3E%3Cpath d='M30 16 q4 -8 12 -4' stroke='%23B89B5E' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238B1A3B'/%3E%3Ccircle cx='24' cy='38' r='14' fill='%23F4C9D1'/%3E%3Ccircle cx='42' cy='34' r='12' fill='%23FAF6EF'/%3E%3Cpath d='M30 16 q4 -8 12 -4' stroke='%23B89B5E' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@04f46c6a0708418cb7b96fc563eacae0fbf77674/qrcode.min.js"></script>
-
-<!-- Firebase (compat) — activates automatically when FIREBASE_CONFIG is filled in -->
-<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,98 +22,45 @@
   tailwind.config = {
     theme: {
       extend: {
-        fontFamily: {
-          display: ['"Fraunces"', 'serif'],
-          sans:    ['"Inter"', 'system-ui', 'sans-serif'],
-        },
-        colors: {
-          cream:    '#FAF6EF',
-          ivory:    '#F2EBE0',
-          espresso: '#1A0E10',
-          berry:    '#8B1A3B',
-          berryd:   '#5C0E27',
-          blush:    '#F4C9D1',
-          gold:     '#B89B5E',
-        },
-        boxShadow: {
-          card: '0 30px 60px -30px rgba(92, 14, 39, 0.25), 0 12px 30px -15px rgba(26, 14, 16, 0.12)',
-          soft: '0 8px 24px -10px rgba(26, 14, 16, 0.18)',
-        },
+        fontFamily: { display: ['"Fraunces"', 'serif'], sans: ['"Inter"', 'system-ui', 'sans-serif'] },
+        colors: { cream:'#FAF6EF', ivory:'#F2EBE0', espresso:'#1A0E10', berry:'#8B1A3B', berryd:'#5C0E27', blush:'#F4C9D1', gold:'#B89B5E' },
+        boxShadow: { card:'0 30px 60px -30px rgba(92,14,39,.25), 0 12px 30px -15px rgba(26,14,16,.12)', soft:'0 8px 24px -10px rgba(26,14,16,.18)' },
         keyframes: {
-          pop:    { '0%': { transform:'scale(.85)', opacity:0 }, '60%':{ transform:'scale(1.05)' }, '100%':{ transform:'scale(1)', opacity:1 } },
-          fade:   { from:{ opacity:0, transform:'translateY(8px)' }, to:{ opacity:1, transform:'translateY(0)' } },
-          shine:  { '0%':{ backgroundPosition:'-200% 0' }, '100%':{ backgroundPosition:'200% 0' } },
-          spin360:{ to: { transform:'rotate(360deg)' } },
-          checkdraw:{ to:{ strokeDashoffset:0 } },
+          pop:    { '0%':{transform:'scale(.85)',opacity:0}, '60%':{transform:'scale(1.05)'}, '100%':{transform:'scale(1)',opacity:1} },
+          fade:   { from:{opacity:0,transform:'translateY(8px)'}, to:{opacity:1,transform:'translateY(0)'} },
+          shine:  { '0%':{backgroundPosition:'-200% 0'}, '100%':{backgroundPosition:'200% 0'} },
+          spin360:{ to:{transform:'rotate(360deg)'} },
+          checkdraw:{ to:{strokeDashoffset:0} },
         },
-        animation: {
-          pop:    'pop .35s cubic-bezier(.2,.8,.2,1) both',
-          fade:   'fade .5s ease-out both',
-          shine:  'shine 4s linear infinite',
-          spin360:'spin360 1s linear infinite',
-        },
+        animation: { pop:'pop .35s cubic-bezier(.2,.8,.2,1) both', fade:'fade .5s ease-out both', shine:'shine 4s linear infinite', spin360:'spin360 1s linear infinite' },
       },
     },
   };
 </script>
 
 <style>
-  /* ==== Smartphone & iOS strict optimizations ==== */
   * { -webkit-tap-highlight-color: transparent; }
   html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
-  body {
-    background:#FAF6EF; color:#1A0E10;
-    font-family: 'Inter', system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    overscroll-behavior-y: contain;
-  }
+  body { background:#FAF6EF; color:#1A0E10; font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing: antialiased; overscroll-behavior-y: contain; }
   .font-display { font-family:'Fraunces',serif; font-optical-sizing:auto; font-variation-settings:"opsz" 96; }
 
-  /* iOS safe areas */
-  .safe-top    { padding-top: max(.5rem, env(safe-area-inset-top)); }
+  .safe-top    { padding-top:    max(.5rem, env(safe-area-inset-top)); }
   .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
-  .safe-inset-bottom { bottom: env(safe-area-inset-bottom); }
 
-  /* Anti-zoom: ALL inputs MUST be 16px on iOS */
   input, select, textarea, button { font-size: 16px; }
-  input[type="text"], input[type="email"], input[type="tel"], input[type="number"] {
-    font-size: 16px !important;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  /* Buttons: no text-selection or callout on tap */
+  input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"], textarea { font-size: 16px !important; -webkit-appearance: none; appearance: none; }
   button, .no-select { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 
-  /* Grainy texture (subtle premium feel) */
-  body::before {
-    content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
-    background-image: radial-gradient(rgba(26,14,16,.04) 1px, transparent 1px);
-    background-size: 3px 3px;
-  }
+  body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; background-image: radial-gradient(rgba(26,14,16,.04) 1px, transparent 1px); background-size: 3px 3px; }
 
-  /* Hero gradient */
-  .hero-grad {
-    background:
-      radial-gradient(120% 80% at 80% 0%, #F4C9D1 0%, transparent 55%),
-      radial-gradient(80% 60% at 10% 100%, #B89B5E33 0%, transparent 55%),
-      linear-gradient(180deg, #FAF6EF 0%, #F2EBE0 100%);
-  }
-
-  /* Flavor card backgrounds */
+  .hero-grad { background: radial-gradient(120% 80% at 80% 0%, #F4C9D1 0%, transparent 55%), radial-gradient(80% 60% at 10% 100%, #B89B5E33 0%, transparent 55%), linear-gradient(180deg,#FAF6EF 0%,#F2EBE0 100%); }
   .grad-chocolate { background: radial-gradient(120% 100% at 30% 20%, #5C2A1B 0%, #2C140C 70%); }
   .grad-vanilla   { background: radial-gradient(120% 100% at 30% 20%, #F0DCB7 0%, #C9A971 75%); }
   .grad-caramel   { background: radial-gradient(120% 100% at 30% 20%, #C57736 0%, #6B3410 75%); }
 
-  /* Chip */
-  .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.32rem .65rem;
-    border:1px solid rgba(26,14,16,.12); border-radius:999px; font-size:.7rem; letter-spacing:.08em;
-    text-transform:uppercase; background: rgba(255,255,255,.6); backdrop-filter: blur(8px); }
+  .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.32rem .65rem; border:1px solid rgba(26,14,16,.12); border-radius:999px; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; background: rgba(255,255,255,.6); backdrop-filter: blur(8px); }
 
-  /* Quantity button - 44px touch target */
-  .qty-btn { width:44px; height:44px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-    border:1px solid rgba(26,14,16,.12); background:#fff;
-    transition: transform .15s ease, background .2s, color .2s, border-color .2s; }
+  .qty-btn { width:44px; height:44px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(26,14,16,.12); background:#fff; transition: transform .15s, background .2s, color .2s, border-color .2s; }
   .qty-btn:active { transform: scale(.92); }
   .qty-btn.primary { background:#1A0E10; color:#fff; border-color:#1A0E10; }
   .qty-btn:disabled { opacity:.35; }
@@ -126,41 +68,23 @@
   .count { font-variant-numeric: tabular-nums; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
   .count.bump { transform: translateY(-2px) scale(1.15); }
 
-  /* Pack button */
-  .pack-btn { display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
-    padding:.7rem 1rem; border-radius:14px; font-size:.78rem; font-weight:600;
-    border:1px solid rgba(26,14,16,.12); background:#fff; transition: transform .15s, background .2s, border-color .2s; }
+  .pack-btn { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; padding:.7rem 1rem; border-radius:14px; font-size:.78rem; font-weight:600; border:1px solid rgba(26,14,16,.12); background:#fff; transition: transform .15s, background .2s, border-color .2s; }
   .pack-btn:active { transform: scale(.97); }
   .pack-btn .save { font-size:.65rem; font-weight:700; color:#8B1A3B; letter-spacing:.04em; }
 
-  /* Bottom sheet */
-  .sheet { position:fixed; inset:0; background:rgba(26,14,16,.55); backdrop-filter:blur(6px);
-    display:flex; align-items:flex-end; justify-content:center; z-index:60; opacity:0; pointer-events:none;
-    transition: opacity .3s ease; }
+  .sheet { position:fixed; inset:0; background:rgba(26,14,16,.55); backdrop-filter:blur(6px); display:flex; align-items:flex-end; justify-content:center; z-index:60; opacity:0; pointer-events:none; transition: opacity .3s ease; }
   .sheet.open { opacity:1; pointer-events:auto; }
-  .sheet-panel { width:100%; max-width:560px; background:#FAF6EF;
-    border-top-left-radius:28px; border-top-right-radius:28px;
-    transform: translateY(100%); transition: transform .35s cubic-bezier(.2,.8,.2,1);
-    max-height:92vh; display:flex; flex-direction:column; overflow:hidden; }
+  .sheet-panel { width:100%; max-width:560px; background:#FAF6EF; border-top-left-radius:28px; border-top-right-radius:28px; transform: translateY(100%); transition: transform .35s cubic-bezier(.2,.8,.2,1); max-height:92vh; display:flex; flex-direction:column; overflow:hidden; }
   .sheet.open .sheet-panel { transform: translateY(0); }
-
   .reveal { animation: fade .6s ease-out both; }
 
-  /* Buttons */
-  .btn-premium { position:relative; overflow:hidden;
-    background: linear-gradient(180deg, #1A0E10 0%, #2C141A 100%); color:#FAF6EF; }
-  .btn-premium::after { content:''; position:absolute; inset:0;
-    background: linear-gradient(110deg, transparent 30%, rgba(244,201,209,.25) 50%, transparent 70%);
-    background-size: 200% 100%; animation: shine 4s linear infinite; pointer-events:none; }
-  .btn-berry { background: linear-gradient(180deg, #8B1A3B 0%, #5C0E27 100%); color:#FAF6EF; }
+  .btn-premium { position:relative; overflow:hidden; background: linear-gradient(180deg,#1A0E10 0%,#2C141A 100%); color:#FAF6EF; }
+  .btn-premium::after { content:''; position:absolute; inset:0; background: linear-gradient(110deg, transparent 30%, rgba(244,201,209,.25) 50%, transparent 70%); background-size: 200% 100%; animation: shine 4s linear infinite; pointer-events:none; }
+  .btn-berry { background: linear-gradient(180deg,#8B1A3B 0%,#5C0E27 100%); color:#FAF6EF; }
   .btn-twint { background:#000; color:#fff; }
-
-  .twint-mark { display:inline-flex; align-items:center; justify-content:center;
-    width:46px; height:28px; border-radius:6px; background:#fff; color:#000;
-    font-weight:800; letter-spacing:.05em; font-size:.7rem; }
+  .twint-mark { display:inline-flex; align-items:center; justify-content:center; width:46px; height:28px; border-radius:6px; background:#fff; color:#000; font-weight:800; letter-spacing:.05em; font-size:.7rem; }
   .twint-mark::before { content:'TWINT'; }
 
-  /* Loading dots */
   .dot { width:6px; height:6px; border-radius:999px; background:#FAF6EF; opacity:.4; }
   .dots .dot:nth-child(1){ animation: pop 1.2s ease-in-out infinite; }
   .dots .dot:nth-child(2){ animation: pop 1.2s ease-in-out .2s infinite; }
@@ -169,94 +93,65 @@
   .check-circle { width:96px; height:96px; }
   .check-circle circle { fill:none; stroke:#8B1A3B; stroke-width:3; stroke-dasharray:283; stroke-dashoffset:283; animation: checkdraw .7s ease-out forwards; }
   .check-circle path { fill:none; stroke:#8B1A3B; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation: checkdraw .5s .6s ease-out forwards; }
-  .check-cream circle { stroke:#F4C9D1; }
-  .check-cream path { stroke:#F4C9D1; }
+  .check-cream circle { stroke:#F4C9D1; } .check-cream path { stroke:#F4C9D1; }
+  .spinner { width:64px; height:64px; border-radius:999px; border:3px solid rgba(250,246,239,.18); border-top-color:#F4C9D1; animation: spin360 1s linear infinite; }
 
-  .spinner { width:64px; height:64px; border-radius:999px;
-    border:3px solid rgba(250,246,239,.18); border-top-color:#F4C9D1; animation: spin360 1s linear infinite; }
-
-  /* Inputs */
-  .input { width:100%; padding:14px 16px; border:1px solid rgba(26,14,16,.14); border-radius:14px;
-    background:#fff; font-size:16px !important; line-height:1.2;
-    transition: border-color .2s, box-shadow .2s; }
+  .input { width:100%; padding:14px 16px; border:1px solid rgba(26,14,16,.14); border-radius:14px; background:#fff; font-size:16px !important; line-height:1.2; transition: border-color .2s, box-shadow .2s; }
   .input:focus { outline:none; border-color:#8B1A3B; box-shadow:0 0 0 4px rgba(139,26,59,.1); }
   .input.error { border-color:#8B1A3B; box-shadow:0 0 0 4px rgba(139,26,59,.1); }
+  textarea.input { min-height: 80px; resize: vertical; }
 
-  /* Tip pills */
-  .tip-pill { padding:.7rem .9rem; border-radius:14px; border:1px solid rgba(26,14,16,.12); background:#fff;
-    font-size:.85rem; font-weight:600; transition: all .2s; }
+  .tip-pill { padding:.7rem .9rem; border-radius:14px; border:1px solid rgba(26,14,16,.12); background:#fff; font-size:.85rem; font-weight:600; transition: all .2s; }
   .tip-pill:active { transform: scale(.96); }
   .tip-pill.active { background:#1A0E10; color:#FAF6EF; border-color:#1A0E10; }
 
-  /* Badges */
-  .badge { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px;
-    font-size:.65rem; font-weight:600; letter-spacing:.04em; }
+  .badge { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px; font-size:.65rem; font-weight:600; letter-spacing:.04em; }
   .badge-bundle { background:#F4C9D1; color:#5C0E27; }
   .badge-pack   { background:#1A0E10; color:#F4C9D1; }
   .badge-ref    { background:#B89B5E; color:#1A0E10; }
-
   .hairline { height:1px; background: linear-gradient(90deg, transparent, rgba(26,14,16,.15), transparent); }
+  .scroll-y::-webkit-scrollbar { width:6px; } .scroll-y::-webkit-scrollbar-thumb { background: rgba(26,14,16,.18); border-radius:999px; }
 
-  /* Scrollbar styling */
-  .scroll-y::-webkit-scrollbar { width:6px; }
-  .scroll-y::-webkit-scrollbar-thumb { background: rgba(26,14,16,.18); border-radius:999px; }
+  .pint { position:relative; width:96px; height:118px; border-radius:14px 14px 18px 18px; box-shadow: 0 18px 28px -14px rgba(0,0,0,.45), inset 0 -10px 24px rgba(0,0,0,.25), inset 0 6px 12px rgba(255,255,255,.15); }
+  .pint::before { content:''; position:absolute; left:7px; right:7px; top:14px; height:60px; background: rgba(255,255,255,.88); border-radius:5px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+  .pint::after { content:''; position:absolute; left:-5px; right:-5px; top:-5px; height:10px; background:#1A0E10; border-radius:10px; }
+  .pint-label { position:absolute; left:0; right:0; top:26px; text-align:center; font-family:'Fraunces',serif; font-weight:600; color:#1A0E10; font-size:.7rem; line-height:1.05; padding:0 10px; }
+  .pint-label small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.5rem; letter-spacing:.16em; color:#8B1A3B; text-transform:uppercase; margin-top:3px; }
 
-  /* Pint mockup */
-  .pint { position:relative; width:96px; height:118px;
-    border-radius:14px 14px 18px 18px;
-    box-shadow: 0 18px 28px -14px rgba(0,0,0,.45), inset 0 -10px 24px rgba(0,0,0,.25), inset 0 6px 12px rgba(255,255,255,.15); }
-  .pint::before { content:''; position:absolute; left:7px; right:7px; top:14px; height:60px;
-    background: rgba(255,255,255,.88); border-radius:5px;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
-  .pint::after { content:''; position:absolute; left:-5px; right:-5px; top:-5px; height:10px;
-    background:#1A0E10; border-radius:10px; }
-  .pint-label { position:absolute; left:0; right:0; top:26px; text-align:center;
-    font-family:'Fraunces',serif; font-weight:600; color:#1A0E10; font-size:.7rem; line-height:1.05; padding:0 10px; }
-  .pint-label small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.5rem;
-    letter-spacing:.16em; color:#8B1A3B; text-transform:uppercase; margin-top:3px; }
-
-  /* Sticky cart bar */
   .cart-bar { box-shadow: 0 -20px 40px -20px rgba(26,14,16,.25); }
+  .pickup-notice { background: linear-gradient(135deg,#1A0E10 0%,#5C0E27 100%); color:#FAF6EF; }
 
-  /* Pickup notice */
-  .pickup-notice { background: linear-gradient(135deg, #1A0E10 0%, #5C0E27 100%); color:#FAF6EF; }
-
-  /* QR admin accordion */
-  details > summary { list-style:none; cursor:pointer; }
-  details > summary::-webkit-details-marker { display:none; }
-  details[open] .chev { transform: rotate(180deg); }
-  .chev { transition: transform .25s ease; }
-
-  /* QR canvas wrapper */
+  details > summary { list-style:none; cursor:pointer; } details > summary::-webkit-details-marker { display:none; }
+  details[open] .chev { transform: rotate(180deg); } .chev { transition: transform .25s ease; }
   #qrcode { display:inline-block; padding:14px; background:#fff; border-radius:18px; box-shadow: 0 8px 24px -10px rgba(0,0,0,.2); }
   #qrcode img, #qrcode canvas { display:block; }
 
-  /* Backoffice */
-  .filter-pill { padding:.45rem .85rem; border-radius:999px; border:1px solid rgba(26,14,16,.12); background:#fff;
-    font-size:.78rem; font-weight:500; white-space:nowrap; transition: all .15s ease; }
+  .filter-pill { padding:.45rem .85rem; border-radius:999px; border:1px solid rgba(26,14,16,.12); background:#fff; font-size:.78rem; font-weight:500; white-space:nowrap; transition: all .15s ease; }
   .filter-pill:active { transform: scale(.96); }
   .filter-pill.active { background:#1A0E10; color:#FAF6EF; border-color:#1A0E10; }
-  .order-card { display:block; width:100%; text-align:left; background:#fff; border:1px solid rgba(26,14,16,.08);
-    border-radius:18px; padding:14px 16px; transition: transform .15s ease, box-shadow .15s ease; }
+  .order-card { display:block; width:100%; text-align:left; background:#fff; border:1px solid rgba(26,14,16,.08); border-radius:18px; padding:14px 16px; transition: transform .15s, box-shadow .15s; }
   .order-card:active { transform: scale(.99); }
-  .order-card:hover { box-shadow: 0 8px 24px -10px rgba(26,14,16,.18); }
+  .order-card:hover  { box-shadow: 0 8px 24px -10px rgba(26,14,16,.18); }
+  .cust-tab.active   { background:#8B1A3B; color:#FAF6EF; }
 
-  /* Customer auth tabs */
-  .cust-tab.active { background:#8B1A3B; color:#FAF6EF; }
-
-  /* Payment status pill */
-  .status-pill { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px;
-    font-size:.65rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
-  .status-paid    { background:#1A0E10; color:#F4C9D1; }
-  .status-pending { background:#F4C9D1; color:#5C0E27; }
-  .status-cancelled { background:rgba(26,14,16,.1); color:rgba(26,14,16,.5); }
+  .status-pill { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px; font-size:.65rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+  .status-bezahlt           { background:#1A0E10; color:#F4C9D1; }
+  .status-zahlung-ausstehend{ background:#F4C9D1; color:#5C0E27; }
+  .status-offen             { background:#fde68a; color:#5C0E27; }
+  .status-in-produktion     { background:#bfdbfe; color:#1A0E10; }
+  .status-abholbereit       { background:#86efac; color:#0a3d18; }
+  .status-abgeschlossen     { background:#6ee7b7; color:#064a2a; }
+  .status-storniert         { background:rgba(26,14,16,.1); color:rgba(26,14,16,.55); }
 </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden">
 
-<!-- ============= APP ============= -->
-<main id="app" class="relative z-10 max-w-xl mx-auto pb-44">
+<!-- LIVE-USER BANNER (visible only when ≥3) -->
+<div id="live-users" class="hidden fixed top-0 inset-x-0 z-[150] bg-berry text-cream text-center text-xs py-2 px-4">
+  🔥 Gerade sind <span id="live-users-count" class="font-semibold">0</span> Glace-Enthusiasten mit dir auf der Seite!
+</div>
 
+<main id="app" class="relative z-10 max-w-xl mx-auto pb-44">
   <!-- HERO -->
   <section class="hero-grad px-5 pt-3 pb-8 safe-top rounded-b-[32px]">
     <header class="flex items-center justify-between">
@@ -283,10 +178,10 @@
       <h1 class="font-display text-[2.2rem] leading-[1.05] font-semibold tracking-tight mt-3">
         Treat-Day,<br/><em class="italic text-berry">jeden Tag.</em>
       </h1>
-      <p class="mt-3 text-sm text-espresso/70 max-w-md">~40&thinsp;g Protein. Sättigende Ballaststoffe. Unter 500&thinsp;kcal pro Pint. Genuss, der deine Ziele <em>nicht</em> sabotiert.</p>
+      <p class="mt-3 text-sm text-espresso/70 max-w-md">45-52&thinsp;g Protein. Sättigende Ballaststoffe. Unter 500&thinsp;kcal pro Pint. Genuss, der deine Ziele <em>nicht</em> sabotiert.</p>
       <div class="mt-4 grid grid-cols-3 gap-2">
         <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
-          <div class="font-display text-xl font-semibold">40<span class="text-xs text-espresso/60">g</span></div>
+          <div class="font-display text-xl font-semibold">45<span class="text-xs text-espresso/60">g+</span></div>
           <div class="text-[9px] uppercase tracking-widest text-espresso/60">Protein</div>
         </div>
         <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
@@ -294,7 +189,7 @@
           <div class="text-[9px] uppercase tracking-widest text-espresso/60">kcal · Pint</div>
         </div>
         <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
-          <div class="font-display text-xl font-semibold">11.90</div>
+          <div class="font-display text-xl font-semibold">12.00</div>
           <div class="text-[9px] uppercase tracking-widest text-espresso/60">CHF · Pint</div>
         </div>
       </div>
@@ -305,17 +200,16 @@
   <section class="px-5 mt-7">
     <div class="flex items-end justify-between mb-3">
       <h2 class="font-display text-2xl font-semibold">Drei Sorten</h2>
-      <span class="text-xs text-espresso/55">11.90 CHF · Pint</span>
+      <span class="text-xs text-espresso/55">12.00 CHF · Pint</span>
     </div>
     <div id="flavor-grid" class="space-y-4"></div>
 
-    <!-- Rabatt-Info -->
     <div class="mt-5 rounded-2xl bg-white/70 border border-espresso/10 p-4 backdrop-blur">
       <p class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Mengen-Rabatt</p>
       <ul class="mt-2 space-y-1.5 text-sm text-espresso/80">
         <li class="flex items-center gap-2"><span class="badge badge-bundle">5×</span> 5 vom gleichen → <strong class="text-berry">5% Rabatt</strong></li>
         <li class="flex items-center gap-2"><span class="badge badge-pack">10×</span> 10 vom gleichen → <strong class="text-berry">10% Rabatt</strong></li>
-        <li class="flex items-center gap-2"><span class="badge badge-ref">Code</span> Empfehlung → <strong class="text-berry">+15% additiv</strong></li>
+        <li class="flex items-center gap-2"><span class="badge badge-ref">Buddy</span> Empfehlungscode → <strong class="text-berry">+5% additiv</strong></li>
       </ul>
     </div>
   </section>
@@ -332,13 +226,13 @@
       </div>
       <div class="space-y-3 text-[15px] leading-relaxed text-espresso/80">
         <p>Ich wollte einen Weg finden, jeden Tag Eiscreme zu essen — ohne meine Fitness- und Ernährungsziele zu sabotieren.</p>
-        <p>Also habe ich gesucht, getestet und perfektioniert: Premium-Eiscreme mit <strong>~40&thinsp;g Protein</strong>, sättigenden <strong>Ballaststoffen</strong> und unter <strong>500&thinsp;kcal pro Pint</strong>.</p>
+        <p>Also habe ich gesucht, getestet und perfektioniert: Premium-Eiscreme mit <strong>45-52&thinsp;g Protein</strong>, sättigenden <strong>Ballaststoffen</strong> und unter <strong>500&thinsp;kcal pro Pint</strong>.</p>
         <p>Das Ergebnis ist <em class="text-berry not-italic font-semibold">Berry's Delights</em> — Eiscreme, die deinen Tag erfüllt statt deine Disziplin testet.</p>
       </div>
       <div class="hairline my-5"></div>
       <p class="text-[15px] leading-relaxed text-espresso/85">
         <strong class="text-espresso">Deine Fitness-Journey braucht keinen Verzicht.</strong>
-        Wenn du deine Ziele mit mehr Genuss erreichen willst — willkommen. Jeder Pint bringt dich näher, nicht weiter weg.
+        Jeder Pint bringt dich näher, nicht weiter weg.
       </p>
     </div>
   </section>
@@ -365,18 +259,17 @@
   </button>
 </div>
 
-<!-- QR ADMIN -->
+<!-- QR ADMIN ACCORDION -->
 <section class="max-w-xl mx-auto px-5 mt-2 mb-6 relative z-10">
   <details class="rounded-2xl border border-espresso/10 bg-white/60 backdrop-blur overflow-hidden">
     <summary class="flex items-center justify-between gap-3 px-4 py-3">
       <span class="flex items-center gap-2 text-sm text-espresso/70">
-        <i data-lucide="qr-code" class="w-4 h-4"></i>
-        <span>Admin · QR-Code zur Seite</span>
+        <i data-lucide="qr-code" class="w-4 h-4"></i><span>QR-Code zur Seite</span>
       </span>
       <i data-lucide="chevron-down" class="chev w-4 h-4 text-espresso/60"></i>
     </summary>
     <div class="px-4 pb-5 pt-2 text-center">
-      <p class="text-xs text-espresso/60 mb-3">Diesen QR-Code für Aufsteller screenshotten oder direkt von Handy zu Handy weitergeben.</p>
+      <p class="text-xs text-espresso/60 mb-3">Screenshot für Aufsteller — Code zeigt automatisch deine aktuelle URL.</p>
       <div id="qrcode"></div>
       <p id="qr-url" class="mt-3 text-[10px] text-espresso/50 break-all"></p>
       <div class="mt-4 pt-3 border-t border-espresso/8">
@@ -385,199 +278,6 @@
     </div>
   </details>
 </section>
-
-<!-- BACKOFFICE LOGIN -->
-<div id="bo-login" class="hidden fixed inset-0 z-[95] bg-espresso/95 backdrop-blur-md overflow-y-auto">
-  <div class="max-w-md mx-auto px-5 pt-12 safe-top safe-bottom">
-    <button id="bo-login-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center" aria-label="Schliessen">
-      <i data-lucide="x" class="w-5 h-5"></i>
-    </button>
-    <div class="text-center mb-8">
-      <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center">
-        <i data-lucide="lock" class="w-6 h-6"></i>
-      </div>
-      <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Backoffice</h2>
-      <p class="text-cream/55 text-sm mt-1">Nur für Lucas</p>
-    </div>
-    <div class="space-y-3">
-      <input id="bo-user" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
-      <input id="bo-pass" type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
-      <button id="bo-login-btn" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button>
-      <p id="bo-login-err" class="hidden text-blush text-sm text-center">Falsche Zugangsdaten</p>
-    </div>
-  </div>
-</div>
-
-<!-- BACKOFFICE PANEL -->
-<div id="backoffice" class="hidden fixed inset-0 z-[96] bg-cream overflow-y-auto">
-  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
-    <header class="flex items-center justify-between mb-6">
-      <div>
-        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Berry's Delights</p>
-        <h1 class="font-display text-2xl font-semibold">Bestellungen</h1>
-      </div>
-      <button id="bo-logout" class="px-3 py-2 rounded-xl border border-espresso/15 text-xs font-medium">Abmelden</button>
-    </header>
-
-    <!-- Stats -->
-    <div class="grid grid-cols-2 gap-3 mb-5">
-      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Bestellungen</div>
-        <div id="bo-stat-count" class="font-display text-2xl font-semibold mt-1">0</div>
-      </div>
-      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Umsatz</div>
-        <div id="bo-stat-revenue" class="font-display text-2xl font-semibold mt-1">0.00 CHF</div>
-      </div>
-    </div>
-
-    <!-- Filter pills -->
-    <div class="overflow-x-auto -mx-1 px-1 mb-5">
-      <div id="bo-filters" class="flex gap-2 min-w-max"></div>
-    </div>
-
-    <!-- Order list -->
-    <div id="bo-list" class="space-y-2.5"></div>
-    <div id="bo-empty" class="hidden text-center py-12">
-      <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center">
-        <i data-lucide="inbox" class="w-7 h-7 text-berryd"></i>
-      </div>
-      <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
-      <p class="text-sm text-espresso/55 mt-1">Sobald die erste Bestellung kommt, erscheint sie hier.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ORDER DETAIL -->
-<div id="bo-detail" class="hidden fixed inset-0 z-[97] bg-cream overflow-y-auto">
-  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
-    <button id="bo-detail-back" class="mb-4 inline-flex items-center gap-2 text-sm text-espresso/70">
-      <i data-lucide="chevron-left" class="w-4 h-4"></i> Zurück zur Liste
-    </button>
-    <div id="bo-detail-content"></div>
-  </div>
-</div>
-
-<!-- CUSTOMER AUTH MODAL -->
-<div id="cust-auth" class="hidden fixed inset-0 z-[92] bg-espresso/95 backdrop-blur-md overflow-y-auto">
-  <div class="max-w-md mx-auto px-5 pt-10 pb-10 safe-top safe-bottom">
-    <button id="cust-auth-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center" aria-label="Schliessen">
-      <i data-lucide="x" class="w-5 h-5"></i>
-    </button>
-    <div class="text-center mb-7">
-      <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center">
-        <i data-lucide="user" class="w-6 h-6"></i>
-      </div>
-      <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Mein Konto</h2>
-      <p class="text-cream/55 text-sm mt-1">Bestellungen, Wiederbestellung, TWINT</p>
-    </div>
-
-    <!-- Tabs -->
-    <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-cream/5 mb-5">
-      <button id="tab-login" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Anmelden</button>
-      <button id="tab-register" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Registrieren</button>
-    </div>
-
-    <!-- LOGIN FORM -->
-    <form id="form-login" class="space-y-3">
-      <input id="login-email" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
-      <input id="login-pass"  type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
-      <button type="submit" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button>
-      <p id="login-err" class="hidden text-blush text-sm text-center"></p>
-      <p id="login-not-verified" class="hidden text-cream/70 text-sm text-center">
-        Konto noch nicht bestätigt. <button type="button" id="resend-verify" class="underline text-blush">Bestätigungsmail erneut senden</button>
-      </p>
-    </form>
-
-    <!-- REGISTER FORM -->
-    <form id="form-register" class="hidden space-y-3">
-      <input id="reg-email"  type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
-      <input id="reg-pass"   type="password" class="input" placeholder="Passwort (min. 8 Zeichen)" autocomplete="new-password" />
-      <input id="reg-pass2"  type="password" class="input" placeholder="Passwort bestätigen" autocomplete="new-password" />
-      <button type="submit" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Konto erstellen</button>
-      <p id="reg-err" class="hidden text-blush text-sm text-center"></p>
-      <p class="text-[11px] text-cream/50 text-center mt-1">Wir senden dir einen Bestätigungslink per E-Mail. Du kannst dich erst nach Klick auf den Link anmelden.</p>
-    </form>
-
-    <!-- VERIFY PROMPT (after registration in local mode) -->
-    <div id="verify-prompt" class="hidden mt-6 p-4 rounded-2xl bg-cream/5 border border-cream/15">
-      <p class="text-cream font-medium text-sm">Bestätigungsmail versendet ✓</p>
-      <p class="text-cream/70 text-xs mt-1.5" id="verify-msg">Schau in dein Postfach (auch Spam) und klick den Link, um dein Konto zu aktivieren.</p>
-      <div id="verify-manual-wrap" class="hidden mt-3">
-        <p class="text-cream/60 text-[11px] mb-1.5">Funktioniert die E-Mail nicht? Aktivierungslink direkt:</p>
-        <a id="verify-manual-link" href="#" class="text-blush text-xs underline break-all"></a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CUSTOMER PORTAL -->
-<div id="cust-portal" class="hidden fixed inset-0 z-[93] bg-cream overflow-y-auto">
-  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
-    <header class="flex items-start justify-between mb-6">
-      <div>
-        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Mein Konto</p>
-        <h1 id="cust-greeting" class="font-display text-2xl font-semibold mt-0.5">Willkommen</h1>
-        <p id="cust-email" class="text-xs text-espresso/55 mt-1"></p>
-      </div>
-      <div class="flex flex-col gap-2 items-end">
-        <button id="cust-close" class="w-10 h-10 rounded-full border border-espresso/15 flex items-center justify-center" aria-label="Schliessen">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-        <button id="cust-logout" class="text-[11px] text-espresso/55 underline">Abmelden</button>
-      </div>
-    </header>
-
-    <div class="grid grid-cols-2 gap-3 mb-5">
-      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Bestellungen</div>
-        <div id="cust-stat-count" class="font-display text-2xl font-semibold mt-1">0</div>
-      </div>
-      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Gesamtumsatz</div>
-        <div id="cust-stat-revenue" class="font-display text-2xl font-semibold mt-1">0.00 CHF</div>
-      </div>
-    </div>
-
-    <!-- Personal referral code + native sharing -->
-    <div class="mb-5 rounded-3xl p-5 shadow-card relative overflow-hidden" style="background: radial-gradient(120% 80% at 0% 0%, #F4C9D1 0%, transparent 60%), linear-gradient(180deg, #5C0E27 0%, #1A0E10 100%);">
-      <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-gold/20 blur-2xl"></div>
-      <span class="chip" style="background:rgba(250,246,239,.1); border-color:rgba(250,246,239,.2); color:#F4C9D1;">
-        <i data-lucide="gift" class="w-3.5 h-3.5"></i> Dein persönlicher Code
-      </span>
-      <h2 class="font-display text-xl font-semibold text-cream mt-3">Teile &amp; Freunde sparen 5%</h2>
-      <div class="mt-4 bg-cream rounded-2xl p-3.5 flex items-center justify-between gap-3">
-        <div class="min-w-0">
-          <div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div>
-          <div id="cust-refcode" class="font-display text-xl font-semibold tracking-wider mt-0.5 truncate">—</div>
-        </div>
-        <button id="cust-copy-code" class="px-3 py-2.5 rounded-xl btn-berry text-sm flex items-center gap-1.5 shrink-0">
-          <i data-lucide="copy" class="w-4 h-4"></i> <span id="cust-copy-label">Kopieren</span>
-        </button>
-      </div>
-      <div class="mt-3 grid grid-cols-2 gap-2">
-        <button id="share-whatsapp" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2" style="background:#25D366;color:#fff;">
-          <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
-        </button>
-        <button id="share-instagram" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2 text-cream" style="background:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5 100%);">
-          <i data-lucide="instagram" class="w-4 h-4"></i> Instagram
-        </button>
-      </div>
-      <p class="text-[10px] text-cream/55 mt-2 text-center">Instagram kopiert den Text und öffnet die App — dort einfach in deine Story oder DM einfügen.</p>
-    </div>
-
-    <div id="cust-list" class="space-y-3"></div>
-    <div id="cust-empty" class="hidden text-center py-12">
-      <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center">
-        <i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i>
-      </div>
-      <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
-      <p class="text-sm text-espresso/55 mt-1">Sobald du deine erste Bestellung abschickst, erscheint sie hier.</p>
-    </div>
-
-    <p class="text-[11px] text-center text-espresso/45 mt-8">Berry's Delights · Premium High Protein Ice Cream</p>
-  </div>
-</div>
 
 <!-- CART SHEET -->
 <div id="cart-sheet" class="sheet">
@@ -593,11 +293,8 @@
     </div>
 
     <div class="scroll-y overflow-y-auto px-5 pb-6 flex-1">
-      <!-- Empty -->
       <div id="cart-empty" class="text-center py-10">
-        <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center">
-          <i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i>
-        </div>
+        <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i></div>
         <p class="mt-3 font-display text-lg">Noch leer.</p>
         <p class="text-sm text-espresso/60 mt-1">Wähle deine Pints – Rabatte werden automatisch angewendet.</p>
       </div>
@@ -605,18 +302,14 @@
       <div id="cart-detail" class="hidden">
         <div id="cart-items" class="space-y-2.5 mt-1"></div>
 
-        <!-- Guest express banner (shown only when NOT logged in) -->
         <div id="guest-banner" class="hidden mt-4 rounded-2xl bg-blush/40 border border-berry/15 p-3 flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full bg-berry text-cream flex items-center justify-center shrink-0">
-            <i data-lucide="zap" class="w-4 h-4"></i>
-          </div>
+          <div class="w-9 h-9 rounded-full bg-berry text-cream flex items-center justify-center shrink-0"><i data-lucide="zap" class="w-4 h-4"></i></div>
           <div class="text-[13px] leading-tight">
-            <div class="font-semibold text-berryd">Express-Bestellung als Gast</div>
-            <div class="text-espresso/70 text-xs mt-0.5">In weniger als 60 Sekunden bereit für TWINT &nbsp;⚡</div>
+            <div class="font-semibold text-berryd">Express als Gast</div>
+            <div class="text-espresso/70 text-xs mt-0.5">In unter 60 Sek. bereit für TWINT ⚡</div>
           </div>
         </div>
 
-        <!-- Protein & Savings Counter — motivational live counter -->
         <div id="protein-counter" class="hidden mt-4 grid grid-cols-2 gap-2">
           <div class="rounded-2xl bg-white border border-espresso/8 p-3 text-center shadow-soft">
             <div class="text-[10px] uppercase tracking-widest text-espresso/55">Protein im Korb</div>
@@ -628,11 +321,8 @@
           </div>
         </div>
 
-        <!-- Pickup notice -->
         <div class="pickup-notice mt-5 rounded-2xl p-4 flex gap-3 items-start">
-          <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0">
-            <i data-lucide="map-pin" class="w-4 h-4 text-blush"></i>
-          </div>
+          <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-blush"></i></div>
           <div>
             <div class="font-display text-base font-semibold">Abholung am Sanitas Hauptsitz</div>
             <p class="text-xs text-cream/75 mt-1">Du wirst per SMS oder E-Mail informiert, sobald deine Bestellung abholbereit ist.</p>
@@ -641,16 +331,14 @@
 
         <!-- Referral -->
         <div class="mt-5">
-          <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Empfehlungscode</label>
+          <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Empfehlungscode (optional)</label>
           <div class="mt-2 flex gap-2">
             <input id="ref-input" class="input" placeholder="z.B. LUCAS842" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" autocapitalize="characters" maxlength="20" />
             <button id="ref-apply" class="px-4 rounded-2xl bg-espresso text-cream font-medium">Einlösen</button>
           </div>
           <p id="ref-msg" class="text-xs mt-2 text-espresso/60"></p>
-          <!-- Honeypot: invisible to humans, bots typically fill all inputs.
-               Form is silently rejected when this contains anything. -->
-          <input type="text" id="ref-honey" name="website_url" tabindex="-1" autocomplete="off"
-                 aria-hidden="true"
+          <!-- Honeypot -->
+          <input type="text" id="ref-honey" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true"
                  style="position:absolute !important; left:-9999px !important; top:-9999px !important; opacity:0 !important; pointer-events:none !important; height:0 !important; width:0 !important;" />
         </div>
 
@@ -676,37 +364,26 @@
         <div class="mt-5 rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
           <div id="discount-lines" class="space-y-2 text-sm"></div>
           <div class="hairline my-3"></div>
-          <div class="flex items-center justify-between text-sm">
-            <span class="text-espresso/70">Zwischensumme</span>
-            <span id="subtotal" class="font-medium">0.00 CHF</span>
-          </div>
-          <div id="discount-total-line" class="hidden items-center justify-between mt-1 text-sm">
-            <span class="text-berry">Rabatt</span>
-            <span id="discount-total" class="font-medium text-berry">−0.00 CHF</span>
-          </div>
-          <div id="tip-line" class="hidden items-center justify-between mt-1 text-sm">
-            <span class="text-espresso/70">Trinkgeld</span>
-            <span id="tip-line-amount" class="font-medium">0.00 CHF</span>
-          </div>
+          <div class="flex items-center justify-between text-sm"><span class="text-espresso/70">Zwischensumme</span><span id="subtotal" class="font-medium">0.00 CHF</span></div>
+          <div id="discount-total-line" class="hidden items-center justify-between mt-1 text-sm"><span class="text-berry">Rabatt</span><span id="discount-total" class="font-medium text-berry">−0.00 CHF</span></div>
+          <div id="tip-line" class="hidden items-center justify-between mt-1 text-sm"><span class="text-espresso/70">Trinkgeld</span><span id="tip-line-amount" class="font-medium">0.00 CHF</span></div>
           <div class="hairline my-3"></div>
-          <div class="flex items-end justify-between">
-            <span class="font-display text-lg">Total</span>
-            <span id="grand-total" class="font-display text-2xl font-semibold">0.00 CHF</span>
-          </div>
+          <div class="flex items-end justify-between"><span class="font-display text-lg">Total</span><span id="grand-total" class="font-display text-2xl font-semibold">0.00 CHF</span></div>
           <p id="save-note" class="hidden text-xs text-berry mt-1 text-right">Du sparst <span id="save-amount">0.00</span> CHF ✦</p>
         </div>
 
         <!-- Form -->
         <h4 class="mt-6 font-display text-xl font-semibold">Deine Daten</h4>
+        <p id="form-err" class="hidden text-sm text-berry mt-1"></p>
         <div class="mt-3 space-y-3">
-          <input id="f-name"  class="input" type="text"  placeholder="Vorname & Nachname"     autocomplete="name" />
-          <input id="f-email" class="input" type="email" placeholder="E-Mail (für Abholung)"   autocomplete="email" inputmode="email" />
-          <input id="f-phone" class="input" type="tel"   placeholder="Handynummer (für SMS)"   autocomplete="tel"   inputmode="tel" />
+          <input id="f-name"  class="input" type="text"  placeholder="Vorname & Nachname" autocomplete="name" />
+          <input id="f-email" class="input" type="email" placeholder="E-Mail (für Abholung)" autocomplete="email" inputmode="email" />
+          <input id="f-phone" class="input" type="tel"   placeholder="Handy +41 7X XXX XX XX" autocomplete="tel" inputmode="tel" />
+          <textarea id="f-notes" class="input" placeholder="Besondere Hinweise zu deiner Bestellung oder Abholung (optional)"></textarea>
         </div>
 
         <button id="pay-twint" class="mt-5 w-full btn-twint rounded-2xl py-4 flex items-center justify-center gap-3 font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed">
-          <span class="twint-mark"></span>
-          <span>Jetzt mit TWINT bezahlen</span>
+          <span class="twint-mark"></span><span>Jetzt mit TWINT bezahlen</span>
         </button>
         <p class="text-[11px] text-center text-espresso/50 mt-2">Öffnet die TWINT-App · Zahlung an +41 78 919 98 38</p>
       </div>
@@ -725,18 +402,15 @@
     </div>
     <div id="pay-step-2" class="reveal hidden">
       <div class="flex items-center justify-center mb-6"><div class="spinner"></div></div>
-      <h3 class="font-display text-2xl font-semibold text-cream">Zahlung wird bestätigt…</h3>
-      <p class="text-cream/60 mt-2 text-sm">Authentifizierung in deiner TWINT-App.</p>
+      <h3 class="font-display text-2xl font-semibold text-cream">Bestellung wird übermittelt…</h3>
+      <p class="text-cream/60 mt-2 text-sm">Bestätige in deiner TWINT-App.</p>
     </div>
     <div id="pay-step-3" class="reveal hidden">
       <div class="flex items-center justify-center mb-4">
-        <svg class="check-circle check-cream" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="45"></circle>
-          <path d="M30 52 L45 67 L72 38"></path>
-        </svg>
+        <svg class="check-circle check-cream" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"></circle><path d="M30 52 L45 67 L72 38"></path></svg>
       </div>
-      <h3 class="font-display text-2xl font-semibold text-cream">Zahlung erfolgreich!</h3>
-      <p id="pay-step-3-amount" class="text-cream/70 mt-2 text-sm">Betrag wurde gesendet</p>
+      <h3 class="font-display text-2xl font-semibold text-cream">Bestellung erfolgreich übermittelt</h3>
+      <p id="pay-step-3-amount" class="text-cream/70 mt-2 text-sm">Zahlung wird geprüft… ⏳</p>
     </div>
   </div>
 </div>
@@ -744,1778 +418,207 @@
 <!-- CONFIRMATION -->
 <div id="confirmation" class="hidden fixed inset-0 z-[70] bg-cream overflow-y-auto">
   <div class="max-w-xl mx-auto px-5 py-8 safe-top safe-bottom">
-    <div class="flex items-center justify-center">
-      <svg class="check-circle" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="45"></circle>
-        <path d="M30 52 L45 67 L72 38"></path>
-      </svg>
-    </div>
-
-    <h1 class="font-display text-3xl font-semibold text-center mt-4">Bestellung bestätigt</h1>
+    <div class="flex items-center justify-center"><svg class="check-circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"></circle><path d="M30 52 L45 67 L72 38"></path></svg></div>
+    <h1 class="font-display text-3xl font-semibold text-center mt-4">Bestellung übermittelt</h1>
     <p class="text-center text-espresso/70 mt-2" id="conf-greeting">Vielen Dank!</p>
+    <p class="text-center text-sm text-espresso/60 mt-1" id="conf-status"><span class="status-pill status-zahlung-ausstehend">Zahlung wird geprüft… ⏳</span></p>
 
-    <!-- Pickup -->
     <div class="pickup-notice mt-6 rounded-2xl p-4 flex gap-3 items-start">
-      <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0">
-        <i data-lucide="map-pin" class="w-4 h-4 text-blush"></i>
-      </div>
+      <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-blush"></i></div>
       <div>
         <div class="font-display text-base font-semibold">Abholung am Sanitas Hauptsitz</div>
         <p class="text-xs text-cream/75 mt-1">Du erhältst eine SMS &amp; E-Mail, sobald deine Bestellung abholbereit ist.</p>
       </div>
     </div>
 
-    <!-- Order -->
     <div class="mt-5 rounded-3xl bg-white border border-espresso/8 p-5 shadow-card">
-      <div class="flex items-center justify-between">
-        <span class="text-[11px] tracking-[.2em] uppercase text-espresso/60">Bestellung</span>
-        <span id="conf-orderid" class="text-[11px] tracking-[.2em] uppercase text-espresso/60">#000</span>
-      </div>
+      <div class="flex items-center justify-between"><span class="text-[11px] tracking-[.2em] uppercase text-espresso/60">Bestellung</span><span id="conf-orderid" class="text-[11px] tracking-[.2em] uppercase text-espresso/60">#000</span></div>
       <div id="conf-items" class="mt-4 space-y-2 text-sm"></div>
       <div class="hairline my-4"></div>
       <div id="conf-discounts" class="space-y-1 text-sm"></div>
       <div class="hairline my-4"></div>
-      <div class="flex items-center justify-between">
-        <span class="font-display text-lg">Bezahlt</span>
-        <span id="conf-total" class="font-display text-2xl font-semibold">0.00 CHF</span>
-      </div>
-      <div class="mt-3 flex items-center gap-2 text-sm text-espresso/70">
-        <span class="twint-mark"></span>
-        <span>TWINT · +41 78 919 98 38</span>
-      </div>
+      <div class="flex items-center justify-between"><span class="font-display text-lg">Total</span><span id="conf-total" class="font-display text-2xl font-semibold">0.00 CHF</span></div>
+      <div class="mt-3 flex items-center gap-2 text-sm text-espresso/70"><span class="twint-mark"></span><span>TWINT · +41 78 919 98 38</span></div>
     </div>
 
-    <!-- Referral reward -->
-    <div class="mt-5 rounded-3xl p-5 shadow-card relative overflow-hidden" style="background: radial-gradient(120% 80% at 0% 0%, #F4C9D1 0%, transparent 60%), linear-gradient(180deg, #5C0E27 0%, #1A0E10 100%);">
-      <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-gold/20 blur-2xl"></div>
-      <span class="chip" style="background:rgba(250,246,239,.1); border-color:rgba(250,246,239,.2); color:#F4C9D1;">
-        <i data-lucide="gift" class="w-3.5 h-3.5"></i> Dein Empfehlungscode
-      </span>
-      <h2 class="font-display text-2xl font-semibold text-cream mt-3">Teile &amp; spare 15%</h2>
-      <p class="text-cream/70 text-sm mt-1">Sobald ein Freund mit deinem Code bestellt, erhältst du <strong class="text-blush">15% Rabatt</strong> per SMS &amp; E-Mail.</p>
-
-      <div class="mt-4 bg-cream rounded-2xl p-3.5 flex items-center justify-between gap-3">
-        <div>
-          <div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div>
-          <div id="conf-refcode" class="font-display text-lg font-semibold tracking-wider mt-0.5">BERRY-FRIEND-XXXX</div>
-        </div>
-        <button id="copy-ref" class="px-3 py-2.5 rounded-xl btn-berry text-sm flex items-center gap-1.5">
-          <i data-lucide="copy" class="w-4 h-4"></i> <span id="copy-label">Kopieren</span>
-        </button>
-      </div>
-
-      <div class="mt-3 grid grid-cols-3 gap-2">
-        <button class="share-btn rounded-xl bg-white/10 text-cream py-2.5 text-xs flex items-center justify-center gap-1.5" data-share="whatsapp"><i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp</button>
-        <button class="share-btn rounded-xl bg-white/10 text-cream py-2.5 text-xs flex items-center justify-center gap-1.5" data-share="sms"><i data-lucide="smartphone" class="w-4 h-4"></i> SMS</button>
-        <button class="share-btn rounded-xl bg-white/10 text-cream py-2.5 text-xs flex items-center justify-center gap-1.5" data-share="copy"><i data-lucide="link" class="w-4 h-4"></i> Link</button>
-      </div>
+    <!-- Feedback widget -->
+    <div id="conf-feedback-wrap" class="hidden mt-5 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
+      <h3 class="font-display text-base font-semibold">Wie hat dir der Bestellprozess gefallen?</h3>
+      <p class="text-xs text-espresso/60 mt-1">Gib uns dein ehrliches Feedback — das hilft uns wirklich.</p>
+      <textarea id="conf-feedback-text" class="input mt-2" placeholder="Deine Gedanken..."></textarea>
+      <button id="conf-feedback-submit" class="mt-2 w-full btn-berry rounded-2xl py-3 text-sm font-medium">Feedback senden</button>
     </div>
 
-    <!-- Email status / fallback -->
-    <div id="email-status" class="mt-5">
-      <div id="email-sent" class="hidden rounded-2xl bg-white border border-espresso/8 p-4 flex items-center gap-3 shadow-soft">
-        <div class="w-9 h-9 rounded-full bg-berry/10 flex items-center justify-center shrink-0">
-          <i data-lucide="check" class="w-5 h-5 text-berry"></i>
-        </div>
-        <div>
-          <div class="font-medium text-sm">Bestätigung gesendet</div>
-          <p class="text-xs text-espresso/60 mt-0.5">An dich und an den Shop — schau in dein Postfach.</p>
-        </div>
-      </div>
-      <a id="email-link" class="hidden w-full btn-premium rounded-2xl py-4 px-5 flex items-center justify-center gap-2 font-medium relative z-10" href="#">
-        <i data-lucide="mail" class="w-5 h-5 relative z-10"></i>
-        <span class="relative z-10">Bestätigung jetzt senden</span>
-      </a>
-      <p id="email-hint" class="hidden text-[11px] text-center text-espresso/55 mt-2">Ein Tap — geht an dich und an den Shop</p>
-    </div>
-
-    <button id="new-order" class="mt-3 w-full rounded-2xl py-3.5 border border-espresso/15 font-medium">Neue Bestellung</button>
-    <p class="text-[11px] text-center text-espresso/45 mt-4">Berry's Delights · Sanitas Hauptsitz · Made in Switzerland</p>
+    <button id="new-order" class="mt-5 w-full rounded-2xl py-3.5 border border-espresso/15 font-medium">Neue Bestellung</button>
   </div>
 </div>
 
-<!-- ============= SCRIPT ============= -->
-<script>
-(() => {
-  'use strict';
+<!-- CUSTOMER AUTH MODAL -->
+<div id="cust-auth" class="hidden fixed inset-0 z-[92] bg-espresso/95 backdrop-blur-md overflow-y-auto">
+  <div class="max-w-md mx-auto px-5 pt-10 pb-10 safe-top safe-bottom">
+    <button id="cust-auth-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center" aria-label="Schliessen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div class="text-center mb-7">
+      <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center"><i data-lucide="user" class="w-6 h-6"></i></div>
+      <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Mein Konto</h2>
+      <p class="text-cream/55 text-sm mt-1">Bestellungen, Wiederbestellung, Buddy-Codes</p>
+    </div>
 
-  // Defensive fallbacks: if any CDN failed to load (offline, blocked extension, etc.)
-  // we keep the app from hard-crashing on icon/QR refresh calls.
-  if (!window.lucide || typeof window.lucide.createIcons !== 'function') {
-    window.lucide = { createIcons: () => {} };
-  }
+    <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-cream/5 mb-5">
+      <button id="tab-login" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Anmelden</button>
+      <button id="tab-register" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Registrieren</button>
+    </div>
 
-  // ===== Constants =====
-  const PRICE = 12.00;
-  const MERCHANT_TWINT = '+41 78 919 98 38';
-  const PICKUP_LOCATION = 'Sanitas Hauptsitz';
-  const ORDER_EMAIL = 'beer.lucas@hotmail.com';
+    <form id="form-login" class="space-y-3">
+      <input id="login-email" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
+      <input id="login-pass"  type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
+      <button type="submit" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button>
+      <p id="login-err" class="hidden text-blush text-sm text-center"></p>
+      <p id="login-not-verified" class="hidden text-cream/70 text-sm text-center">Konto noch nicht bestätigt. Schau in dein Postfach (auch Spam!).</p>
+    </form>
 
-  // Referral system
-  const REF_PCT = 5; // 5% discount when a valid referral code is applied
-  // New format: [FIRSTNAME][3 digits]  e.g. LUCAS842 — memorable but not guessable
-  const REF_PATTERN_NEW    = /^[A-Z]{2,12}[0-9]{3}$/;
-  // Legacy formats kept for backward compat with codes already in circulation
-  const REF_PATTERN_LEGACY = /^BERRY-(FRIEND|EARN)-[A-Z0-9]{3,6}$/;
-  const REF_LOCK_KEY        = 'berrysdelights_ref_lock_v1';
-  const REF_CODES_KEY       = 'berrysdelights_ref_codes_v1'; // email -> code
-  const REF_LOCK_MAX_ATTEMPTS = 3;
-  const REF_LOCK_MINUTES      = 10;
+    <form id="form-register" class="hidden space-y-3">
+      <input id="reg-firstname" class="input" placeholder="Vorname (für deinen Buddy-Code)" />
+      <input id="reg-email"  type="email" inputmode="email" class="input" placeholder="E-Mail" autocorrect="off" spellcheck="false" />
+      <input id="reg-pass"   type="password" class="input" placeholder="Passwort (min. 8 Zeichen)" autocomplete="new-password" />
+      <input id="reg-pass2"  type="password" class="input" placeholder="Passwort bestätigen" autocomplete="new-password" />
+      <button type="submit" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Konto erstellen</button>
+      <p id="reg-err" class="hidden text-blush text-sm text-center"></p>
+      <p class="text-[11px] text-cream/50 text-center mt-1">Du erhältst einen Bestätigungslink per Mail. Erst nach Klick freigeschaltet.</p>
+    </form>
 
-  // ===== Firebase (Cloud Backend) =====
-  // PASTE YOUR FIREBASE CONFIG HERE TO ENABLE CROSS-DEVICE SYNC.
-  // 1) https://console.firebase.google.com  -> "Add project" (free)
-  // 2) Build > Authentication > Sign-in method > Enable "Email/Password"
-  // 3) Build > Firestore Database > Create (Production mode, region europe-west)
-  // 4) Project settings (gear icon) > "Add app" > Web (</> icon) > register
-  // 5) Copy the firebaseConfig object you get and paste below.
-  // Security rules (Firestore > Rules tab) — replace defaults with:
-  /*
-    rules_version = '2';
-    service cloud.firestore {
-      match /databases/{database}/documents {
-        match /orders/{orderId} {
-          allow create: if request.auth != null
-                        && request.resource.data.email == request.auth.token.email;
-          allow read:   if request.auth != null
-                        && (resource.data.email == request.auth.token.email
-                            || request.auth.token.email == 'beer.lucas@hotmail.com');
-          allow update: if request.auth.token.email == 'beer.lucas@hotmail.com';
-        }
-      }
-    }
-  */
-  const FIREBASE_CONFIG = {
-    // apiKey: "AIzaSy...",
-    // authDomain: "berrys-delights.firebaseapp.com",
-    // projectId: "berrys-delights",
-    // storageBucket: "berrys-delights.appspot.com",
-    // messagingSenderId: "...",
-    // appId: "1:...:web:..."
-  };
+    <div id="verify-prompt" class="hidden mt-6 p-4 rounded-2xl bg-cream/5 border border-cream/15">
+      <p class="text-cream font-medium text-sm">Bestätigungsmail unterwegs ✓</p>
+      <p class="text-cream/70 text-xs mt-1.5" id="verify-msg"></p>
+      <div id="verify-manual-wrap" class="hidden mt-3">
+        <p class="text-cream/60 text-[11px] mb-1.5">Aktivierungslink:</p>
+        <a id="verify-manual-link" href="#" class="text-blush text-xs underline break-all"></a>
+      </div>
+    </div>
+  </div>
+</div>
 
-  // ===== Storage Keys =====
-  const SK = {
-    cart:       'berrysdelights_cart_v1',
-    orders:     'berrysdelights_orders_v1',
-    customers:  'berrysdelights_customers_v1',
-    custSess:   'berrysdelights_cust_session_v1',
-    adminSess:  'berrysdelights_admin_session_v1',
-  };
+<!-- CUSTOMER PORTAL -->
+<div id="cust-portal" class="hidden fixed inset-0 z-[93] bg-cream overflow-y-auto">
+  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
+    <header class="flex items-start justify-between mb-6">
+      <div>
+        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Mein Konto</p>
+        <h1 id="cust-greeting" class="font-display text-2xl font-semibold mt-0.5">Willkommen</h1>
+        <p id="cust-email" class="text-xs text-espresso/55 mt-1"></p>
+      </div>
+      <div class="flex flex-col gap-2 items-end">
+        <button id="cust-close" class="w-10 h-10 rounded-full border border-espresso/15 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <button id="cust-logout" class="text-[11px] text-espresso/55 underline">Abmelden</button>
+      </div>
+    </header>
 
-  const FLAVORS = [
-    { id:'chocolate', name:'Chocolate Fudge Brownie', tagline:'Dunkel · Brownie-Stücke',  gradient:'grad-chocolate', labelColor:'#1A0E10' },
-    { id:'vanilla',   name:'Vanilla Cookie Dough',    tagline:'Cremig · Cookie-Bites',     gradient:'grad-vanilla',   labelColor:'#1A0E10' },
-    { id:'caramel',   name:'Salted Caramel Toffee',   tagline:'Butterig · Fleur de Sel',   gradient:'grad-caramel',   labelColor:'#FAF6EF' },
-  ];
+    <div class="grid grid-cols-2 gap-3 mb-3">
+      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Bestellungen</div>
+        <div id="cust-stat-count" class="font-display text-2xl font-semibold mt-1">0</div>
+      </div>
+      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Dein Proteineis-Support</div>
+        <div id="cust-stat-support" class="font-display text-2xl font-semibold mt-1">0.00 CHF</div>
+      </div>
+    </div>
+    <div class="rounded-2xl bg-berry text-cream p-4 mb-5 shadow-card">
+      <div class="text-[10px] uppercase tracking-widest text-cream/65">Pint-Spar-Zähler</div>
+      <div class="font-display text-xl font-semibold mt-1">Bereits <span id="cust-stat-savings">0.00 CHF</span> gespart</div>
+      <p class="text-sm text-cream/85 mt-1">Das entspricht <strong><span id="cust-stat-pints">0.00 Gratis-Pints 🍦</span></strong> für deine Muskeln!</p>
+    </div>
 
-  // (Old single-pattern variable removed — superseded by REF_PATTERN_NEW + REF_PATTERN_LEGACY above.)
-
-  // ===== State =====
-  const state = {
-    qty: { chocolate:0, vanilla:0, caramel:0 },
-    referral: null,    // { code, percent:15 }
-    tip: { type:'percent', value:0 }, // value in %; or { type:'fixed', value: CHF }
-    customer: { name:'', email:'', phone:'' },
-  };
-
-  // ===== Cart persistence (survives reload) =====
-  let _cartHydrating = false;
-  function saveCart() {
-    if (_cartHydrating) return; // don't save while hydrating from storage
-    try {
-      localStorage.setItem(SK.cart, JSON.stringify({
-        qty: state.qty,
-        referral: state.referral,
-        tip: state.tip,
-        customer: state.customer,
-      }));
-    } catch {}
-  }
-  function loadCart() {
-    try {
-      const raw = localStorage.getItem(SK.cart);
-      if (!raw) return;
-      const d = JSON.parse(raw);
-      if (d && d.qty)      Object.assign(state.qty, d.qty);
-      if (d && 'referral' in d) state.referral = d.referral;
-      if (d && d.tip)      state.tip = d.tip;
-      if (d && d.customer) state.customer = d.customer;
-    } catch {}
-  }
-
-  // ===== Utils =====
-  const fmt = n => `${n.toFixed(2)} CHF`;
-  const $  = s => document.querySelector(s);
-  const $$ = s => document.querySelectorAll(s);
-
-  function genCode(name) {
-    // [FIRSTNAME][3 digits], A-Z only, fallback to BERRY
-    let prefix = String(name || '').split(/\s+/)[0].toUpperCase().replace(/[^A-Z]/g, '');
-    if (prefix.length < 2) prefix = 'BERRY';
-    if (prefix.length > 12) prefix = prefix.slice(0, 12);
-    const num = 100 + Math.floor(Math.random() * 900);
-    return prefix + num;
-  }
-
-  // Stable referral code per registered customer, persisted across sessions.
-  function getCustomerCode(email, fallbackName) {
-    if (!email) return null;
-    let map = {};
-    try { map = JSON.parse(localStorage.getItem(REF_CODES_KEY)) || {}; } catch {}
-    if (map[email]) return map[email];
-    // Find a name from recent orders
-    let name = fallbackName || '';
-    if (!name) {
-      const orders = Backend.loadOrdersLocal();
-      const mine = orders.filter(o => String(o.email || '').toLowerCase() === email).pop();
-      if (mine) name = mine.name || '';
-    }
-    const code = genCode(name);
-    map[email] = code;
-    try { localStorage.setItem(REF_CODES_KEY, JSON.stringify(map)); } catch {}
-    return code;
-  }
-
-  // Rate-limit storage (localStorage so the lock survives reload/tab-close)
-  function refLockState() {
-    try { return JSON.parse(localStorage.getItem(REF_LOCK_KEY)) || { attempts: 0, lockedUntil: 0 }; }
-    catch { return { attempts: 0, lockedUntil: 0 }; }
-  }
-  function setRefLockState(s) {
-    try { localStorage.setItem(REF_LOCK_KEY, JSON.stringify(s)); } catch {}
-  }
-  function refIsLocked() {
-    const s = refLockState();
-    return s.lockedUntil > Date.now() ? s.lockedUntil : 0;
-  }
-  function refRecordInvalid() {
-    const s = refLockState();
-    s.attempts = (s.attempts || 0) + 1;
-    if (s.attempts >= REF_LOCK_MAX_ATTEMPTS) {
-      s.lockedUntil = Date.now() + REF_LOCK_MINUTES * 60 * 1000;
-      s.attempts = 0; // reset for the next round after lock expires
-    }
-    setRefLockState(s);
-    return s;
-  }
-  function refResetAttempts() { setRefLockState({ attempts: 0, lockedUntil: 0 }); }
-
-  // ===== Pricing =====
-  // Per-flavor only (no cross-flavor bundles):
-  //   - Every 10 of same flavor: -10%
-  //   - Then every 5 of same flavor: -5%
-  //   - Remainder: full price
-  // Greedy is optimal (10-pack saves more than 5-pack per item).
-  function priceCart() {
-    const ids = ['chocolate','vanilla','caramel'];
-    const totalItems = ids.reduce((s,id) => s + state.qty[id], 0);
-    const subtotal = totalItems * PRICE;
-
-    const packs = {};
-    let tens = 0, fives = 0;
-    for (const id of ids) {
-      const n = state.qty[id];
-      const t = Math.floor(n / 10);
-      const f = Math.floor((n - 10 * t) / 5);
-      packs[id] = { tens: t, fives: f };
-      tens += t;
-      fives += f;
-    }
-
-    const tenDiscount   = tens  * 10 * PRICE * 0.10;
-    const fiveDiscount  = fives *  5 * PRICE * 0.05;
-    const refPct        = state.referral ? state.referral.percent / 100 : 0;
-    const refDiscount   = subtotal * refPct;
-    const totalDiscount = tenDiscount + fiveDiscount + refDiscount;
-    const afterDiscount = Math.max(0, subtotal - totalDiscount);
-
-    let tipAmount = 0;
-    if (state.tip.type === 'percent') tipAmount = afterDiscount * (state.tip.value / 100);
-    else if (state.tip.type === 'fixed') tipAmount = Math.max(0, state.tip.value);
-
-    const grandTotal = afterDiscount + tipAmount;
-
-    return {
-      subtotal, totalDiscount, afterDiscount, tipAmount, grandTotal,
-      tens, fives, packs,
-      tenDiscount, fiveDiscount, refDiscount,
-      totalItems,
-    };
-  }
-
-  // ===== Render: flavor cards =====
-  function renderFlavors() {
-    const grid = $('#flavor-grid');
-    grid.innerHTML = FLAVORS.map(f => `
-      <article class="bg-white rounded-3xl p-4 shadow-card border border-espresso/5">
-        <div class="flex gap-4 items-center">
-          <div class="${f.gradient} rounded-2xl w-24 h-28 shrink-0 relative overflow-hidden flex items-center justify-center">
-            <div class="pint">
-              <div class="pint-label" style="color:${f.labelColor}">Berry's<small>${f.id.toUpperCase()}</small></div>
-            </div>
-          </div>
-          <div class="flex-1 min-w-0">
-            <h3 class="font-display text-lg font-semibold leading-tight">${f.name}</h3>
-            <p class="text-xs text-espresso/55 mt-0.5">${f.tagline}</p>
-            <div class="mt-3 flex items-center justify-between gap-2">
-              <span class="font-display text-base font-semibold">${fmt(PRICE)}</span>
-              <div class="flex items-center gap-2" data-qty-controls="${f.id}">
-                <button class="qty-btn" data-act="dec" data-id="${f.id}" aria-label="Weniger"><i data-lucide="minus" class="w-4 h-4"></i></button>
-                <span class="count font-display text-lg font-semibold w-6 text-center" data-count="${f.id}">0</span>
-                <button class="qty-btn primary" data-act="inc" data-id="${f.id}" aria-label="Mehr"><i data-lucide="plus" class="w-4 h-4"></i></button>
-              </div>
-            </div>
-          </div>
+    <!-- Personal referral code + sharing -->
+    <div class="mb-5 rounded-3xl p-5 shadow-card relative overflow-hidden" style="background: radial-gradient(120% 80% at 0% 0%, #F4C9D1 0%, transparent 60%), linear-gradient(180deg, #5C0E27 0%, #1A0E10 100%);">
+      <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-gold/20 blur-2xl"></div>
+      <span class="chip" style="background:rgba(250,246,239,.1); border-color:rgba(250,246,239,.2); color:#F4C9D1;"><i data-lucide="gift" class="w-3.5 h-3.5"></i> Dein Buddy-Code</span>
+      <h2 class="font-display text-xl font-semibold text-cream mt-3">Teile &amp; Freunde sparen 5%</h2>
+      <p id="cust-bonus" class="text-cream/75 text-sm mt-1"></p>
+      <div class="mt-4 bg-cream rounded-2xl p-3.5 flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div>
+          <div id="cust-refcode" class="font-display text-xl font-semibold tracking-wider mt-0.5 truncate">—</div>
         </div>
-        <div class="grid grid-cols-2 gap-2 mt-3">
-          <button class="pack-btn" data-pack="${f.id}" data-size="5">
-            <i data-lucide="plus" class="w-4 h-4"></i><span>5er-Pack</span><span class="save">−5%</span>
-          </button>
-          <button class="pack-btn" data-pack="${f.id}" data-size="10">
-            <i data-lucide="plus" class="w-4 h-4"></i><span>10er-Pack</span><span class="save">−10%</span>
-          </button>
-        </div>
-      </article>
-    `).join('');
-    lucide.createIcons();
-
-    grid.addEventListener('click', (e) => {
-      const qbtn = e.target.closest('[data-act]');
-      const pbtn = e.target.closest('[data-pack]');
-      if (qbtn) {
-        const id = qbtn.dataset.id, act = qbtn.dataset.act;
-        if (act === 'inc') state.qty[id]++;
-        else if (act === 'dec' && state.qty[id] > 0) state.qty[id]--;
-        bumpCount(id);
-        renderAll();
-      } else if (pbtn) {
-        const size = Number(pbtn.dataset.size) || 5;
-        state.qty[pbtn.dataset.pack] += size;
-        bumpCount(pbtn.dataset.pack);
-        renderAll();
-      }
-    });
-  }
-
-  function bumpCount(id) {
-    document.querySelectorAll(`[data-count="${id}"]`).forEach(el => {
-      el.classList.add('bump');
-      setTimeout(() => el.classList.remove('bump'), 220);
-    });
-  }
-
-  // ===== Render everything =====
-  function renderAll() {
-    const p = priceCart();
-
-    FLAVORS.forEach(f => {
-      document.querySelectorAll(`[data-count="${f.id}"]`).forEach(el => el.textContent = state.qty[f.id]);
-    });
-
-    // Bar
-    const bar = $('#cart-bar');
-    bar.classList.toggle('hidden', p.totalItems === 0);
-    $('#cart-count').textContent   = p.totalItems;
-    $('#cart-summary').textContent = `${p.totalItems} ${p.totalItems === 1 ? 'Pint' : 'Pints'}`;
-    $('#cart-total').textContent   = fmt(p.grandTotal);
-
-    const badge = $('#cart-badge');
-    if (p.totalItems > 0) { badge.classList.remove('hidden'); badge.textContent = p.totalItems; }
-    else badge.classList.add('hidden');
-
-    // Sheet
-    $('#cart-empty').classList.toggle('hidden', p.totalItems > 0);
-    $('#cart-detail').classList.toggle('hidden', p.totalItems === 0);
-
-    if (p.totalItems > 0) {
-      renderCartItems();
-      renderDiscountLines(p);
-      renderTip(p);
-      renderExpressUI(p);
-    }
-
-    saveCart();
-  }
-
-  // Guest banner + live Protein/Savings counter
-  // Each pint = ~40g protein; savings = discount (excl. tip)
-  function renderExpressUI(p) {
-    // Guest banner: show only when NOT logged in
-    const guestBanner = $('#guest-banner');
-    if (guestBanner) {
-      const cur = Backend.currentCustomer();
-      if (!cur && p.totalItems > 0) guestBanner.classList.remove('hidden');
-      else guestBanner.classList.add('hidden');
-    }
-    // Counter
-    const counter = $('#protein-counter');
-    if (counter) {
-      if (p.totalItems > 0) counter.classList.remove('hidden');
-      else counter.classList.add('hidden');
-      $('#pc-protein').textContent = Math.round(p.totalItems * 40);
-      $('#pc-savings').textContent = (p.totalDiscount || 0).toFixed(2);
-    }
-  }
-
-  // Hydrate form inputs from saved state (called on init AND after login)
-  function hydrateForm() {
-    if (state.customer.name)  $('#f-name').value  = state.customer.name;
-    if (state.customer.email) $('#f-email').value = state.customer.email;
-    if (state.customer.phone) $('#f-phone').value = state.customer.phone;
-    if (state.referral && state.referral.code) {
-      $('#ref-input').value = state.referral.code;
-      const m = $('#ref-msg');
-      m.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · ${state.referral.percent}% additiv`;
-      m.className = 'text-xs mt-2 text-espresso/70';
-    }
-    if (state.tip && state.tip.type === 'fixed' && state.tip.value > 0) {
-      $('#tip-custom').value = state.tip.value;
-      $('#tip-custom-wrap').classList.remove('hidden');
-    }
-  }
-
-  // Mirror customer typing into state so it persists across reloads
-  ['f-name','f-email','f-phone'].forEach(id => {
-    document.addEventListener('input', (e) => {
-      if (e.target && e.target.id === id) {
-        const k = id === 'f-name' ? 'name' : id === 'f-email' ? 'email' : 'phone';
-        state.customer[k] = e.target.value;
-        saveCart();
-      }
-    });
-  });
-
-  function renderCartItems() {
-    const wrap = $('#cart-items');
-    wrap.innerHTML = FLAVORS.filter(f => state.qty[f.id] > 0).map(f => `
-      <div class="flex items-center gap-3 bg-white rounded-2xl p-2.5 border border-espresso/8">
-        <div class="${f.gradient} w-12 h-14 rounded-xl shrink-0"></div>
-        <div class="flex-1 min-w-0">
-          <div class="font-medium text-sm truncate">${f.name}</div>
-          <div class="text-xs text-espresso/55 mt-0.5">${fmt(PRICE)} · Pint</div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="qty-btn" data-act="dec" data-id="${f.id}" aria-label="Weniger"><i data-lucide="minus" class="w-4 h-4"></i></button>
-          <span class="count w-5 text-center text-sm font-semibold" data-count="${f.id}">${state.qty[f.id]}</span>
-          <button class="qty-btn primary" data-act="inc" data-id="${f.id}" aria-label="Mehr"><i data-lucide="plus" class="w-4 h-4"></i></button>
-        </div>
+        <button id="cust-copy-code" class="px-3 py-2.5 rounded-xl btn-berry text-sm flex items-center gap-1.5 shrink-0"><i data-lucide="copy" class="w-4 h-4"></i> <span id="cust-copy-label">Kopieren</span></button>
       </div>
-    `).join('');
-    lucide.createIcons();
-    wrap.querySelectorAll('[data-act]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.id, act = btn.dataset.act;
-        if (act === 'inc') state.qty[id]++;
-        else if (act === 'dec' && state.qty[id] > 0) state.qty[id]--;
-        renderAll();
-      });
-    });
-  }
-
-  function renderDiscountLines(p) {
-    const lines = [];
-    if (p.tens > 0) {
-      const lbl = [];
-      if (p.packs.chocolate.tens) lbl.push(`Choco ×${p.packs.chocolate.tens}`);
-      if (p.packs.vanilla.tens)   lbl.push(`Vanilla ×${p.packs.vanilla.tens}`);
-      if (p.packs.caramel.tens)   lbl.push(`Caramel ×${p.packs.caramel.tens}`);
-      lines.push(`
-        <div class="flex items-center justify-between">
-          <span class="flex items-center gap-2"><span class="badge badge-pack">10er ${lbl.join(', ')}</span><span class="text-espresso/65">10%</span></span>
-          <span class="text-berry font-medium">−${p.tenDiscount.toFixed(2)} CHF</span>
-        </div>`);
-    }
-    if (p.fives > 0) {
-      const lbl = [];
-      if (p.packs.chocolate.fives) lbl.push(`Choco ×${p.packs.chocolate.fives}`);
-      if (p.packs.vanilla.fives)   lbl.push(`Vanilla ×${p.packs.vanilla.fives}`);
-      if (p.packs.caramel.fives)   lbl.push(`Caramel ×${p.packs.caramel.fives}`);
-      lines.push(`
-        <div class="flex items-center justify-between">
-          <span class="flex items-center gap-2"><span class="badge badge-bundle">5er ${lbl.join(', ')}</span><span class="text-espresso/65">5%</span></span>
-          <span class="text-berry font-medium">−${p.fiveDiscount.toFixed(2)} CHF</span>
-        </div>`);
-    }
-    if (p.refDiscount > 0 && state.referral) lines.push(`
-      <div class="flex items-center justify-between">
-        <span class="flex items-center gap-2"><span class="badge badge-ref">Code</span><span class="text-espresso/65">${state.referral.percent}% Empfehlung</span></span>
-        <span class="text-berry font-medium">−${p.refDiscount.toFixed(2)} CHF</span>
-      </div>`);
-
-    const dl = $('#discount-lines');
-    dl.innerHTML = lines.join('');
-    dl.classList.toggle('hidden', lines.length === 0);
-
-    $('#subtotal').textContent = fmt(p.subtotal);
-    $('#grand-total').textContent = fmt(p.grandTotal);
-
-    const totalLine = $('#discount-total-line');
-    if (p.totalDiscount > 0) { totalLine.classList.remove('hidden'); totalLine.classList.add('flex'); $('#discount-total').textContent = `−${p.totalDiscount.toFixed(2)} CHF`; $('#save-note').classList.remove('hidden'); $('#save-amount').textContent = p.totalDiscount.toFixed(2); }
-    else { totalLine.classList.add('hidden'); totalLine.classList.remove('flex'); $('#save-note').classList.add('hidden'); }
-
-    const tipLine = $('#tip-line');
-    if (p.tipAmount > 0) { tipLine.classList.remove('hidden'); tipLine.classList.add('flex'); $('#tip-line-amount').textContent = fmt(p.tipAmount); }
-    else { tipLine.classList.add('hidden'); tipLine.classList.remove('flex'); }
-  }
-
-  function renderTip(p) {
-    $('#tip-amount').textContent = fmt(p.tipAmount);
-    document.querySelectorAll('.tip-pill').forEach(b => {
-      const v = b.dataset.tip;
-      let active = false;
-      if (v === 'custom') active = state.tip.type === 'fixed';
-      else active = state.tip.type === 'percent' && state.tip.value === Number(v);
-      b.classList.toggle('active', active);
-    });
-  }
-
-  // Tip pills
-  document.querySelectorAll('.tip-pill').forEach(b => {
-    b.addEventListener('click', () => {
-      const v = b.dataset.tip;
-      if (v === 'custom') {
-        state.tip = { type:'fixed', value: Number($('#tip-custom').value) || 0 };
-        $('#tip-custom-wrap').classList.remove('hidden');
-        setTimeout(() => $('#tip-custom').focus(), 50);
-      } else {
-        state.tip = { type:'percent', value: Number(v) };
-        $('#tip-custom-wrap').classList.add('hidden');
-        $('#tip-custom').value = '';
-      }
-      renderAll();
-    });
-  });
-  $('#tip-custom').addEventListener('input', (e) => {
-    state.tip = { type:'fixed', value: Number(e.target.value) || 0 };
-    renderAll();
-  });
-
-  // ===== Cart sheet =====
-  function openCart()  { $('#cart-sheet').classList.add('open');    document.body.style.overflow = 'hidden'; }
-  function closeCart() { $('#cart-sheet').classList.remove('open'); document.body.style.overflow = ''; }
-  $('#open-cart').addEventListener('click', openCart);
-  $('#open-cart-top').addEventListener('click', openCart);
-  $('#close-cart').addEventListener('click', closeCart);
-  $('#cart-sheet').addEventListener('click', (e) => { if (e.target === $('#cart-sheet')) closeCart(); });
-
-  // ===== Referral =====
-  $('#ref-apply').addEventListener('click', applyReferral);
-  $('#ref-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); applyReferral(); } });
-
-  // Renders the lock state every second while locked
-  let _refLockTimer = null;
-  function refreshRefLockUI() {
-    const input = $('#ref-input');
-    const btn   = $('#ref-apply');
-    const msg   = $('#ref-msg');
-    if (!input || !btn || !msg) return;
-    const until = refIsLocked();
-    if (until > 0) {
-      input.disabled = true;
-      btn.disabled = true;
-      input.classList.add('opacity-50');
-      btn.classList.add('opacity-50');
-      const t = new Date(until).toLocaleTimeString('de-CH', { hour:'2-digit', minute:'2-digit' });
-      msg.innerHTML = `<span class="text-berry font-medium">⛔ Code-Eingabe gesperrt</span> · Wieder verfügbar um ${t} Uhr`;
-      msg.className = 'text-xs mt-2 text-berry';
-      if (!_refLockTimer) _refLockTimer = setInterval(refreshRefLockUI, 1000);
-    } else {
-      input.disabled = false;
-      btn.disabled = false;
-      input.classList.remove('opacity-50');
-      btn.classList.remove('opacity-50');
-      if (_refLockTimer) { clearInterval(_refLockTimer); _refLockTimer = null; }
-    }
-  }
-
-  function applyReferral(opts = {}) {
-    const input = $('#ref-input');
-    const msg = $('#ref-msg');
-    const honey = $('#ref-honey');
-
-    // Honeypot: silent block (don't tip off bots)
-    if (honey && honey.value) {
-      console.warn('Honeypot triggered — referral rejected.');
-      return;
-    }
-
-    // Rate limit
-    const lockedUntil = refIsLocked();
-    if (lockedUntil > 0) { refreshRefLockUI(); return; }
-
-    const code = input.value.trim().toUpperCase();
-    if (!code) return;
-
-    const valid = REF_PATTERN_NEW.test(code) || REF_PATTERN_LEGACY.test(code);
-    if (!valid) {
-      input.classList.add('error');
-      const s = refRecordInvalid();
-      const left = REF_LOCK_MAX_ATTEMPTS - (s.attempts || 0);
-      if (s.lockedUntil > Date.now()) {
-        refreshRefLockUI();
-      } else {
-        msg.textContent = `Code ungültig. Format: VORNAME + 3 Ziffern (z.B. LUCAS842). Noch ${left} Versuch${left===1?'':'e'}.`;
-        msg.className = 'text-xs mt-2 text-berry';
-      }
-      state.referral = null;
-      renderAll();
-      return;
-    }
-
-    // Valid format
-    refResetAttempts();
-    input.classList.remove('error');
-    state.referral = { code, percent: REF_PCT };
-    input.value = code;
-    const fromUrl = !!opts.fromUrl;
-    msg.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · ${REF_PCT}% Rabatt${fromUrl ? ' (automatisch via Link)' : ''}`;
-    msg.className = 'text-xs mt-2 text-espresso/70';
-    if (!opts.fromUrl) input.blur();
-    saveCart();
-    renderAll();
-  }
-
-  // URL ?ref=CODE  -> auto-apply on page load
-  function handleRefParam() {
-    const params = new URLSearchParams(window.location.search);
-    const ref = params.get('ref');
-    if (!ref) return;
-    const code = String(ref).trim().toUpperCase();
-    // Validate format before doing anything
-    if (REF_PATTERN_NEW.test(code) || REF_PATTERN_LEGACY.test(code)) {
-      // Pre-fill the input so user sees it, then apply
-      const input = $('#ref-input');
-      if (input) input.value = code;
-      applyReferral({ fromUrl: true });
-      // Small toast at top
-      const t = document.createElement('div');
-      t.className = 'fixed top-0 inset-x-0 z-[200] bg-berry text-cream px-4 py-3 text-sm text-center shadow-soft';
-      t.innerHTML = `🎁 Empfehlungscode <strong>${code}</strong> aktiviert · ${REF_PCT}% Rabatt auf deine Bestellung`;
-      document.body.appendChild(t);
-      setTimeout(() => t.remove(), 4000);
-    }
-    // Clean URL regardless to avoid re-triggering on refresh
-    const params2 = new URLSearchParams(window.location.search);
-    params2.delete('ref');
-    const qs = params2.toString();
-    window.history.replaceState({}, '', window.location.pathname + (qs ? '?' + qs : ''));
-  }
-
-  // ===== TWINT Deep Link =====
-  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-  function openTwintApp() {
-    if (!isMobile) return;
-    const a = document.createElement('a');
-    a.href = 'twint://';
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => a.remove(), 100);
-  }
-
-  // ===== Checkout =====
-  $('#pay-twint').addEventListener('click', async () => {
-    // iOS keyboard collapse
-    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
-
-    const name  = $('#f-name').value.trim();
-    const email = $('#f-email').value.trim();
-    const phone = $('#f-phone').value.trim();
-
-    let valid = true;
-    [['f-name', name], ['f-email', email], ['f-phone', phone]].forEach(([id, v]) => {
-      const el = $('#' + id);
-      if (!v) { el.classList.add('error'); valid = false; } else el.classList.remove('error');
-    });
-    if (email && !/^\S+@\S+\.\S+$/.test(email)) { $('#f-email').classList.add('error'); valid = false; }
-    if (!valid) return;
-
-    const p = priceCart();
-    if (p.totalItems === 0) return;
-
-    state.customer = { name, email, phone };
-
-    const btn = $('#pay-twint');
-    btn.disabled = true;
-
-    // Mobile: open TWINT app immediately (must be within user gesture)
-    openTwintApp();
-
-    closeCart();
-    await runPayment(p);
-
-    // Identify guest vs registered customer for ordering schema
-    const cur = Backend.currentCustomer();
-    const userId = cur ? cur.email : 'guest';
-
-    const order = {
-      id: '#' + Math.floor(100000 + Math.random()*900000),
-      ...state.customer,
-      userId,
-      qty: { ...state.qty },
-      pricing: p,
-      referral: state.referral,
-      tip: state.tip,
-      // For logged-in customers use their stable code; for guests derive from order name
-      refCode: (userId !== 'guest' && getCustomerCode(userId, state.customer.name)) || genCode(state.customer.name),
-      // Treat as pending until admin confirms receipt — TWINT may have been cancelled
-      paymentStatus: 'pending',
-      timestamp: new Date(),
-    };
-    // Persist order locally (and to cloud if configured) — always before email
-    try { await Backend.appendOrder(serializeOrder(order)); } catch (e) { /* non-fatal */ }
-
-    // Clear cart but keep customer profile so portal & next order pre-fill
-    state.qty = { chocolate:0, vanilla:0, caramel:0 };
-    state.referral = null;
-    state.tip = { type:'percent', value:0 };
-    $('#ref-input').value = ''; $('#ref-msg').textContent = '';
-    $('#tip-custom').value = ''; $('#tip-custom-wrap').classList.add('hidden');
-    saveCart();
-
-    renderConfirmation(order);
-    btn.disabled = false;
-  });
-
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-  async function runPayment(p) {
-    const ov = $('#pay-overlay');
-    ov.classList.remove('hidden'); ov.classList.add('flex');
-    $('#pay-step-1').classList.remove('hidden');
-    $('#pay-step-2').classList.add('hidden');
-    $('#pay-step-3').classList.add('hidden');
-    $('#pay-step-3-amount').textContent = `${fmt(p.grandTotal)} an ${MERCHANT_TWINT}`;
-
-    await sleep(1400);
-    $('#pay-step-1').classList.add('hidden');
-    $('#pay-step-2').classList.remove('hidden');
-    await sleep(1500);
-    $('#pay-step-2').classList.add('hidden');
-    $('#pay-step-3').classList.remove('hidden');
-    await sleep(1500);
-    ov.classList.add('hidden'); ov.classList.remove('flex');
-  }
-
-  // ===== Confirmation =====
-  function renderConfirmation(order) {
-    const view = $('#confirmation');
-    view.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-
-    $('#conf-greeting').textContent = `Vielen Dank, ${order.name.split(' ')[0]}!`;
-    $('#conf-orderid').textContent  = order.id;
-
-    const itemsHtml = FLAVORS.filter(f => order.qty[f.id] > 0).map(f => `
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3"><div class="${f.gradient} w-8 h-9 rounded-md"></div><span>${order.qty[f.id]}× ${f.name}</span></div>
-        <span class="text-espresso/70">${fmt(order.qty[f.id] * PRICE)}</span>
-      </div>`).join('');
-    $('#conf-items').innerHTML = itemsHtml;
-
-    const p = order.pricing;
-    const disc = [];
-    disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Zwischensumme</span><span>${fmt(p.subtotal)}</span></div>`);
-    if (p.tenDiscount  > 0) disc.push(`<div class="flex justify-between text-berry"><span>10er-Pack (10%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.fiveDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (5%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.refDiscount > 0 && order.referral) disc.push(`<div class="flex justify-between text-berry"><span>Empfehlung (15%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.tipAmount > 0)      disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Trinkgeld</span><span>${fmt(p.tipAmount)}</span></div>`);
-    $('#conf-discounts').innerHTML = disc.join('');
-
-    $('#conf-total').textContent  = fmt(p.grandTotal);
-    $('#conf-refcode').textContent = order.refCode;
-
-    // Pre-fill mailto link as fallback
-    $('#email-link').href = buildMailto(order);
-
-    // Hide all email-status children initially
-    $('#email-sent').classList.add('hidden');
-    $('#email-link').classList.add('hidden');
-    $('#email-hint').classList.add('hidden');
-
-    lucide.createIcons();
-
-    // Try fully automatic sending via FormSubmit.co (no user tap needed)
-    sendOrderEmailAuto(order).then((ok) => {
-      if (ok) {
-        $('#email-sent').classList.remove('hidden');
-        $('#email-sent').classList.add('flex');
-      } else {
-        // Fallback: show one-tap mailto button
-        $('#email-link').classList.remove('hidden');
-        $('#email-link').classList.add('flex');
-        $('#email-hint').classList.remove('hidden');
-      }
-      lucide.createIcons();
-    });
-  }
-
-  function orderItemsToText(order) {
-    return FLAVORS.filter(f => order.qty[f.id] > 0)
-      .map(f => `${order.qty[f.id]}× ${f.name} — ${fmt(order.qty[f.id] * PRICE)}`)
-      .join('\n');
-  }
-
-  function buildOrderText(order) {
-    const p = order.pricing;
-    const firstName = order.name.split(' ')[0];
-    return [
-      `Hallo ${firstName},`,
-      ``,
-      `vielen Dank für deine Bestellung bei Berry's Delights.`,
-      `Diese E-Mail bestätigt deine Bestellung — der Shop ist auf CC.`,
-      ``,
-      `BESTELLUNG`,
-      `Nr.    ${order.id}`,
-      `Datum  ${order.timestamp.toLocaleString('de-CH')}`,
-      ``,
-      `ARTIKEL`,
-      orderItemsToText(order),
-      ``,
-      `ABRECHNUNG`,
-      `Zwischensumme        ${fmt(p.subtotal)}`,
-      p.tenDiscount  > 0 ? `10er-Pack (10%)    − ${p.tenDiscount.toFixed(2)} CHF`  : null,
-      p.fiveDiscount > 0 ? `5er-Pack  (5%)     − ${p.fiveDiscount.toFixed(2)} CHF` : null,
-      (p.refDiscount > 0 && order.referral) ? `Empfehlung (15%)   − ${p.refDiscount.toFixed(2)} CHF  [${order.referral.code}]` : null,
-      p.tipAmount    > 0 ? `Trinkgeld          + ${p.tipAmount.toFixed(2)} CHF`    : null,
-      `————————————————————————————`,
-      `Total bezahlt        ${fmt(p.grandTotal)}`,
-      ``,
-      `ABHOLUNG`,
-      `Standort  ${PICKUP_LOCATION}`,
-      `Du erhältst eine Nachricht, sobald die Bestellung abholbereit ist.`,
-      ``,
-      `ZAHLUNG`,
-      `TWINT an ${MERCHANT_TWINT} · bestätigt`,
-      ``,
-      `DEIN EMPFEHLUNGSCODE`,
-      `${order.refCode}`,
-      `Teile diesen Code. Wenn jemand damit bestellt,`,
-      `erhältst du 15% Rabatt auf deine nächste Bestellung.`,
-      ``,
-      `KONTAKT`,
-      `${order.name}`,
-      `${order.email}`,
-      `${order.phone}`,
-      ``,
-      `——`,
-      `Berry's Delights · Premium High Protein Ice Cream`,
-      `Made in Switzerland`,
-    ].filter(Boolean).join('\n');
-  }
-
-  function buildMailto(order) {
-    const subject = `Bestellbestätigung ${order.id} — Berry's Delights`;
-    const body    = buildOrderText(order);
-    // Customer is TO, shop is CC — single tap, both get the order
-    return `mailto:${encodeURIComponent(order.email)}?cc=${encodeURIComponent(ORDER_EMAIL)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  }
-
-  // Automatic, free, no-signup email via FormSubmit.co
-  // First-time activation: Lucas receives a one-time confirmation email
-  // on the first order; once he clicks the activation link, every future
-  // order auto-sends to him + the customer (as CC) without user action.
-  async function sendOrderEmailAuto(order) {
-    try {
-      const body = buildOrderText(order);
-      const subject = `Bestellbestätigung ${order.id} — Berry's Delights`;
-      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(ORDER_EMAIL), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          _subject: subject,
-          _cc: order.email,
-          _captcha: 'false',
-          _template: 'box',
-          name: order.name,
-          email: order.email,
-          phone: order.phone,
-          order_id: order.id,
-          total: fmt(order.pricing.grandTotal),
-          referral_code: order.refCode,
-          message: body,
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      return !!(data && (data.success === true || data.success === 'true'));
-    } catch (_) {
-      return false;
-    }
-  }
-
-  // Copy
-  $('#copy-ref').addEventListener('click', async () => {
-    const code = $('#conf-refcode').textContent;
-    try { await navigator.clipboard.writeText(code); } catch(_) {}
-    $('#copy-label').textContent = 'Kopiert ✓';
-    setTimeout(() => { $('#copy-label').textContent = 'Kopieren'; }, 1800);
-  });
-
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.share-btn');
-    if (!btn) return;
-    const code = $('#conf-refcode').textContent;
-    const msg = encodeURIComponent(`Probier Berry's Delights – Premium High-Protein Eiscreme. Mit Code ${code} bekommst du 15% Rabatt auf deine Bestellung 🍓`);
-    const type = btn.dataset.share;
-    if (type === 'whatsapp') window.open(`https://wa.me/?text=${msg}`, '_blank');
-    else if (type === 'sms') window.location.href = `sms:?body=${msg}`;
-    else if (type === 'copy') {
-      navigator.clipboard?.writeText(`Berry's Delights · Code ${code}`);
-      btn.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> Kopiert';
-      lucide.createIcons();
-    }
-  });
-
-  $('#new-order').addEventListener('click', () => {
-    state.qty = { chocolate:0, vanilla:0, caramel:0 };
-    state.referral = null;
-    state.tip = { type:'percent', value:0 };
-    state.customer = { name:'', email:'', phone:'' };
-    $('#ref-input').value = ''; $('#ref-msg').textContent = '';
-    $('#tip-custom').value = ''; $('#tip-custom-wrap').classList.add('hidden');
-    $('#f-name').value = $('#f-email').value = $('#f-phone').value = '';
-    $('#confirmation').classList.add('hidden');
-    document.body.style.overflow = '';
-    renderAll();
-    window.scrollTo({ top:0, behavior:'smooth' });
-  });
-
-  // Clear error state when user starts typing
-  document.addEventListener('input', (e) => {
-    if (e.target instanceof HTMLInputElement) e.target.classList.remove('error');
-  });
-
-  // ===== QR Code =====
-  function renderQR() {
-    const wrap = $('#qrcode');
-    wrap.innerHTML = '';
-    const url = window.location.href;
-    new QRCode(wrap, {
-      text: url,
-      width: 180,
-      height: 180,
-      colorDark : '#1A0E10',
-      colorLight: '#FFFFFF',
-      correctLevel: QRCode.CorrectLevel.M,
-    });
-    $('#qr-url').textContent = url;
-  }
-
-  // ============================================================
-  // ===== Backend abstraction: Firebase if configured, else  =====
-  // =====  localStorage. Same interface either way.          =====
-  // ============================================================
-  const ADMIN_EMAIL = 'beer.lucas@hotmail.com';
-  const ADMIN_PASS  = 'LuBe25031997.';
-
-  const Backend = {
-    cloud: false,
-    fbAuth: null,
-    fbDb: null,
-
-    init() {
-      if (!FIREBASE_CONFIG.apiKey || typeof firebase === 'undefined') return false;
-      try {
-        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
-        this.fbAuth = firebase.auth();
-        this.fbDb   = firebase.firestore();
-        this.fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
-        this.cloud = true;
-        return true;
-      } catch (e) {
-        console.warn('Firebase init failed', e);
-        return false;
-      }
-    },
-
-    // ---- Orders ----
-    loadOrdersLocal() {
-      try { return JSON.parse(localStorage.getItem(SK.orders)) || []; }
-      catch { return []; }
-    },
-    saveOrdersLocal(orders) {
-      try { localStorage.setItem(SK.orders, JSON.stringify(orders)); } catch {}
-    },
-
-    async loadAllOrders() {
-      if (!this.cloud) return this.loadOrdersLocal();
-      try {
-        const snap = await this.fbDb.collection('orders').orderBy('timestamp', 'desc').get();
-        const list = snap.docs.map(d => ({ ...d.data(), _id: d.id }));
-        this.saveOrdersLocal(list); // keep a local cache for offline
-        return list;
-      } catch (e) {
-        console.warn('Cloud load failed, fallback to local', e);
-        return this.loadOrdersLocal();
-      }
-    },
-
-    async loadOrdersByEmail(email) {
-      const all = await this.loadAllOrders();
-      const e = String(email || '').toLowerCase();
-      return all.filter(o => String(o.email || '').toLowerCase() === e);
-    },
-
-    async appendOrder(order) {
-      // Always write to local for instant feedback + offline cache
-      const orders = this.loadOrdersLocal();
-      orders.push(order);
-      this.saveOrdersLocal(orders);
-      // Then mirror to cloud if available
-      if (this.cloud) {
-        try { await this.fbDb.collection('orders').doc(order.id).set(order); }
-        catch (e) { console.warn('Cloud write failed', e); }
-      }
-    },
-
-    async updateOrderStatus(id, status) {
-      const orders = this.loadOrdersLocal();
-      const idx = orders.findIndex(o => o.id === id);
-      if (idx >= 0) { orders[idx].paymentStatus = status; this.saveOrdersLocal(orders); }
-      if (this.cloud) {
-        try { await this.fbDb.collection('orders').doc(id).update({ paymentStatus: status }); }
-        catch (e) { console.warn('Cloud update failed', e); }
-      }
-    },
-
-    // ---- Customer auth ----
-    async registerCustomer(email, password) {
-      email = String(email).trim().toLowerCase();
-      if (this.cloud) {
-        const cred = await this.fbAuth.createUserWithEmailAndPassword(email, password);
-        await cred.user.sendEmailVerification({
-          url: window.location.origin + window.location.pathname,
-          handleCodeInApp: false,
-        });
-        await this.fbAuth.signOut();
-        return { email, verified: false, manualLink: null };
-      }
-      // Local fallback
-      const users = this._loadCustomers();
-      if (users[email]) { const err = new Error('Diese E-Mail ist bereits registriert.'); err.code = 'EXISTS'; throw err; }
-      const passwordHash = await this._hash(password);
-      const verifyToken  = (crypto.randomUUID ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2)));
-      users[email] = { email, passwordHash, verified: false, verifyToken, createdAt: new Date().toISOString() };
-      this._saveCustomers(users);
-      const manualLink = window.location.origin + window.location.pathname
-        + '?verify=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(verifyToken);
-      // Try formsubmit (no signup) to deliver
-      this._sendVerifyEmail(email, manualLink).catch(() => {});
-      return { email, verified: false, manualLink };
-    },
-
-    async loginCustomer(email, password) {
-      email = String(email).trim().toLowerCase();
-      if (this.cloud) {
-        const cred = await this.fbAuth.signInWithEmailAndPassword(email, password);
-        if (!cred.user.emailVerified) {
-          const err = new Error('Konto noch nicht bestätigt.'); err.code = 'NOT_VERIFIED'; err.user = cred.user; throw err;
-        }
-        return { email: cred.user.email, verified: true };
-      }
-      const users = this._loadCustomers();
-      const u = users[email];
-      if (!u) { const err = new Error('Kein Konto mit dieser E-Mail.'); err.code = 'NO_USER'; throw err; }
-      const hash = await this._hash(password);
-      if (hash !== u.passwordHash) { const err = new Error('Passwort falsch.'); err.code = 'BAD_PASS'; throw err; }
-      if (!u.verified) { const err = new Error('Konto noch nicht bestätigt.'); err.code = 'NOT_VERIFIED'; throw err; }
-      localStorage.setItem(SK.custSess, email);
-      return { email, verified: true };
-    },
-
-    async logoutCustomer() {
-      if (this.cloud) { try { await this.fbAuth.signOut(); } catch {} }
-      localStorage.removeItem(SK.custSess);
-    },
-
-    currentCustomer() {
-      if (this.cloud) {
-        const u = this.fbAuth && this.fbAuth.currentUser;
-        return u && u.emailVerified ? { email: u.email, verified: true } : null;
-      }
-      const email = localStorage.getItem(SK.custSess);
-      if (!email) return null;
-      const u = this._loadCustomers()[email];
-      return (u && u.verified) ? { email, verified: true } : null;
-    },
-
-    async resendVerification(email) {
-      if (this.cloud) {
-        // Need to be signed in; ignore failures
-        try {
-          const u = this.fbAuth.currentUser;
-          if (u && !u.emailVerified) await u.sendEmailVerification({ url: window.location.origin + window.location.pathname });
-        } catch {}
-        return;
-      }
-      const users = this._loadCustomers();
-      const u = users[email];
-      if (!u || u.verified) return;
-      const link = window.location.origin + window.location.pathname
-        + '?verify=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(u.verifyToken);
-      this._sendVerifyEmail(email, link).catch(() => {});
-    },
-
-    verifyFromURL(email, token) {
-      // Cloud mode: Firebase handles the link itself, this is irrelevant
-      if (this.cloud) return false;
-      email = String(email).trim().toLowerCase();
-      const users = this._loadCustomers();
-      const u = users[email];
-      if (!u) return false;
-      if (u.verified) return true;
-      if (u.verifyToken !== token) return false;
-      u.verified = true; delete u.verifyToken;
-      users[email] = u;
-      this._saveCustomers(users);
-      return true;
-    },
-
-    // ---- internal ----
-    _loadCustomers() {
-      try { return JSON.parse(localStorage.getItem(SK.customers)) || {}; }
-      catch { return {}; }
-    },
-    _saveCustomers(users) {
-      try { localStorage.setItem(SK.customers, JSON.stringify(users)); } catch {}
-    },
-    async _hash(pwd) {
-      const salt = 'berrysdelights_v1_salt_change_for_prod';
-      const enc = new TextEncoder().encode(pwd + salt);
-      const buf = await crypto.subtle.digest('SHA-256', enc);
-      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
-    },
-    async _sendVerifyEmail(email, link) {
-      const subject = `Bestätige dein Berry's Delights Konto`;
-      const body = [
-        `Hallo,`,
-        ``,
-        `Danke für deine Registrierung bei Berry's Delights.`,
-        `Bitte aktiviere dein Konto über diesen Link:`,
-        ``,
-        link,
-        ``,
-        `Falls du dich nicht registriert hast, ignoriere diese E-Mail.`,
-        ``,
-        `Berry's Delights — Premium High Protein Ice Cream`,
-      ].join('\n');
-      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ _subject: subject, _captcha: 'false', _template: 'box', message: body, verify_link: link }),
-      });
-      const data = await res.json().catch(() => ({}));
-      return data && (data.success === 'true' || data.success === true);
-    },
-  };
-
-  // Compat alias for old code paths
-  const OrderStore = {
-    load:   () => Backend.loadAllOrders(),
-    append: (order) => Backend.appendOrder(order),
-  };
-
-  function serializeOrder(order) {
-    return {
-      id: order.id,
-      userId: order.userId || 'guest',
-      name: order.name,
-      email: String(order.email || '').toLowerCase(),
-      phone: order.phone,
-      qty: { ...order.qty },
-      pricing: { ...order.pricing },
-      referral: order.referral ? { ...order.referral } : null,
-      tip: { ...order.tip },
-      refCode: order.refCode,
-      paymentStatus: order.paymentStatus || 'pending',
-      timestamp: (order.timestamp instanceof Date ? order.timestamp : new Date(order.timestamp)).toISOString(),
-    };
-  }
-
-  // Admin session — persists across browser restarts (localStorage)
-  const isLoggedIn = () => localStorage.getItem(SK.adminSess) === '1';
-  const setLoggedIn = (v) => v ? localStorage.setItem(SK.adminSess, '1') : localStorage.removeItem(SK.adminSess);
-
-  // Entry
-  $('#bo-entry').addEventListener('click', () => {
-    if (isLoggedIn()) { showBackoffice(); }
-    else {
-      $('#bo-login').classList.remove('hidden');
-      setTimeout(() => $('#bo-user').focus(), 50);
-    }
-  });
-  $('#bo-login-close').addEventListener('click', () => {
-    $('#bo-login').classList.add('hidden');
-    $('#bo-pass').value = '';
-    $('#bo-login-err').classList.add('hidden');
-  });
-  $('#bo-login-btn').addEventListener('click', tryLogin);
-  $('#bo-pass').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
-
-  function tryLogin() {
-    const u = $('#bo-user').value.trim().toLowerCase();
-    const p = $('#bo-pass').value;
-    if (u === ADMIN_EMAIL.toLowerCase() && p === ADMIN_PASS) {
-      setLoggedIn(true);
-      $('#bo-login').classList.add('hidden');
-      $('#bo-pass').value = '';
-      $('#bo-login-err').classList.add('hidden');
-      showBackoffice();
-    } else {
-      $('#bo-login-err').classList.remove('hidden');
-      $('#bo-pass').classList.add('error');
-      setTimeout(() => $('#bo-pass').classList.remove('error'), 1200);
-    }
-  }
-
-  let boCurrentFilter = 'all';
-
-  async function showBackoffice() {
-    $('#backoffice').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    await renderBackoffice(boCurrentFilter);
-    lucide.createIcons();
-  }
-
-  $('#bo-logout').addEventListener('click', () => {
-    setLoggedIn(false);
-    $('#backoffice').classList.add('hidden');
-    $('#bo-detail').classList.add('hidden');
-    document.body.style.overflow = '';
-  });
-
-  const MONTH_NAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-
-  function monthKey(d) {
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
-  }
-  function monthLabel(key) {
-    const [y, m] = key.split('-');
-    return MONTH_NAMES[parseInt(m,10) - 1] + ' ' + y;
-  }
-
-  async function renderBackoffice(filter) {
-    boCurrentFilter = filter;
-    const orders = await OrderStore.load();
-
-    // Stats (always over ALL orders)
-    const totalRevenue = orders.reduce((s, o) => s + (o.pricing?.grandTotal || 0), 0);
-    $('#bo-stat-count').textContent   = orders.length;
-    $('#bo-stat-revenue').textContent = totalRevenue.toFixed(2) + ' CHF';
-
-    // Month filter pills
-    const months = new Set();
-    orders.forEach(o => { try { months.add(monthKey(new Date(o.timestamp))); } catch {} });
-    const monthList = [...months].sort().reverse();
-    const pills = [`<button class="filter-pill ${filter === 'all' ? 'active' : ''}" data-filter="all">Alle (${orders.length})</button>`];
-    monthList.forEach(k => {
-      const count = orders.filter(o => monthKey(new Date(o.timestamp)) === k).length;
-      pills.push(`<button class="filter-pill ${filter === k ? 'active' : ''}" data-filter="${k}">${monthLabel(k)} (${count})</button>`);
-    });
-    $('#bo-filters').innerHTML = pills.join('');
-    $('#bo-filters').querySelectorAll('[data-filter]').forEach(b => {
-      b.addEventListener('click', () => renderBackoffice(b.dataset.filter));
-    });
-
-    // Filtered list (newest first)
-    let list = orders.slice();
-    if (filter !== 'all') list = list.filter(o => monthKey(new Date(o.timestamp)) === filter);
-    list.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-    if (list.length === 0) {
-      $('#bo-list').classList.add('hidden');
-      $('#bo-empty').classList.remove('hidden');
-    } else {
-      $('#bo-list').classList.remove('hidden');
-      $('#bo-empty').classList.add('hidden');
-      $('#bo-list').innerHTML = list.map(o => {
-        const d = new Date(o.timestamp);
-        const dStr = d.toLocaleString('de-CH', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
-        const totalItems = (o.qty?.chocolate || 0) + (o.qty?.vanilla || 0) + (o.qty?.caramel || 0);
-        return `
-          <button class="order-card no-select" data-order-id="${o.id}">
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0 flex-1">
-                <div class="text-[10px] uppercase tracking-widest text-espresso/55">${dStr}</div>
-                <div class="font-display text-base font-semibold mt-0.5">${o.id} · ${o.name}</div>
-                <div class="text-xs text-espresso/60 mt-1 truncate">${totalItems} ${totalItems === 1 ? 'Pint' : 'Pints'} · ${o.email}</div>
-              </div>
-              <div class="text-right shrink-0">
-                <div class="font-display text-lg font-semibold">${(o.pricing?.grandTotal || 0).toFixed(2)}</div>
-                <div class="text-[10px] uppercase tracking-widest text-espresso/55">CHF</div>
-              </div>
-            </div>
-          </button>`;
-      }).join('');
-      $('#bo-list').querySelectorAll('[data-order-id]').forEach(b => {
-        b.addEventListener('click', () => showOrderDetail(b.dataset.orderId));
-      });
-    }
-  }
-
-  async function showOrderDetail(id) {
-    const orders = await OrderStore.load();
-    const o = orders.find(x => x.id === id);
-    if (!o) return;
-    const d = new Date(o.timestamp);
-    const dStr = d.toLocaleString('de-CH');
-    const p = o.pricing || {};
-
-    const itemsArr = [];
-    if (o.qty?.chocolate > 0) itemsArr.push({ name:'Chocolate Fudge Brownie', qty:o.qty.chocolate });
-    if (o.qty?.vanilla   > 0) itemsArr.push({ name:'Vanilla Cookie Dough',     qty:o.qty.vanilla });
-    if (o.qty?.caramel   > 0) itemsArr.push({ name:'Salted Caramel Toffee',    qty:o.qty.caramel });
-
-    const itemsHtml = itemsArr.map(i => `
-      <div class="flex justify-between text-sm py-1">
-        <span>${i.qty}× ${i.name}</span>
-        <span class="text-espresso/70">${(i.qty * PRICE).toFixed(2)} CHF</span>
-      </div>`).join('');
-
-    const discountLines = [];
-    if (p.tenDiscount  > 0) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>10er-Pack (10%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.fiveDiscount > 0) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>5er-Pack (5%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.refDiscount > 0 && o.referral) discountLines.push(`<div class="flex justify-between text-sm text-berry"><span>Empfehlung (${o.referral.percent}%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
-    if (p.tipAmount   > 0) discountLines.push(`<div class="flex justify-between text-sm"><span class="text-espresso/60">Trinkgeld</span><span>${p.tipAmount.toFixed(2)} CHF</span></div>`);
-
-    $('#bo-detail-content').innerHTML = `
-      <div class="rounded-2xl bg-white border border-espresso/8 p-5 shadow-card">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">${dStr}</div>
-        <h2 class="font-display text-2xl font-semibold mt-1">${o.id}</h2>
-        <p class="text-espresso/70 text-sm mt-1">${o.name}</p>
+      <div class="mt-3 grid grid-cols-2 gap-2">
+        <button id="share-whatsapp" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2" style="background:#25D366;color:#fff;"><i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp</button>
+        <button id="share-instagram" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2 text-cream" style="background:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5 100%);"><i data-lucide="instagram" class="w-4 h-4"></i> Instagram</button>
       </div>
+    </div>
 
-      <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
-        <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Kontakt</p>
-        <div class="space-y-1.5 text-sm">
-          <div class="flex items-center gap-2"><i data-lucide="user" class="w-4 h-4 text-espresso/55"></i><span>${o.name}</span></div>
-          <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-espresso/55"></i><a class="underline" href="mailto:${o.email}">${o.email}</a></div>
-          <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-espresso/55"></i><a class="underline" href="tel:${o.phone}">${o.phone}</a></div>
-        </div>
+    <div id="cust-list" class="space-y-3"></div>
+    <div id="cust-empty" class="hidden text-center py-12">
+      <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i></div>
+      <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
+      <p class="text-sm text-espresso/55 mt-1">Mach gleich los — deine Muskeln warten schon!</p>
+    </div>
+  </div>
+</div>
+
+<!-- BACKOFFICE LOGIN -->
+<div id="bo-login" class="hidden fixed inset-0 z-[95] bg-espresso/95 backdrop-blur-md overflow-y-auto">
+  <div class="max-w-md mx-auto px-5 pt-12 safe-top safe-bottom">
+    <button id="bo-login-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div class="text-center mb-8">
+      <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center"><i data-lucide="lock" class="w-6 h-6"></i></div>
+      <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Backoffice</h2>
+      <p class="text-cream/55 text-sm mt-1">Nur für Lucas</p>
+    </div>
+    <div class="space-y-3">
+      <input id="bo-user" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
+      <input id="bo-pass" type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
+      <button id="bo-login-btn" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button>
+      <p id="bo-login-err" class="hidden text-blush text-sm text-center">Falsche Zugangsdaten</p>
+    </div>
+  </div>
+</div>
+
+<!-- BACKOFFICE PANEL -->
+<div id="backoffice" class="hidden fixed inset-0 z-[96] bg-cream overflow-y-auto">
+  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
+    <header class="flex items-center justify-between mb-6">
+      <div>
+        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Berry's Delights</p>
+        <h1 class="font-display text-2xl font-semibold">Backoffice</h1>
       </div>
+      <button id="bo-logout" class="px-3 py-2 rounded-xl border border-espresso/15 text-xs font-medium">Abmelden</button>
+    </header>
 
-      <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
-        <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Artikel</p>
-        ${itemsHtml || '<p class="text-sm text-espresso/55">Keine Artikel</p>'}
+    <!-- Stats area -->
+    <div id="bo-stats"></div>
+
+    <!-- View tabs -->
+    <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-espresso/5 mt-5">
+      <button id="bo-tab-orders"   class="cust-tab active py-2 rounded-xl text-sm font-medium">Bestellungen</button>
+      <button id="bo-tab-feedback" class="cust-tab py-2 rounded-xl text-sm font-medium">Feedback</button>
+    </div>
+
+    <div id="bo-view-orders" class="mt-4">
+      <div class="overflow-x-auto -mx-1 px-1 mb-3"><div id="bo-filters" class="flex gap-2 min-w-max"></div></div>
+      <div id="bo-list" class="space-y-2.5"></div>
+      <div id="bo-empty" class="hidden text-center py-10">
+        <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="inbox" class="w-7 h-7 text-berryd"></i></div>
+        <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
       </div>
+    </div>
 
-      <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
-        <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Abrechnung</p>
-        <div class="flex justify-between text-sm"><span class="text-espresso/60">Zwischensumme</span><span>${(p.subtotal || 0).toFixed(2)} CHF</span></div>
-        ${discountLines.join('')}
-        <div class="hairline my-3"></div>
-        <div class="flex justify-between"><span class="font-display text-base">Total bezahlt</span><span class="font-display text-lg font-semibold">${(p.grandTotal || 0).toFixed(2)} CHF</span></div>
-      </div>
+    <div id="bo-view-feedback" class="hidden mt-4">
+      <div id="bo-feedback-list" class="space-y-2.5"></div>
+    </div>
+  </div>
+</div>
 
-      <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
-        <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Empfehlung</p>
-        <div class="text-sm space-y-1.5">
-          ${o.referral ? `<div>Eingelöster Code: <strong>${o.referral.code}</strong> (${o.referral.percent}%)</div>` : '<div class="text-espresso/55">Kein Code eingelöst</div>'}
-          <div>Neu vergebener Code: <strong>${o.refCode || '—'}</strong></div>
-        </div>
-      </div>
+<!-- ORDER DETAIL -->
+<div id="bo-detail" class="hidden fixed inset-0 z-[97] bg-cream overflow-y-auto">
+  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
+    <button id="bo-detail-back" class="mb-4 inline-flex items-center gap-2 text-sm text-espresso/70"><i data-lucide="chevron-left" class="w-4 h-4"></i> Zurück zur Liste</button>
+    <div id="bo-detail-content"></div>
+  </div>
+</div>
 
-      <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
-        <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Zahlung & Abholung</p>
-        <div class="text-sm space-y-1.5">
-          <div class="flex items-center gap-2"><span class="twint-mark"></span><span>${MERCHANT_TWINT}</span></div>
-          <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-espresso/55"></i><span>${PICKUP_LOCATION}</span></div>
-        </div>
-      </div>
-    `;
-    $('#backoffice').classList.add('hidden');
-    $('#bo-detail').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    lucide.createIcons();
-  }
+<!-- Single module entry — all logic lives in /js/* -->
+<script type="module" src="./js/app.js"></script>
 
-  $('#bo-detail-back').addEventListener('click', () => {
-    $('#bo-detail').classList.add('hidden');
-    $('#backoffice').classList.remove('hidden');
-  });
-
-  // ============================================================
-  // ===== Customer Account UI: modal, tabs, register, login,    =====
-  // =====  portal with order history, reorder, TWINT re-pay    =====
-  // ============================================================
-
-  function setAccountIndicator() {
-    const dot = $('#account-dot');
-    if (!dot) return;
-    if (Backend.currentCustomer()) dot.classList.remove('hidden');
-    else dot.classList.add('hidden');
-    // Re-render cart UI so guest banner shows/hides correctly on auth changes
-    if (typeof renderAll === 'function') renderAll();
-  }
-
-  function openAccount() {
-    const cur = Backend.currentCustomer();
-    if (cur) { openCustomerPortal(); return; }
-    $('#cust-auth').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    switchAuthTab('login');
-    setTimeout(() => $('#login-email').focus(), 50);
-  }
-  function closeAuth() {
-    $('#cust-auth').classList.add('hidden');
-    if (!$('#cust-portal').classList.contains('hidden')) return; // portal still open
-    document.body.style.overflow = '';
-  }
-
-  function switchAuthTab(which) {
-    const isLogin = which === 'login';
-    $('#tab-login').classList.toggle('active', isLogin);
-    $('#tab-register').classList.toggle('active', !isLogin);
-    $('#form-login').classList.toggle('hidden', !isLogin);
-    $('#form-register').classList.toggle('hidden', isLogin);
-    $('#verify-prompt').classList.add('hidden');
-    $('#login-err').classList.add('hidden');
-    $('#login-not-verified').classList.add('hidden');
-    $('#reg-err').classList.add('hidden');
-  }
-
-  $('#open-account').addEventListener('click', openAccount);
-  $('#cust-auth-close').addEventListener('click', closeAuth);
-  $('#cust-auth').addEventListener('click', (e) => { if (e.target.id === 'cust-auth') closeAuth(); });
-  $('#tab-login').addEventListener('click', () => switchAuthTab('login'));
-  $('#tab-register').addEventListener('click', () => switchAuthTab('register'));
-
-  // --- Register ---
-  $('#form-register').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const err = $('#reg-err');
-    err.classList.add('hidden');
-    const email = $('#reg-email').value.trim().toLowerCase();
-    const p1 = $('#reg-pass').value;
-    const p2 = $('#reg-pass2').value;
-    if (!/^\S+@\S+\.\S+$/.test(email)) { err.textContent = 'Ungültige E-Mail.'; err.classList.remove('hidden'); return; }
-    if (p1.length < 8) { err.textContent = 'Passwort muss mindestens 8 Zeichen lang sein.'; err.classList.remove('hidden'); return; }
-    if (p1 !== p2)     { err.textContent = 'Passwörter stimmen nicht überein.';      err.classList.remove('hidden'); return; }
-
-    const btn = e.submitter || $('#form-register button[type="submit"]');
-    btn.disabled = true; const oldText = btn.textContent; btn.textContent = 'Wird erstellt…';
-    try {
-      const res = await Backend.registerCustomer(email, p1);
-      $('#form-register').classList.add('hidden');
-      $('#verify-prompt').classList.remove('hidden');
-      const msg = $('#verify-msg');
-      if (Backend.cloud) {
-        msg.textContent = `Bestätigungs-Mail an ${email} versendet (kann ein paar Sekunden dauern). Klick den Link, danach kannst du dich anmelden.`;
-        $('#verify-manual-wrap').classList.add('hidden');
-      } else {
-        msg.innerHTML = `Wir haben versucht, dir an <strong class="text-cream">${email}</strong> einen Bestätigungslink zu senden. Falls die E-Mail nicht ankommt (z.B. weil der Mail-Provider noch aktiviert werden muss), kannst du den Link unten direkt verwenden:`;
-        $('#verify-manual-link').href = res.manualLink;
-        $('#verify-manual-link').textContent = res.manualLink;
-        $('#verify-manual-wrap').classList.remove('hidden');
-      }
-    } catch (e2) {
-      err.textContent = e2.message || 'Registrierung fehlgeschlagen.';
-      err.classList.remove('hidden');
-    } finally {
-      btn.disabled = false; btn.textContent = oldText;
-    }
-  });
-
-  // --- Login ---
-  $('#form-login').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const err = $('#login-err');
-    const notVerified = $('#login-not-verified');
-    err.classList.add('hidden'); notVerified.classList.add('hidden');
-    const email = $('#login-email').value.trim().toLowerCase();
-    const pw    = $('#login-pass').value;
-    if (!email || !pw) { err.textContent = 'E-Mail und Passwort eingeben.'; err.classList.remove('hidden'); return; }
-
-    const btn = e.submitter || $('#form-login button[type="submit"]');
-    btn.disabled = true; const oldText = btn.textContent; btn.textContent = 'Wird angemeldet…';
-    try {
-      await Backend.loginCustomer(email, pw);
-      // Pre-fill checkout form for next purchase
-      state.customer.email = email;
-      saveCart();
-      $('#f-email').value = email;
-      setAccountIndicator();
-      closeAuth();
-      openCustomerPortal();
-    } catch (e2) {
-      if (e2.code === 'NOT_VERIFIED') {
-        notVerified.dataset.email = email;
-        notVerified.classList.remove('hidden');
-      } else {
-        err.textContent = e2.message || 'Anmeldung fehlgeschlagen.';
-        err.classList.remove('hidden');
-      }
-    } finally {
-      btn.disabled = false; btn.textContent = oldText;
-    }
-  });
-
-  $('#resend-verify').addEventListener('click', async () => {
-    const email = $('#login-email').value.trim().toLowerCase();
-    if (!email) return;
-    await Backend.resendVerification(email);
-    $('#login-not-verified').innerHTML = 'Bestätigungsmail wurde erneut gesendet (auch Spam checken).';
-  });
-
-  // --- Portal ---
-  async function openCustomerPortal() {
-    closeAuth();
-    $('#cust-portal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    await renderCustomerPortal();
-    lucide.createIcons();
-  }
-  function closeCustomerPortal() {
-    $('#cust-portal').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-  $('#cust-close').addEventListener('click', closeCustomerPortal);
-  $('#cust-logout').addEventListener('click', async () => {
-    await Backend.logoutCustomer();
-    setAccountIndicator();
-    closeCustomerPortal();
-  });
-
-  async function renderCustomerPortal() {
-    const cur = Backend.currentCustomer();
-    if (!cur) { closeCustomerPortal(); openAccount(); return; }
-    const firstName = (state.customer && state.customer.name) ? state.customer.name.split(' ')[0] : null;
-    $('#cust-greeting').textContent = firstName ? `Willkommen, ${firstName}` : 'Willkommen';
-    $('#cust-email').textContent = cur.email;
-
-    const orders = await Backend.loadOrdersByEmail(cur.email);
-    orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
-    const revenue = orders.reduce((s, o) => s + (o.pricing?.grandTotal || 0), 0);
-    $('#cust-stat-count').textContent = orders.length;
-    $('#cust-stat-revenue').textContent = revenue.toFixed(2) + ' CHF';
-
-    // Customer's stable personal referral code
-    const refCode = getCustomerCode(cur.email, firstName || (orders[0] && orders[0].name));
-    $('#cust-refcode').textContent = refCode;
-
-    if (orders.length === 0) {
-      $('#cust-list').classList.add('hidden');
-      $('#cust-empty').classList.remove('hidden');
-      return;
-    }
-    $('#cust-list').classList.remove('hidden');
-    $('#cust-empty').classList.add('hidden');
-
-    $('#cust-list').innerHTML = orders.map(o => {
-      const d = new Date(o.timestamp);
-      const dStr = d.toLocaleString('de-CH', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
-      const itemLines = [];
-      if (o.qty?.chocolate > 0) itemLines.push(`${o.qty.chocolate}× Chocolate`);
-      if (o.qty?.vanilla   > 0) itemLines.push(`${o.qty.vanilla}× Vanilla`);
-      if (o.qty?.caramel   > 0) itemLines.push(`${o.qty.caramel}× Caramel`);
-      const status = o.paymentStatus || 'pending';
-      const statusBadge = status === 'paid'
-        ? `<span class="status-pill status-paid">Bezahlt</span>`
-        : status === 'cancelled'
-          ? `<span class="status-pill status-cancelled">Storniert</span>`
-          : `<span class="status-pill status-pending">Zahlung offen</span>`;
-      const payBtn = status === 'pending'
-        ? `<button class="flex-1 rounded-xl btn-twint py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-2 repay-btn" data-id="${o.id}"><span class="twint-mark"></span> Jetzt bezahlen</button>`
-        : '';
-      return `
-        <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <div class="text-[10px] uppercase tracking-widest text-espresso/55">${dStr}</div>
-              <div class="font-display text-base font-semibold mt-0.5">${o.id}</div>
-              <div class="text-xs text-espresso/65 mt-1">${itemLines.join(' · ') || '—'}</div>
-            </div>
-            <div class="text-right shrink-0">
-              <div class="font-display text-lg font-semibold">${(o.pricing?.grandTotal || 0).toFixed(2)} CHF</div>
-              <div class="mt-1">${statusBadge}</div>
-            </div>
-          </div>
-          <div class="flex gap-2 mt-3">
-            <button class="flex-1 rounded-xl border border-espresso/15 py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-2 reorder-btn" data-id="${o.id}">
-              <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Wieder bestellen
-            </button>
-            ${payBtn}
-          </div>
-        </div>`;
-    }).join('');
-
-    // Wire reorder / repay
-    $('#cust-list').querySelectorAll('.reorder-btn').forEach(b => {
-      b.addEventListener('click', () => reorderById(b.dataset.id));
-    });
-    $('#cust-list').querySelectorAll('.repay-btn').forEach(b => {
-      b.addEventListener('click', () => repayById(b.dataset.id));
-    });
-    lucide.createIcons();
-  }
-
-  // Small toast (top, auto-fades after ~2s)
-  function showToast(html, color = '#1A0E10') {
-    const t = document.createElement('div');
-    t.className = 'fixed top-0 inset-x-0 z-[200] text-cream px-4 py-3 text-sm text-center shadow-soft';
-    t.style.background = color;
-    t.innerHTML = html;
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 2200);
-  }
-
-  function shareTextFor(code) {
-    const base = window.location.origin + window.location.pathname;
-    const url  = `${base}?ref=${encodeURIComponent(code)}`;
-    return `Hey! Gönn dir mal das High-Protein Eis von Berry's Delights. Über meinen Link kriegst du direkt 5% Extra-Rabatt auf deine erste Bestellung: ${url} 🍦💪`;
-  }
-
-  $('#cust-copy-code').addEventListener('click', async () => {
-    const code = $('#cust-refcode').textContent.trim();
-    if (!code || code === '—') return;
-    try { await navigator.clipboard.writeText(code); } catch {}
-    $('#cust-copy-label').textContent = 'Kopiert ✓';
-    setTimeout(() => { $('#cust-copy-label').textContent = 'Kopieren'; }, 1600);
-  });
-
-  $('#share-whatsapp').addEventListener('click', () => {
-    const code = $('#cust-refcode').textContent.trim();
-    if (!code || code === '—') return;
-    const text = shareTextFor(code);
-    // Opens the native WhatsApp app on mobile, web on desktop
-    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
-  });
-
-  $('#share-instagram').addEventListener('click', async () => {
-    const code = $('#cust-refcode').textContent.trim();
-    if (!code || code === '—') return;
-    const text = shareTextFor(code);
-    let copied = false;
-    try { await navigator.clipboard.writeText(text); copied = true; } catch {}
-    if (copied) showToast('✓ Text kopiert! Jetzt in Instagram einfügen.', '#25D366');
-    else        showToast('Konnte Text nicht kopieren — Browser hat Clipboard blockiert.', '#8B1A3B');
-    // Deep link to Instagram app (silently fails on desktop / no-app)
-    setTimeout(() => {
-      const a = document.createElement('a');
-      a.href = 'instagram://';
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => a.remove(), 100);
-    }, 300);
-  });
-
-  async function reorderById(id) {
-    const all = await Backend.loadAllOrders();
-    const o = all.find(x => x.id === id);
-    if (!o) return;
-    state.qty.chocolate += o.qty?.chocolate || 0;
-    state.qty.vanilla   += o.qty?.vanilla   || 0;
-    state.qty.caramel   += o.qty?.caramel   || 0;
-    saveCart();
-    closeCustomerPortal();
-    renderAll();
-    openCart();
-  }
-
-  async function repayById(id) {
-    const all = await Backend.loadAllOrders();
-    const o = all.find(x => x.id === id);
-    if (!o) return;
-    const amount = (o.pricing?.grandTotal || 0).toFixed(2);
-    const ok = confirm(`TWINT wird geöffnet.\n\nBitte überweise ${amount} CHF an ${MERCHANT_TWINT}.\n\nFortfahren?`);
-    if (!ok) return;
-    openTwintApp();
-  }
-
-  // ============================================================
-  // ===== Admin payment status toggle (in detail view) =====
-  // ============================================================
-  document.addEventListener('click', async (e) => {
-    const setBtn = e.target.closest('[data-set-status]');
-    if (!setBtn) return;
-    const id = setBtn.dataset.id;
-    const status = setBtn.dataset.setStatus;
-    await Backend.updateOrderStatus(id, status);
-    await showOrderDetail(id);
-  });
-
-  // Extend showOrderDetail with status controls — append after detail content render
-  const _origShowOrderDetail = showOrderDetail;
-  showOrderDetail = async function (id) {
-    await _origShowOrderDetail(id);
-    const all = await Backend.loadAllOrders();
-    const o = all.find(x => x.id === id);
-    if (!o) return;
-    const status = o.paymentStatus || 'pending';
-    const statusBadge = status === 'paid'
-      ? `<span class="status-pill status-paid">Bezahlt</span>`
-      : status === 'cancelled'
-        ? `<span class="status-pill status-cancelled">Storniert</span>`
-        : `<span class="status-pill status-pending">Zahlung offen</span>`;
-    const extra = document.createElement('div');
-    extra.className = 'mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft';
-    extra.innerHTML = `
-      <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Zahlungsstatus</p>
-      <div class="flex items-center justify-between mb-3">
-        <div>Aktuell: ${statusBadge}</div>
-      </div>
-      <div class="grid grid-cols-3 gap-2">
-        <button class="filter-pill ${status==='pending'?'active':''}" data-set-status="pending" data-id="${o.id}">Offen</button>
-        <button class="filter-pill ${status==='paid'?'active':''}" data-set-status="paid" data-id="${o.id}">Bezahlt</button>
-        <button class="filter-pill ${status==='cancelled'?'active':''}" data-set-status="cancelled" data-id="${o.id}">Storniert</button>
-      </div>`;
-    $('#bo-detail-content').appendChild(extra);
-  };
-
-  // ============================================================
-  // ===== Email verification URL handler (local-mode only) =====
-  // ============================================================
-  function handleVerifyURL() {
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get('verify');
-    const token = params.get('token');
-    if (!email || !token) return;
-    const ok = Backend.verifyFromURL(email, token);
-    if (ok) {
-      // Friendly inline confirmation
-      const banner = document.createElement('div');
-      banner.className = 'fixed top-0 inset-x-0 z-[200] bg-berry text-cream px-4 py-3 text-sm text-center';
-      banner.textContent = `Konto ${email} bestätigt. Du kannst dich jetzt anmelden.`;
-      document.body.appendChild(banner);
-      setTimeout(() => banner.remove(), 5000);
-    }
-    // Clean URL regardless to avoid re-triggering
-    window.history.replaceState({}, '', window.location.pathname);
-  }
-
-  // ===== Init =====
-  // Order matters: hydrate cart BEFORE first render so counts/discounts are correct.
-  _cartHydrating = true;
-  loadCart();
-  _cartHydrating = false;
-
-  // Initialize cloud backend (no-op if config empty)
-  Backend.init();
-  // When Firebase auth resolves later, refresh the indicator
-  if (Backend.cloud && Backend.fbAuth) {
-    Backend.fbAuth.onAuthStateChanged(() => {
-      setAccountIndicator();
-      if (!$('#cust-portal').classList.contains('hidden')) renderCustomerPortal();
-    });
-  }
-
-  renderFlavors();
-  renderAll();
-  hydrateForm();
-  setAccountIndicator();
-  handleVerifyURL();
-  refreshRefLockUI();   // pick up any persisted lock from previous session
-  handleRefParam();     // auto-apply ?ref= from URL
-  lucide.createIcons();
-
-  // QR renders on first details open (or immediately if details is open by default)
-  const qrDetails = document.querySelector('details');
-  qrDetails.addEventListener('toggle', () => { if (qrDetails.open) renderQR(); });
-  if (window.QRCode) renderQR();
-})();
-</script>
 </body>
 </html>

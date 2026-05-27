@@ -1,0 +1,76 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+
+    "users": {
+      "$uid": {
+        ".read":  "auth != null && (auth.uid == $uid || auth.token.email == 'beer.lucas@hotmail.com')",
+        ".write": "auth != null && (auth.uid == $uid || auth.token.email == 'beer.lucas@hotmail.com')",
+        "role": {
+          ".validate": "newData.val() != 'admin' || auth.token.email == 'beer.lucas@hotmail.com'"
+        },
+        "referralBonusPercent": {
+          ".write": "auth != null && (auth.uid == $uid && newData.val() == data.val()) || auth.token.email == 'beer.lucas@hotmail.com'"
+        },
+        "email":       { ".validate": "newData.isString() && newData.val().length <= 254" },
+        "firstName":   { ".validate": "newData.isString() && newData.val().length <= 80" },
+        "refCode":     { ".validate": "newData.isString() && newData.val().matches(/^[A-Z]{2,12}[0-9]{3}$/)" }
+      }
+    },
+
+    "referralCodes": {
+      ".read":  "auth != null",
+      "$code": {
+        ".validate": "$code.matches(/^[A-Z]{2,12}[0-9]{3}$/)",
+        ".write":    "auth != null && (auth.token.email == 'beer.lucas@hotmail.com' || (!data.exists() && newData.child('ownerUid').val() == auth.uid))",
+        "ownerUid":   { ".validate": "newData.isString()" },
+        "ownerEmail": { ".validate": "newData.isString()" },
+        "createdAt":  { ".validate": "newData.isNumber() || newData.val() == now" }
+      }
+    },
+
+    "orders": {
+      ".read":  "auth != null && auth.token.email == 'beer.lucas@hotmail.com'",
+      "$orderId": {
+        ".read":  "auth != null && (data.child('userId').val() == auth.uid || auth.token.email == 'beer.lucas@hotmail.com')",
+        ".write": "auth != null && ((!data.exists() && (newData.child('userId').val() == auth.uid || newData.child('userId').val() == 'guest')) || auth.token.email == 'beer.lucas@hotmail.com')",
+        ".validate": "newData.hasChildren(['id','userId','email','qty','pricing','paymentStatus','timestamp'])",
+        "paymentStatus": {
+          ".validate": "newData.val() == 'zahlung_ausstehend' || newData.val() == 'offen' || newData.val() == 'bezahlt' || newData.val() == 'in_produktion' || newData.val() == 'abholbereit' || newData.val() == 'abgeschlossen' || newData.val() == 'storniert'",
+          ".write": "auth != null && (auth.token.email == 'beer.lucas@hotmail.com' || (!data.exists() && newData.val() == 'zahlung_ausstehend'))"
+        }
+      }
+    },
+
+    "userOrders": {
+      "$uid": {
+        ".read":  "auth != null && (auth.uid == $uid || auth.token.email == 'beer.lucas@hotmail.com')",
+        ".write": "auth != null && (auth.uid == $uid || auth.token.email == 'beer.lucas@hotmail.com')"
+      }
+    },
+
+    "feedbacks": {
+      ".read":  "auth != null && auth.token.email == 'beer.lucas@hotmail.com'",
+      "$key": {
+        ".write": "true",
+        ".validate": "newData.hasChildren(['text','createdAt']) && newData.child('text').val().length <= 1000"
+      }
+    },
+
+    "sessions": {
+      ".read":  "auth != null && auth.token.email == 'beer.lucas@hotmail.com'",
+      "$sid": {
+        ".write": "true",
+        ".validate": "newData.hasChildren(['startedAt']) || newData.hasChildren(['durationMs'])"
+      }
+    },
+
+    "presence": {
+      ".read":  true,
+      "$sid": {
+        ".write": "true"
+      }
+    }
+  }
+}

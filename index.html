@@ -14,6 +14,11 @@
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@04f46c6a0708418cb7b96fc563eacae0fbf77674/qrcode.min.js"></script>
 
+<!-- Firebase (compat) — activates automatically when FIREBASE_CONFIG is filled in -->
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -235,6 +240,16 @@
     border-radius:18px; padding:14px 16px; transition: transform .15s ease, box-shadow .15s ease; }
   .order-card:active { transform: scale(.99); }
   .order-card:hover { box-shadow: 0 8px 24px -10px rgba(26,14,16,.18); }
+
+  /* Customer auth tabs */
+  .cust-tab.active { background:#8B1A3B; color:#FAF6EF; }
+
+  /* Payment status pill */
+  .status-pill { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px;
+    font-size:.65rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+  .status-paid    { background:#1A0E10; color:#F4C9D1; }
+  .status-pending { background:#F4C9D1; color:#5C0E27; }
+  .status-cancelled { background:rgba(26,14,16,.1); color:rgba(26,14,16,.5); }
 </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden">
@@ -251,10 +266,16 @@
         </div>
         <span class="font-display text-xl font-semibold tracking-tight">Berry's Delights</span>
       </div>
-      <button id="open-cart-top" class="relative w-11 h-11 rounded-full bg-white/85 backdrop-blur flex items-center justify-center shadow-soft" aria-label="Warenkorb">
-        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-        <span id="cart-badge" class="hidden absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-berry text-cream text-[10px] font-semibold flex items-center justify-center">0</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <button id="open-account" class="relative w-11 h-11 rounded-full bg-white/85 backdrop-blur flex items-center justify-center shadow-soft" aria-label="Mein Konto">
+          <i data-lucide="user" class="w-5 h-5"></i>
+          <span id="account-dot" class="hidden absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-berry border-2 border-cream"></span>
+        </button>
+        <button id="open-cart-top" class="relative w-11 h-11 rounded-full bg-white/85 backdrop-blur flex items-center justify-center shadow-soft" aria-label="Warenkorb">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span id="cart-badge" class="hidden absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-berry text-cream text-[10px] font-semibold flex items-center justify-center">0</span>
+        </button>
+      </div>
     </header>
 
     <div class="mt-7">
@@ -434,6 +455,100 @@
       <i data-lucide="chevron-left" class="w-4 h-4"></i> Zurück zur Liste
     </button>
     <div id="bo-detail-content"></div>
+  </div>
+</div>
+
+<!-- CUSTOMER AUTH MODAL -->
+<div id="cust-auth" class="hidden fixed inset-0 z-[92] bg-espresso/95 backdrop-blur-md overflow-y-auto">
+  <div class="max-w-md mx-auto px-5 pt-10 pb-10 safe-top safe-bottom">
+    <button id="cust-auth-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center" aria-label="Schliessen">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div class="text-center mb-7">
+      <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center">
+        <i data-lucide="user" class="w-6 h-6"></i>
+      </div>
+      <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Mein Konto</h2>
+      <p class="text-cream/55 text-sm mt-1">Bestellungen, Wiederbestellung, TWINT</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-cream/5 mb-5">
+      <button id="tab-login" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Anmelden</button>
+      <button id="tab-register" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Registrieren</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="form-login" class="space-y-3">
+      <input id="login-email" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
+      <input id="login-pass"  type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
+      <button type="submit" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button>
+      <p id="login-err" class="hidden text-blush text-sm text-center"></p>
+      <p id="login-not-verified" class="hidden text-cream/70 text-sm text-center">
+        Konto noch nicht bestätigt. <button type="button" id="resend-verify" class="underline text-blush">Bestätigungsmail erneut senden</button>
+      </p>
+    </form>
+
+    <!-- REGISTER FORM -->
+    <form id="form-register" class="hidden space-y-3">
+      <input id="reg-email"  type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
+      <input id="reg-pass"   type="password" class="input" placeholder="Passwort (min. 8 Zeichen)" autocomplete="new-password" />
+      <input id="reg-pass2"  type="password" class="input" placeholder="Passwort bestätigen" autocomplete="new-password" />
+      <button type="submit" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Konto erstellen</button>
+      <p id="reg-err" class="hidden text-blush text-sm text-center"></p>
+      <p class="text-[11px] text-cream/50 text-center mt-1">Wir senden dir einen Bestätigungslink per E-Mail. Du kannst dich erst nach Klick auf den Link anmelden.</p>
+    </form>
+
+    <!-- VERIFY PROMPT (after registration in local mode) -->
+    <div id="verify-prompt" class="hidden mt-6 p-4 rounded-2xl bg-cream/5 border border-cream/15">
+      <p class="text-cream font-medium text-sm">Bestätigungsmail versendet ✓</p>
+      <p class="text-cream/70 text-xs mt-1.5" id="verify-msg">Schau in dein Postfach (auch Spam) und klick den Link, um dein Konto zu aktivieren.</p>
+      <div id="verify-manual-wrap" class="hidden mt-3">
+        <p class="text-cream/60 text-[11px] mb-1.5">Funktioniert die E-Mail nicht? Aktivierungslink direkt:</p>
+        <a id="verify-manual-link" href="#" class="text-blush text-xs underline break-all"></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER PORTAL -->
+<div id="cust-portal" class="hidden fixed inset-0 z-[93] bg-cream overflow-y-auto">
+  <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
+    <header class="flex items-start justify-between mb-6">
+      <div>
+        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Mein Konto</p>
+        <h1 id="cust-greeting" class="font-display text-2xl font-semibold mt-0.5">Willkommen</h1>
+        <p id="cust-email" class="text-xs text-espresso/55 mt-1"></p>
+      </div>
+      <div class="flex flex-col gap-2 items-end">
+        <button id="cust-close" class="w-10 h-10 rounded-full border border-espresso/15 flex items-center justify-center" aria-label="Schliessen">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <button id="cust-logout" class="text-[11px] text-espresso/55 underline">Abmelden</button>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-2 gap-3 mb-5">
+      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Bestellungen</div>
+        <div id="cust-stat-count" class="font-display text-2xl font-semibold mt-1">0</div>
+      </div>
+      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Gesamtumsatz</div>
+        <div id="cust-stat-revenue" class="font-display text-2xl font-semibold mt-1">0.00 CHF</div>
+      </div>
+    </div>
+
+    <div id="cust-list" class="space-y-3"></div>
+    <div id="cust-empty" class="hidden text-center py-12">
+      <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center">
+        <i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i>
+      </div>
+      <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
+      <p class="text-sm text-espresso/55 mt-1">Sobald du deine erste Bestellung abschickst, erscheint sie hier.</p>
+    </div>
+
+    <p class="text-[11px] text-center text-espresso/45 mt-8">Berry's Delights · Premium High Protein Ice Cream</p>
   </div>
 </div>
 
@@ -681,6 +796,47 @@
   const PICKUP_LOCATION = 'Sanitas Hauptsitz';
   const ORDER_EMAIL = 'beer.lucas@hotmail.com';
 
+  // ===== Firebase (Cloud Backend) =====
+  // PASTE YOUR FIREBASE CONFIG HERE TO ENABLE CROSS-DEVICE SYNC.
+  // 1) https://console.firebase.google.com  -> "Add project" (free)
+  // 2) Build > Authentication > Sign-in method > Enable "Email/Password"
+  // 3) Build > Firestore Database > Create (Production mode, region europe-west)
+  // 4) Project settings (gear icon) > "Add app" > Web (</> icon) > register
+  // 5) Copy the firebaseConfig object you get and paste below.
+  // Security rules (Firestore > Rules tab) — replace defaults with:
+  /*
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+        match /orders/{orderId} {
+          allow create: if request.auth != null
+                        && request.resource.data.email == request.auth.token.email;
+          allow read:   if request.auth != null
+                        && (resource.data.email == request.auth.token.email
+                            || request.auth.token.email == 'beer.lucas@hotmail.com');
+          allow update: if request.auth.token.email == 'beer.lucas@hotmail.com';
+        }
+      }
+    }
+  */
+  const FIREBASE_CONFIG = {
+    // apiKey: "AIzaSy...",
+    // authDomain: "berrys-delights.firebaseapp.com",
+    // projectId: "berrys-delights",
+    // storageBucket: "berrys-delights.appspot.com",
+    // messagingSenderId: "...",
+    // appId: "1:...:web:..."
+  };
+
+  // ===== Storage Keys =====
+  const SK = {
+    cart:       'berrysdelights_cart_v1',
+    orders:     'berrysdelights_orders_v1',
+    customers:  'berrysdelights_customers_v1',
+    custSess:   'berrysdelights_cust_session_v1',
+    adminSess:  'berrysdelights_admin_session_v1',
+  };
+
   const FLAVORS = [
     { id:'chocolate', name:'Chocolate Fudge Brownie', tagline:'Dunkel · Brownie-Stücke',  gradient:'grad-chocolate', labelColor:'#1A0E10' },
     { id:'vanilla',   name:'Vanilla Cookie Dough',    tagline:'Cremig · Cookie-Bites',     gradient:'grad-vanilla',   labelColor:'#1A0E10' },
@@ -697,6 +853,31 @@
     tip: { type:'percent', value:0 }, // value in %; or { type:'fixed', value: CHF }
     customer: { name:'', email:'', phone:'' },
   };
+
+  // ===== Cart persistence (survives reload) =====
+  let _cartHydrating = false;
+  function saveCart() {
+    if (_cartHydrating) return; // don't save while hydrating from storage
+    try {
+      localStorage.setItem(SK.cart, JSON.stringify({
+        qty: state.qty,
+        referral: state.referral,
+        tip: state.tip,
+        customer: state.customer,
+      }));
+    } catch {}
+  }
+  function loadCart() {
+    try {
+      const raw = localStorage.getItem(SK.cart);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (d && d.qty)      Object.assign(state.qty, d.qty);
+      if (d && 'referral' in d) state.referral = d.referral;
+      if (d && d.tip)      state.tip = d.tip;
+      if (d && d.customer) state.customer = d.customer;
+    } catch {}
+  }
 
   // ===== Utils =====
   const fmt = n => `${n.toFixed(2)} CHF`;
@@ -842,7 +1023,37 @@
       renderDiscountLines(p);
       renderTip(p);
     }
+
+    saveCart();
   }
+
+  // Hydrate form inputs from saved state (called on init AND after login)
+  function hydrateForm() {
+    if (state.customer.name)  $('#f-name').value  = state.customer.name;
+    if (state.customer.email) $('#f-email').value = state.customer.email;
+    if (state.customer.phone) $('#f-phone').value = state.customer.phone;
+    if (state.referral && state.referral.code) {
+      $('#ref-input').value = state.referral.code;
+      const m = $('#ref-msg');
+      m.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · ${state.referral.percent}% additiv`;
+      m.className = 'text-xs mt-2 text-espresso/70';
+    }
+    if (state.tip && state.tip.type === 'fixed' && state.tip.value > 0) {
+      $('#tip-custom').value = state.tip.value;
+      $('#tip-custom-wrap').classList.remove('hidden');
+    }
+  }
+
+  // Mirror customer typing into state so it persists across reloads
+  ['f-name','f-email','f-phone'].forEach(id => {
+    document.addEventListener('input', (e) => {
+      if (e.target && e.target.id === id) {
+        const k = id === 'f-name' ? 'name' : id === 'f-email' ? 'email' : 'phone';
+        state.customer[k] = e.target.value;
+        saveCart();
+      }
+    });
+  });
 
   function renderCartItems() {
     const wrap = $('#cart-items');
@@ -1032,10 +1243,20 @@
       referral: state.referral,
       tip: state.tip,
       refCode: genCode(),
+      // Treat as pending until admin confirms receipt — TWINT may have been cancelled
+      paymentStatus: 'pending',
       timestamp: new Date(),
     };
     // Persist order locally (and to cloud if configured) — always before email
-    try { OrderStore.append(serializeOrder(order)); } catch (e) { /* non-fatal */ }
+    try { await Backend.appendOrder(serializeOrder(order)); } catch (e) { /* non-fatal */ }
+
+    // Clear cart but keep customer profile so portal & next order pre-fill
+    state.qty = { chocolate:0, vanilla:0, caramel:0 };
+    state.referral = null;
+    state.tip = { type:'percent', value:0 };
+    $('#ref-input').value = ''; $('#ref-msg').textContent = '';
+    $('#tip-custom').value = ''; $('#tip-custom-wrap').classList.add('hidden');
+    saveCart();
 
     renderConfirmation(order);
     btn.disabled = false;
@@ -1266,89 +1487,238 @@
   }
 
   // ============================================================
-  // ===== BACKOFFICE: storage, login, list, filter, detail =====
+  // ===== Backend abstraction: Firebase if configured, else  =====
+  // =====  localStorage. Same interface either way.          =====
   // ============================================================
   const ADMIN_EMAIL = 'beer.lucas@hotmail.com';
   const ADMIN_PASS  = 'LuBe25031997.';
 
-  // Order storage.
-  // Default: localStorage (works on Lucas's device only).
-  // CLOUD UPGRADE (for cross-device visibility):
-  //   1. Sign up free at https://jsonbin.io  -> create a "bin", copy the X-Master-Key
-  //   2. Replace JSONBIN_KEY and JSONBIN_ID below
-  //   3. Cloud sync activates automatically — no other code changes needed.
-  const JSONBIN_KEY = '';   // <- paste your jsonbin Master Key here to enable cloud sync
-  const JSONBIN_ID  = '';   // <- paste your bin ID here (e.g. "65a1b2c3...")
+  const Backend = {
+    cloud: false,
+    fbAuth: null,
+    fbDb: null,
 
-  const OrderStore = {
-    KEY: 'berrysdelights_orders_v1',
+    init() {
+      if (!FIREBASE_CONFIG.apiKey || typeof firebase === 'undefined') return false;
+      try {
+        if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+        this.fbAuth = firebase.auth();
+        this.fbDb   = firebase.firestore();
+        this.fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+        this.cloud = true;
+        return true;
+      } catch (e) {
+        console.warn('Firebase init failed', e);
+        return false;
+      }
+    },
 
-    loadLocal() {
-      try { return JSON.parse(localStorage.getItem(this.KEY)) || []; }
+    // ---- Orders ----
+    loadOrdersLocal() {
+      try { return JSON.parse(localStorage.getItem(SK.orders)) || []; }
       catch { return []; }
     },
-    saveLocal(orders) {
-      try { localStorage.setItem(this.KEY, JSON.stringify(orders)); } catch {}
+    saveOrdersLocal(orders) {
+      try { localStorage.setItem(SK.orders, JSON.stringify(orders)); } catch {}
     },
 
-    async loadCloud() {
-      if (!JSONBIN_KEY || !JSONBIN_ID) return null;
+    async loadAllOrders() {
+      if (!this.cloud) return this.loadOrdersLocal();
       try {
-        const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-          headers: { 'X-Master-Key': JSONBIN_KEY, 'X-Bin-Meta': 'false' },
-        });
-        if (!r.ok) return null;
-        const data = await r.json();
-        return Array.isArray(data) ? data : (data.orders || []);
-      } catch { return null; }
-    },
-    async saveCloud(orders) {
-      if (!JSONBIN_KEY || !JSONBIN_ID) return;
-      try {
-        await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-          body: JSON.stringify(orders),
-        });
-      } catch {}
-    },
-
-    async load() {
-      const cloud = await this.loadCloud();
-      if (cloud !== null) {
-        this.saveLocal(cloud);
-        return cloud;
+        const snap = await this.fbDb.collection('orders').orderBy('timestamp', 'desc').get();
+        const list = snap.docs.map(d => ({ ...d.data(), _id: d.id }));
+        this.saveOrdersLocal(list); // keep a local cache for offline
+        return list;
+      } catch (e) {
+        console.warn('Cloud load failed, fallback to local', e);
+        return this.loadOrdersLocal();
       }
-      return this.loadLocal();
     },
 
-    async append(order) {
-      const orders = await this.load();
-      orders.push(order);
-      this.saveLocal(orders);
-      this.saveCloud(orders);
+    async loadOrdersByEmail(email) {
+      const all = await this.loadAllOrders();
+      const e = String(email || '').toLowerCase();
+      return all.filter(o => String(o.email || '').toLowerCase() === e);
     },
+
+    async appendOrder(order) {
+      // Always write to local for instant feedback + offline cache
+      const orders = this.loadOrdersLocal();
+      orders.push(order);
+      this.saveOrdersLocal(orders);
+      // Then mirror to cloud if available
+      if (this.cloud) {
+        try { await this.fbDb.collection('orders').doc(order.id).set(order); }
+        catch (e) { console.warn('Cloud write failed', e); }
+      }
+    },
+
+    async updateOrderStatus(id, status) {
+      const orders = this.loadOrdersLocal();
+      const idx = orders.findIndex(o => o.id === id);
+      if (idx >= 0) { orders[idx].paymentStatus = status; this.saveOrdersLocal(orders); }
+      if (this.cloud) {
+        try { await this.fbDb.collection('orders').doc(id).update({ paymentStatus: status }); }
+        catch (e) { console.warn('Cloud update failed', e); }
+      }
+    },
+
+    // ---- Customer auth ----
+    async registerCustomer(email, password) {
+      email = String(email).trim().toLowerCase();
+      if (this.cloud) {
+        const cred = await this.fbAuth.createUserWithEmailAndPassword(email, password);
+        await cred.user.sendEmailVerification({
+          url: window.location.origin + window.location.pathname,
+          handleCodeInApp: false,
+        });
+        await this.fbAuth.signOut();
+        return { email, verified: false, manualLink: null };
+      }
+      // Local fallback
+      const users = this._loadCustomers();
+      if (users[email]) { const err = new Error('Diese E-Mail ist bereits registriert.'); err.code = 'EXISTS'; throw err; }
+      const passwordHash = await this._hash(password);
+      const verifyToken  = (crypto.randomUUID ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2)));
+      users[email] = { email, passwordHash, verified: false, verifyToken, createdAt: new Date().toISOString() };
+      this._saveCustomers(users);
+      const manualLink = window.location.origin + window.location.pathname
+        + '?verify=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(verifyToken);
+      // Try formsubmit (no signup) to deliver
+      this._sendVerifyEmail(email, manualLink).catch(() => {});
+      return { email, verified: false, manualLink };
+    },
+
+    async loginCustomer(email, password) {
+      email = String(email).trim().toLowerCase();
+      if (this.cloud) {
+        const cred = await this.fbAuth.signInWithEmailAndPassword(email, password);
+        if (!cred.user.emailVerified) {
+          const err = new Error('Konto noch nicht bestätigt.'); err.code = 'NOT_VERIFIED'; err.user = cred.user; throw err;
+        }
+        return { email: cred.user.email, verified: true };
+      }
+      const users = this._loadCustomers();
+      const u = users[email];
+      if (!u) { const err = new Error('Kein Konto mit dieser E-Mail.'); err.code = 'NO_USER'; throw err; }
+      const hash = await this._hash(password);
+      if (hash !== u.passwordHash) { const err = new Error('Passwort falsch.'); err.code = 'BAD_PASS'; throw err; }
+      if (!u.verified) { const err = new Error('Konto noch nicht bestätigt.'); err.code = 'NOT_VERIFIED'; throw err; }
+      localStorage.setItem(SK.custSess, email);
+      return { email, verified: true };
+    },
+
+    async logoutCustomer() {
+      if (this.cloud) { try { await this.fbAuth.signOut(); } catch {} }
+      localStorage.removeItem(SK.custSess);
+    },
+
+    currentCustomer() {
+      if (this.cloud) {
+        const u = this.fbAuth && this.fbAuth.currentUser;
+        return u && u.emailVerified ? { email: u.email, verified: true } : null;
+      }
+      const email = localStorage.getItem(SK.custSess);
+      if (!email) return null;
+      const u = this._loadCustomers()[email];
+      return (u && u.verified) ? { email, verified: true } : null;
+    },
+
+    async resendVerification(email) {
+      if (this.cloud) {
+        // Need to be signed in; ignore failures
+        try {
+          const u = this.fbAuth.currentUser;
+          if (u && !u.emailVerified) await u.sendEmailVerification({ url: window.location.origin + window.location.pathname });
+        } catch {}
+        return;
+      }
+      const users = this._loadCustomers();
+      const u = users[email];
+      if (!u || u.verified) return;
+      const link = window.location.origin + window.location.pathname
+        + '?verify=' + encodeURIComponent(email) + '&token=' + encodeURIComponent(u.verifyToken);
+      this._sendVerifyEmail(email, link).catch(() => {});
+    },
+
+    verifyFromURL(email, token) {
+      // Cloud mode: Firebase handles the link itself, this is irrelevant
+      if (this.cloud) return false;
+      email = String(email).trim().toLowerCase();
+      const users = this._loadCustomers();
+      const u = users[email];
+      if (!u) return false;
+      if (u.verified) return true;
+      if (u.verifyToken !== token) return false;
+      u.verified = true; delete u.verifyToken;
+      users[email] = u;
+      this._saveCustomers(users);
+      return true;
+    },
+
+    // ---- internal ----
+    _loadCustomers() {
+      try { return JSON.parse(localStorage.getItem(SK.customers)) || {}; }
+      catch { return {}; }
+    },
+    _saveCustomers(users) {
+      try { localStorage.setItem(SK.customers, JSON.stringify(users)); } catch {}
+    },
+    async _hash(pwd) {
+      const salt = 'berrysdelights_v1_salt_change_for_prod';
+      const enc = new TextEncoder().encode(pwd + salt);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+    },
+    async _sendVerifyEmail(email, link) {
+      const subject = `Bestätige dein Berry's Delights Konto`;
+      const body = [
+        `Hallo,`,
+        ``,
+        `Danke für deine Registrierung bei Berry's Delights.`,
+        `Bitte aktiviere dein Konto über diesen Link:`,
+        ``,
+        link,
+        ``,
+        `Falls du dich nicht registriert hast, ignoriere diese E-Mail.`,
+        ``,
+        `Berry's Delights — Premium High Protein Ice Cream`,
+      ].join('\n');
+      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ _subject: subject, _captcha: 'false', _template: 'box', message: body, verify_link: link }),
+      });
+      const data = await res.json().catch(() => ({}));
+      return data && (data.success === 'true' || data.success === true);
+    },
+  };
+
+  // Compat alias for old code paths
+  const OrderStore = {
+    load:   () => Backend.loadAllOrders(),
+    append: (order) => Backend.appendOrder(order),
   };
 
   function serializeOrder(order) {
     return {
       id: order.id,
       name: order.name,
-      email: order.email,
+      email: String(order.email || '').toLowerCase(),
       phone: order.phone,
       qty: { ...order.qty },
       pricing: { ...order.pricing },
       referral: order.referral ? { ...order.referral } : null,
       tip: { ...order.tip },
       refCode: order.refCode,
+      paymentStatus: order.paymentStatus || 'pending',
       timestamp: (order.timestamp instanceof Date ? order.timestamp : new Date(order.timestamp)).toISOString(),
     };
   }
 
-  // Session
-  const SESSION_KEY = 'berrysdelights_admin_session';
-  const isLoggedIn = () => sessionStorage.getItem(SESSION_KEY) === '1';
-  const setLoggedIn = (v) => v ? sessionStorage.setItem(SESSION_KEY, '1') : sessionStorage.removeItem(SESSION_KEY);
+  // Admin session — persists across browser restarts (localStorage)
+  const isLoggedIn = () => localStorage.getItem(SK.adminSess) === '1';
+  const setLoggedIn = (v) => v ? localStorage.setItem(SK.adminSess, '1') : localStorage.removeItem(SK.adminSess);
 
   // Entry
   $('#bo-entry').addEventListener('click', () => {
@@ -1548,15 +1918,326 @@
     $('#backoffice').classList.remove('hidden');
   });
 
+  // ============================================================
+  // ===== Customer Account UI: modal, tabs, register, login,    =====
+  // =====  portal with order history, reorder, TWINT re-pay    =====
+  // ============================================================
+
+  function setAccountIndicator() {
+    const dot = $('#account-dot');
+    if (!dot) return;
+    if (Backend.currentCustomer()) dot.classList.remove('hidden');
+    else dot.classList.add('hidden');
+  }
+
+  function openAccount() {
+    const cur = Backend.currentCustomer();
+    if (cur) { openCustomerPortal(); return; }
+    $('#cust-auth').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    switchAuthTab('login');
+    setTimeout(() => $('#login-email').focus(), 50);
+  }
+  function closeAuth() {
+    $('#cust-auth').classList.add('hidden');
+    if (!$('#cust-portal').classList.contains('hidden')) return; // portal still open
+    document.body.style.overflow = '';
+  }
+
+  function switchAuthTab(which) {
+    const isLogin = which === 'login';
+    $('#tab-login').classList.toggle('active', isLogin);
+    $('#tab-register').classList.toggle('active', !isLogin);
+    $('#form-login').classList.toggle('hidden', !isLogin);
+    $('#form-register').classList.toggle('hidden', isLogin);
+    $('#verify-prompt').classList.add('hidden');
+    $('#login-err').classList.add('hidden');
+    $('#login-not-verified').classList.add('hidden');
+    $('#reg-err').classList.add('hidden');
+  }
+
+  $('#open-account').addEventListener('click', openAccount);
+  $('#cust-auth-close').addEventListener('click', closeAuth);
+  $('#cust-auth').addEventListener('click', (e) => { if (e.target.id === 'cust-auth') closeAuth(); });
+  $('#tab-login').addEventListener('click', () => switchAuthTab('login'));
+  $('#tab-register').addEventListener('click', () => switchAuthTab('register'));
+
+  // --- Register ---
+  $('#form-register').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const err = $('#reg-err');
+    err.classList.add('hidden');
+    const email = $('#reg-email').value.trim().toLowerCase();
+    const p1 = $('#reg-pass').value;
+    const p2 = $('#reg-pass2').value;
+    if (!/^\S+@\S+\.\S+$/.test(email)) { err.textContent = 'Ungültige E-Mail.'; err.classList.remove('hidden'); return; }
+    if (p1.length < 8) { err.textContent = 'Passwort muss mindestens 8 Zeichen lang sein.'; err.classList.remove('hidden'); return; }
+    if (p1 !== p2)     { err.textContent = 'Passwörter stimmen nicht überein.';      err.classList.remove('hidden'); return; }
+
+    const btn = e.submitter || $('#form-register button[type="submit"]');
+    btn.disabled = true; const oldText = btn.textContent; btn.textContent = 'Wird erstellt…';
+    try {
+      const res = await Backend.registerCustomer(email, p1);
+      $('#form-register').classList.add('hidden');
+      $('#verify-prompt').classList.remove('hidden');
+      const msg = $('#verify-msg');
+      if (Backend.cloud) {
+        msg.textContent = `Bestätigungs-Mail an ${email} versendet (kann ein paar Sekunden dauern). Klick den Link, danach kannst du dich anmelden.`;
+        $('#verify-manual-wrap').classList.add('hidden');
+      } else {
+        msg.innerHTML = `Wir haben versucht, dir an <strong class="text-cream">${email}</strong> einen Bestätigungslink zu senden. Falls die E-Mail nicht ankommt (z.B. weil der Mail-Provider noch aktiviert werden muss), kannst du den Link unten direkt verwenden:`;
+        $('#verify-manual-link').href = res.manualLink;
+        $('#verify-manual-link').textContent = res.manualLink;
+        $('#verify-manual-wrap').classList.remove('hidden');
+      }
+    } catch (e2) {
+      err.textContent = e2.message || 'Registrierung fehlgeschlagen.';
+      err.classList.remove('hidden');
+    } finally {
+      btn.disabled = false; btn.textContent = oldText;
+    }
+  });
+
+  // --- Login ---
+  $('#form-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const err = $('#login-err');
+    const notVerified = $('#login-not-verified');
+    err.classList.add('hidden'); notVerified.classList.add('hidden');
+    const email = $('#login-email').value.trim().toLowerCase();
+    const pw    = $('#login-pass').value;
+    if (!email || !pw) { err.textContent = 'E-Mail und Passwort eingeben.'; err.classList.remove('hidden'); return; }
+
+    const btn = e.submitter || $('#form-login button[type="submit"]');
+    btn.disabled = true; const oldText = btn.textContent; btn.textContent = 'Wird angemeldet…';
+    try {
+      await Backend.loginCustomer(email, pw);
+      // Pre-fill checkout form for next purchase
+      state.customer.email = email;
+      saveCart();
+      $('#f-email').value = email;
+      setAccountIndicator();
+      closeAuth();
+      openCustomerPortal();
+    } catch (e2) {
+      if (e2.code === 'NOT_VERIFIED') {
+        notVerified.dataset.email = email;
+        notVerified.classList.remove('hidden');
+      } else {
+        err.textContent = e2.message || 'Anmeldung fehlgeschlagen.';
+        err.classList.remove('hidden');
+      }
+    } finally {
+      btn.disabled = false; btn.textContent = oldText;
+    }
+  });
+
+  $('#resend-verify').addEventListener('click', async () => {
+    const email = $('#login-email').value.trim().toLowerCase();
+    if (!email) return;
+    await Backend.resendVerification(email);
+    $('#login-not-verified').innerHTML = 'Bestätigungsmail wurde erneut gesendet (auch Spam checken).';
+  });
+
+  // --- Portal ---
+  async function openCustomerPortal() {
+    closeAuth();
+    $('#cust-portal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    await renderCustomerPortal();
+    lucide.createIcons();
+  }
+  function closeCustomerPortal() {
+    $('#cust-portal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+  $('#cust-close').addEventListener('click', closeCustomerPortal);
+  $('#cust-logout').addEventListener('click', async () => {
+    await Backend.logoutCustomer();
+    setAccountIndicator();
+    closeCustomerPortal();
+  });
+
+  async function renderCustomerPortal() {
+    const cur = Backend.currentCustomer();
+    if (!cur) { closeCustomerPortal(); openAccount(); return; }
+    const firstName = (state.customer && state.customer.name) ? state.customer.name.split(' ')[0] : null;
+    $('#cust-greeting').textContent = firstName ? `Willkommen, ${firstName}` : 'Willkommen';
+    $('#cust-email').textContent = cur.email;
+
+    const orders = await Backend.loadOrdersByEmail(cur.email);
+    orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    const revenue = orders.reduce((s, o) => s + (o.pricing?.grandTotal || 0), 0);
+    $('#cust-stat-count').textContent = orders.length;
+    $('#cust-stat-revenue').textContent = revenue.toFixed(2) + ' CHF';
+
+    if (orders.length === 0) {
+      $('#cust-list').classList.add('hidden');
+      $('#cust-empty').classList.remove('hidden');
+      return;
+    }
+    $('#cust-list').classList.remove('hidden');
+    $('#cust-empty').classList.add('hidden');
+
+    $('#cust-list').innerHTML = orders.map(o => {
+      const d = new Date(o.timestamp);
+      const dStr = d.toLocaleString('de-CH', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+      const itemLines = [];
+      if (o.qty?.chocolate > 0) itemLines.push(`${o.qty.chocolate}× Chocolate`);
+      if (o.qty?.vanilla   > 0) itemLines.push(`${o.qty.vanilla}× Vanilla`);
+      if (o.qty?.caramel   > 0) itemLines.push(`${o.qty.caramel}× Caramel`);
+      const status = o.paymentStatus || 'pending';
+      const statusBadge = status === 'paid'
+        ? `<span class="status-pill status-paid">Bezahlt</span>`
+        : status === 'cancelled'
+          ? `<span class="status-pill status-cancelled">Storniert</span>`
+          : `<span class="status-pill status-pending">Zahlung offen</span>`;
+      const payBtn = status === 'pending'
+        ? `<button class="flex-1 rounded-xl btn-twint py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-2 repay-btn" data-id="${o.id}"><span class="twint-mark"></span> Jetzt bezahlen</button>`
+        : '';
+      return `
+        <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <div class="text-[10px] uppercase tracking-widest text-espresso/55">${dStr}</div>
+              <div class="font-display text-base font-semibold mt-0.5">${o.id}</div>
+              <div class="text-xs text-espresso/65 mt-1">${itemLines.join(' · ') || '—'}</div>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="font-display text-lg font-semibold">${(o.pricing?.grandTotal || 0).toFixed(2)} CHF</div>
+              <div class="mt-1">${statusBadge}</div>
+            </div>
+          </div>
+          <div class="flex gap-2 mt-3">
+            <button class="flex-1 rounded-xl border border-espresso/15 py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-2 reorder-btn" data-id="${o.id}">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Wieder bestellen
+            </button>
+            ${payBtn}
+          </div>
+        </div>`;
+    }).join('');
+
+    // Wire reorder / repay
+    $('#cust-list').querySelectorAll('.reorder-btn').forEach(b => {
+      b.addEventListener('click', () => reorderById(b.dataset.id));
+    });
+    $('#cust-list').querySelectorAll('.repay-btn').forEach(b => {
+      b.addEventListener('click', () => repayById(b.dataset.id));
+    });
+    lucide.createIcons();
+  }
+
+  async function reorderById(id) {
+    const all = await Backend.loadAllOrders();
+    const o = all.find(x => x.id === id);
+    if (!o) return;
+    state.qty.chocolate += o.qty?.chocolate || 0;
+    state.qty.vanilla   += o.qty?.vanilla   || 0;
+    state.qty.caramel   += o.qty?.caramel   || 0;
+    saveCart();
+    closeCustomerPortal();
+    renderAll();
+    openCart();
+  }
+
+  async function repayById(id) {
+    const all = await Backend.loadAllOrders();
+    const o = all.find(x => x.id === id);
+    if (!o) return;
+    const amount = (o.pricing?.grandTotal || 0).toFixed(2);
+    const ok = confirm(`TWINT wird geöffnet.\n\nBitte überweise ${amount} CHF an ${MERCHANT_TWINT}.\n\nFortfahren?`);
+    if (!ok) return;
+    openTwintApp();
+  }
+
+  // ============================================================
+  // ===== Admin payment status toggle (in detail view) =====
+  // ============================================================
+  document.addEventListener('click', async (e) => {
+    const setBtn = e.target.closest('[data-set-status]');
+    if (!setBtn) return;
+    const id = setBtn.dataset.id;
+    const status = setBtn.dataset.setStatus;
+    await Backend.updateOrderStatus(id, status);
+    await showOrderDetail(id);
+  });
+
+  // Extend showOrderDetail with status controls — append after detail content render
+  const _origShowOrderDetail = showOrderDetail;
+  showOrderDetail = async function (id) {
+    await _origShowOrderDetail(id);
+    const all = await Backend.loadAllOrders();
+    const o = all.find(x => x.id === id);
+    if (!o) return;
+    const status = o.paymentStatus || 'pending';
+    const statusBadge = status === 'paid'
+      ? `<span class="status-pill status-paid">Bezahlt</span>`
+      : status === 'cancelled'
+        ? `<span class="status-pill status-cancelled">Storniert</span>`
+        : `<span class="status-pill status-pending">Zahlung offen</span>`;
+    const extra = document.createElement('div');
+    extra.className = 'mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft';
+    extra.innerHTML = `
+      <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Zahlungsstatus</p>
+      <div class="flex items-center justify-between mb-3">
+        <div>Aktuell: ${statusBadge}</div>
+      </div>
+      <div class="grid grid-cols-3 gap-2">
+        <button class="filter-pill ${status==='pending'?'active':''}" data-set-status="pending" data-id="${o.id}">Offen</button>
+        <button class="filter-pill ${status==='paid'?'active':''}" data-set-status="paid" data-id="${o.id}">Bezahlt</button>
+        <button class="filter-pill ${status==='cancelled'?'active':''}" data-set-status="cancelled" data-id="${o.id}">Storniert</button>
+      </div>`;
+    $('#bo-detail-content').appendChild(extra);
+  };
+
+  // ============================================================
+  // ===== Email verification URL handler (local-mode only) =====
+  // ============================================================
+  function handleVerifyURL() {
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('verify');
+    const token = params.get('token');
+    if (!email || !token) return;
+    const ok = Backend.verifyFromURL(email, token);
+    if (ok) {
+      // Friendly inline confirmation
+      const banner = document.createElement('div');
+      banner.className = 'fixed top-0 inset-x-0 z-[200] bg-berry text-cream px-4 py-3 text-sm text-center';
+      banner.textContent = `Konto ${email} bestätigt. Du kannst dich jetzt anmelden.`;
+      document.body.appendChild(banner);
+      setTimeout(() => banner.remove(), 5000);
+    }
+    // Clean URL regardless to avoid re-triggering
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
   // ===== Init =====
+  // Order matters: hydrate cart BEFORE first render so counts/discounts are correct.
+  _cartHydrating = true;
+  loadCart();
+  _cartHydrating = false;
+
+  // Initialize cloud backend (no-op if config empty)
+  Backend.init();
+  // When Firebase auth resolves later, refresh the indicator
+  if (Backend.cloud && Backend.fbAuth) {
+    Backend.fbAuth.onAuthStateChanged(() => {
+      setAccountIndicator();
+      if (!$('#cust-portal').classList.contains('hidden')) renderCustomerPortal();
+    });
+  }
+
   renderFlavors();
   renderAll();
+  hydrateForm();
+  setAccountIndicator();
+  handleVerifyURL();
   lucide.createIcons();
 
   // QR renders on first details open (or immediately if details is open by default)
   const qrDetails = document.querySelector('details');
   qrDetails.addEventListener('toggle', () => { if (qrDetails.open) renderQR(); });
-  // Pre-render once so screenshot is instant on first tap (only if library is available)
   if (window.QRCode) renderQR();
 })();
 </script>

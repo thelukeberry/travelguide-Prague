@@ -8,7 +8,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>Berry's Delights — Premium High Protein Ice Cream</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238B1A3B'/%3E%3Ccircle cx='24' cy='38' r='14' fill='%23F4C9D1'/%3E%3Ccircle cx='42' cy='34' r='12' fill='%23FAF6EF'/%3E%3Cpath d='M30 16 q4 -8 12 -4' stroke='%23B89B5E' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238B1A3B'/%3E%3Ccircle cx='24' cy='38' r='14' fill='%23F4C9D1'/%3E%3Ccircle cx='42' cy='34' r='12' fill='%23FAF6EF'/%3E%3Cpath d='M30 16 q4 -8 12 -4' stroke='%23B89B5E' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -43,89 +42,70 @@
   html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
   body { background:#FAF6EF; color:#1A0E10; font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing: antialiased; overscroll-behavior-y: contain; }
   .font-display { font-family:'Fraunces',serif; font-optical-sizing:auto; font-variation-settings:"opsz" 96; }
-
   .safe-top    { padding-top:    max(.5rem, env(safe-area-inset-top)); }
   .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
-
   input, select, textarea, button { font-size: 16px; }
   input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="password"], textarea { font-size: 16px !important; -webkit-appearance: none; appearance: none; }
   button, .no-select { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
-
   body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5; background-image: radial-gradient(rgba(26,14,16,.04) 1px, transparent 1px); background-size: 3px 3px; }
-
   .hero-grad { background: radial-gradient(120% 80% at 80% 0%, #F4C9D1 0%, transparent 55%), radial-gradient(80% 60% at 10% 100%, #B89B5E33 0%, transparent 55%), linear-gradient(180deg,#FAF6EF 0%,#F2EBE0 100%); }
   .grad-chocolate { background: radial-gradient(120% 100% at 30% 20%, #5C2A1B 0%, #2C140C 70%); }
   .grad-vanilla   { background: radial-gradient(120% 100% at 30% 20%, #F0DCB7 0%, #C9A971 75%); }
   .grad-caramel   { background: radial-gradient(120% 100% at 30% 20%, #C57736 0%, #6B3410 75%); }
-
   .chip { display:inline-flex; align-items:center; gap:.4rem; padding:.32rem .65rem; border:1px solid rgba(26,14,16,.12); border-radius:999px; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; background: rgba(255,255,255,.6); backdrop-filter: blur(8px); }
-
   .qty-btn { width:44px; height:44px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(26,14,16,.12); background:#fff; transition: transform .15s, background .2s, color .2s, border-color .2s; }
   .qty-btn:active { transform: scale(.92); }
   .qty-btn.primary { background:#1A0E10; color:#fff; border-color:#1A0E10; }
   .qty-btn:disabled { opacity:.35; }
-
   .count { font-variant-numeric: tabular-nums; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
   .count.bump { transform: translateY(-2px) scale(1.15); }
-
   .pack-btn { display:inline-flex; align-items:center; justify-content:center; gap:.4rem; padding:.7rem 1rem; border-radius:14px; font-size:.78rem; font-weight:600; border:1px solid rgba(26,14,16,.12); background:#fff; transition: transform .15s, background .2s, border-color .2s; }
   .pack-btn:active { transform: scale(.97); }
   .pack-btn .save { font-size:.65rem; font-weight:700; color:#8B1A3B; letter-spacing:.04em; }
-
   .sheet { position:fixed; inset:0; background:rgba(26,14,16,.55); backdrop-filter:blur(6px); display:flex; align-items:flex-end; justify-content:center; z-index:60; opacity:0; pointer-events:none; transition: opacity .3s ease; }
   .sheet.open { opacity:1; pointer-events:auto; }
   .sheet-panel { width:100%; max-width:560px; background:#FAF6EF; border-top-left-radius:28px; border-top-right-radius:28px; transform: translateY(100%); transition: transform .35s cubic-bezier(.2,.8,.2,1); max-height:92vh; display:flex; flex-direction:column; overflow:hidden; }
   .sheet.open .sheet-panel { transform: translateY(0); }
   .reveal { animation: fade .6s ease-out both; }
-
   .btn-premium { position:relative; overflow:hidden; background: linear-gradient(180deg,#1A0E10 0%,#2C141A 100%); color:#FAF6EF; }
   .btn-premium::after { content:''; position:absolute; inset:0; background: linear-gradient(110deg, transparent 30%, rgba(244,201,209,.25) 50%, transparent 70%); background-size: 200% 100%; animation: shine 4s linear infinite; pointer-events:none; }
   .btn-berry { background: linear-gradient(180deg,#8B1A3B 0%,#5C0E27 100%); color:#FAF6EF; }
   .btn-twint { background:#000; color:#fff; }
   .twint-mark { display:inline-flex; align-items:center; justify-content:center; width:46px; height:28px; border-radius:6px; background:#fff; color:#000; font-weight:800; letter-spacing:.05em; font-size:.7rem; }
   .twint-mark::before { content:'TWINT'; }
-
   .dot { width:6px; height:6px; border-radius:999px; background:#FAF6EF; opacity:.4; }
   .dots .dot:nth-child(1){ animation: pop 1.2s ease-in-out infinite; }
   .dots .dot:nth-child(2){ animation: pop 1.2s ease-in-out .2s infinite; }
   .dots .dot:nth-child(3){ animation: pop 1.2s ease-in-out .4s infinite; }
-
   .check-circle { width:96px; height:96px; }
   .check-circle circle { fill:none; stroke:#8B1A3B; stroke-width:3; stroke-dasharray:283; stroke-dashoffset:283; animation: checkdraw .7s ease-out forwards; }
   .check-circle path { fill:none; stroke:#8B1A3B; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation: checkdraw .5s .6s ease-out forwards; }
   .check-cream circle { stroke:#F4C9D1; } .check-cream path { stroke:#F4C9D1; }
   .spinner { width:64px; height:64px; border-radius:999px; border:3px solid rgba(250,246,239,.18); border-top-color:#F4C9D1; animation: spin360 1s linear infinite; }
-
   .input { width:100%; padding:14px 16px; border:1px solid rgba(26,14,16,.14); border-radius:14px; background:#fff; font-size:16px !important; line-height:1.2; transition: border-color .2s, box-shadow .2s; }
   .input:focus { outline:none; border-color:#8B1A3B; box-shadow:0 0 0 4px rgba(139,26,59,.1); }
   .input.error { border-color:#8B1A3B; box-shadow:0 0 0 4px rgba(139,26,59,.1); }
   textarea.input { min-height: 80px; resize: vertical; }
-
   .tip-pill { padding:.7rem .9rem; border-radius:14px; border:1px solid rgba(26,14,16,.12); background:#fff; font-size:.85rem; font-weight:600; transition: all .2s; }
   .tip-pill:active { transform: scale(.96); }
   .tip-pill.active { background:#1A0E10; color:#FAF6EF; border-color:#1A0E10; }
-
   .badge { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px; font-size:.65rem; font-weight:600; letter-spacing:.04em; }
   .badge-bundle { background:#F4C9D1; color:#5C0E27; }
   .badge-pack   { background:#1A0E10; color:#F4C9D1; }
   .badge-ref    { background:#B89B5E; color:#1A0E10; }
   .hairline { height:1px; background: linear-gradient(90deg, transparent, rgba(26,14,16,.15), transparent); }
   .scroll-y::-webkit-scrollbar { width:6px; } .scroll-y::-webkit-scrollbar-thumb { background: rgba(26,14,16,.18); border-radius:999px; }
-
   .pint { position:relative; width:96px; height:118px; border-radius:14px 14px 18px 18px; box-shadow: 0 18px 28px -14px rgba(0,0,0,.45), inset 0 -10px 24px rgba(0,0,0,.25), inset 0 6px 12px rgba(255,255,255,.15); }
   .pint::before { content:''; position:absolute; left:7px; right:7px; top:14px; height:60px; background: rgba(255,255,255,.88); border-radius:5px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
   .pint::after { content:''; position:absolute; left:-5px; right:-5px; top:-5px; height:10px; background:#1A0E10; border-radius:10px; }
   .pint-label { position:absolute; left:0; right:0; top:26px; text-align:center; font-family:'Fraunces',serif; font-weight:600; color:#1A0E10; font-size:.7rem; line-height:1.05; padding:0 10px; }
   .pint-label small { display:block; font-family:'Inter',sans-serif; font-weight:500; font-size:.5rem; letter-spacing:.16em; color:#8B1A3B; text-transform:uppercase; margin-top:3px; }
-
   .cart-bar { box-shadow: 0 -20px 40px -20px rgba(26,14,16,.25); }
   .pickup-notice { background: linear-gradient(135deg,#1A0E10 0%,#5C0E27 100%); color:#FAF6EF; }
-
   details > summary { list-style:none; cursor:pointer; } details > summary::-webkit-details-marker { display:none; }
   details[open] .chev { transform: rotate(180deg); } .chev { transition: transform .25s ease; }
   #qrcode { display:inline-block; padding:14px; background:#fff; border-radius:18px; box-shadow: 0 8px 24px -10px rgba(0,0,0,.2); }
   #qrcode img, #qrcode canvas { display:block; }
-
   .filter-pill { padding:.45rem .85rem; border-radius:999px; border:1px solid rgba(26,14,16,.12); background:#fff; font-size:.78rem; font-weight:500; white-space:nowrap; transition: all .15s ease; }
   .filter-pill:active { transform: scale(.96); }
   .filter-pill.active { background:#1A0E10; color:#FAF6EF; border-color:#1A0E10; }
@@ -133,7 +113,6 @@
   .order-card:active { transform: scale(.99); }
   .order-card:hover  { box-shadow: 0 8px 24px -10px rgba(26,14,16,.18); }
   .cust-tab.active   { background:#8B1A3B; color:#FAF6EF; }
-
   .status-pill { display:inline-flex; align-items:center; gap:.3rem; padding:.18rem .55rem; border-radius:999px; font-size:.65rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
   .status-bezahlt           { background:#1A0E10; color:#F4C9D1; }
   .status-zahlung-ausstehend{ background:#F4C9D1; color:#5C0E27; }
@@ -146,19 +125,15 @@
 </head>
 <body class="relative min-h-screen overflow-x-hidden">
 
-<!-- LIVE-USER BANNER (visible only when ≥3) -->
 <div id="live-users" class="hidden fixed top-0 inset-x-0 z-[150] bg-berry text-cream text-center text-xs py-2 px-4">
   🔥 Gerade sind <span id="live-users-count" class="font-semibold">0</span> Glace-Enthusiasten mit dir auf der Seite!
 </div>
 
 <main id="app" class="relative z-10 max-w-xl mx-auto pb-44">
-  <!-- HERO -->
   <section class="hero-grad px-5 pt-3 pb-8 safe-top rounded-b-[32px]">
     <header class="flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="w-9 h-9 rounded-full bg-berry flex items-center justify-center shadow-soft">
-          <i data-lucide="cherry" class="w-5 h-5 text-cream"></i>
-        </div>
+        <div class="w-9 h-9 rounded-full bg-berry flex items-center justify-center shadow-soft"><i data-lucide="cherry" class="w-5 h-5 text-cream"></i></div>
         <span class="font-display text-xl font-semibold tracking-tight">Berry's Delights</span>
       </div>
       <div class="flex items-center gap-2">
@@ -172,38 +147,21 @@
         </button>
       </div>
     </header>
-
     <div class="mt-7">
       <span class="chip"><span class="w-1.5 h-1.5 rounded-full bg-berry"></span> Premium High Protein Ice Cream</span>
-      <h1 class="font-display text-[2.2rem] leading-[1.05] font-semibold tracking-tight mt-3">
-        Treat-Day,<br/><em class="italic text-berry">jeden Tag.</em>
-      </h1>
+      <h1 class="font-display text-[2.2rem] leading-[1.05] font-semibold tracking-tight mt-3">Treat-Day,<br/><em class="italic text-berry">jeden Tag.</em></h1>
       <p class="mt-3 text-sm text-espresso/70 max-w-md">45-52&thinsp;g Protein. Sättigende Ballaststoffe. Unter 500&thinsp;kcal pro Pint. Genuss, der deine Ziele <em>nicht</em> sabotiert.</p>
       <div class="mt-4 grid grid-cols-3 gap-2">
-        <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
-          <div class="font-display text-xl font-semibold">45<span class="text-xs text-espresso/60">g+</span></div>
-          <div class="text-[9px] uppercase tracking-widest text-espresso/60">Protein</div>
-        </div>
-        <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
-          <div class="font-display text-xl font-semibold">&lt;500</div>
-          <div class="text-[9px] uppercase tracking-widest text-espresso/60">kcal · Pint</div>
-        </div>
-        <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft">
-          <div class="font-display text-xl font-semibold">12.00</div>
-          <div class="text-[9px] uppercase tracking-widest text-espresso/60">CHF · Pint</div>
-        </div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft"><div class="font-display text-xl font-semibold">45<span class="text-xs text-espresso/60">g+</span></div><div class="text-[9px] uppercase tracking-widest text-espresso/60">Protein</div></div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft"><div class="font-display text-xl font-semibold">&lt;500</div><div class="text-[9px] uppercase tracking-widest text-espresso/60">kcal · Pint</div></div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl py-2 px-1 text-center shadow-soft"><div class="font-display text-xl font-semibold">12.00</div><div class="text-[9px] uppercase tracking-widest text-espresso/60">CHF · Pint</div></div>
       </div>
     </div>
   </section>
 
-  <!-- FLAVORS -->
   <section class="px-5 mt-7">
-    <div class="flex items-end justify-between mb-3">
-      <h2 class="font-display text-2xl font-semibold">Drei Sorten</h2>
-      <span class="text-xs text-espresso/55">12.00 CHF · Pint</span>
-    </div>
+    <div class="flex items-end justify-between mb-3"><h2 class="font-display text-2xl font-semibold">Drei Sorten</h2><span class="text-xs text-espresso/55">12.00 CHF · Pint</span></div>
     <div id="flavor-grid" class="space-y-4"></div>
-
     <div class="mt-5 rounded-2xl bg-white/70 border border-espresso/10 p-4 backdrop-blur">
       <p class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Mengen-Rabatt</p>
       <ul class="mt-2 space-y-1.5 text-sm text-espresso/80">
@@ -214,15 +172,11 @@
     </div>
   </section>
 
-  <!-- ABOUT LUCAS -->
   <section class="px-5 mt-9">
     <div class="rounded-3xl bg-white border border-espresso/8 p-6 shadow-card">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-12 h-12 rounded-full bg-berry text-cream font-display text-xl font-semibold flex items-center justify-center">L</div>
-        <div>
-          <p class="text-[11px] tracking-[.2em] uppercase text-espresso/55 font-medium">Hinter der Marke</p>
-          <h2 class="font-display text-xl font-semibold">Hey, ich bin Lucas.</h2>
-        </div>
+        <div><p class="text-[11px] tracking-[.2em] uppercase text-espresso/55 font-medium">Hinter der Marke</p><h2 class="font-display text-xl font-semibold">Hey, ich bin Lucas.</h2></div>
       </div>
       <div class="space-y-3 text-[15px] leading-relaxed text-espresso/80">
         <p>Ich wollte einen Weg finden, jeden Tag Eiscreme zu essen — ohne meine Fitness- und Ernährungsziele zu sabotieren.</p>
@@ -230,106 +184,59 @@
         <p>Das Ergebnis ist <em class="text-berry not-italic font-semibold">Berry's Delights</em> — Eiscreme, die deinen Tag erfüllt statt deine Disziplin testet.</p>
       </div>
       <div class="hairline my-5"></div>
-      <p class="text-[15px] leading-relaxed text-espresso/85">
-        <strong class="text-espresso">Deine Fitness-Journey braucht keinen Verzicht.</strong>
-        Jeder Pint bringt dich näher, nicht weiter weg.
-      </p>
+      <p class="text-[15px] leading-relaxed text-espresso/85"><strong class="text-espresso">Deine Fitness-Journey braucht keinen Verzicht.</strong> Jeder Pint bringt dich näher, nicht weiter weg.</p>
     </div>
   </section>
 </main>
 
-<!-- STICKY CART BAR -->
 <div id="cart-bar" class="cart-bar fixed inset-x-0 z-40 bg-cream/85 backdrop-blur-xl border-t border-espresso/10 safe-bottom pt-3 px-4 hidden" style="bottom:0;">
   <button id="open-cart" class="w-full flex items-center justify-between gap-3 btn-premium rounded-2xl px-5 py-3.5 text-left">
     <div class="flex items-center gap-3 relative z-10">
-      <div class="relative">
-        <i data-lucide="shopping-bag" class="w-5 h-5 text-cream"></i>
-        <span id="cart-count" class="absolute -top-2 -right-2 min-w-5 h-5 px-1 rounded-full bg-berry text-cream text-[10px] font-semibold flex items-center justify-center">0</span>
-      </div>
-      <div>
-        <div class="text-[10px] uppercase tracking-widest text-cream/60">Warenkorb</div>
-        <div id="cart-summary" class="text-sm font-medium text-cream">0 Pints</div>
-      </div>
+      <div class="relative"><i data-lucide="shopping-bag" class="w-5 h-5 text-cream"></i><span id="cart-count" class="absolute -top-2 -right-2 min-w-5 h-5 px-1 rounded-full bg-berry text-cream text-[10px] font-semibold flex items-center justify-center">0</span></div>
+      <div><div class="text-[10px] uppercase tracking-widest text-cream/60">Warenkorb</div><div id="cart-summary" class="text-sm font-medium text-cream">0 Pints</div></div>
     </div>
-    <div class="flex items-center gap-2 relative z-10">
-      <span class="text-[10px] uppercase tracking-widest text-cream/60">Total</span>
-      <span id="cart-total" class="font-display text-lg font-semibold text-cream">0.00 CHF</span>
-      <i data-lucide="arrow-right" class="w-4 h-4 text-cream"></i>
-    </div>
+    <div class="flex items-center gap-2 relative z-10"><span class="text-[10px] uppercase tracking-widest text-cream/60">Total</span><span id="cart-total" class="font-display text-lg font-semibold text-cream">0.00 CHF</span><i data-lucide="arrow-right" class="w-4 h-4 text-cream"></i></div>
   </button>
 </div>
 
-<!-- QR ADMIN ACCORDION -->
 <section class="max-w-xl mx-auto px-5 mt-2 mb-6 relative z-10">
   <details class="rounded-2xl border border-espresso/10 bg-white/60 backdrop-blur overflow-hidden">
-    <summary class="flex items-center justify-between gap-3 px-4 py-3">
-      <span class="flex items-center gap-2 text-sm text-espresso/70">
-        <i data-lucide="qr-code" class="w-4 h-4"></i><span>QR-Code zur Seite</span>
-      </span>
-      <i data-lucide="chevron-down" class="chev w-4 h-4 text-espresso/60"></i>
-    </summary>
+    <summary class="flex items-center justify-between gap-3 px-4 py-3"><span class="flex items-center gap-2 text-sm text-espresso/70"><i data-lucide="qr-code" class="w-4 h-4"></i><span>QR-Code zur Seite</span></span><i data-lucide="chevron-down" class="chev w-4 h-4 text-espresso/60"></i></summary>
     <div class="px-4 pb-5 pt-2 text-center">
       <p class="text-xs text-espresso/60 mb-3">Screenshot für Aufsteller — Code zeigt automatisch deine aktuelle URL.</p>
       <div id="qrcode"></div>
       <p id="qr-url" class="mt-3 text-[10px] text-espresso/50 break-all"></p>
-      <div class="mt-4 pt-3 border-t border-espresso/8">
-        <button id="bo-entry" class="text-[11px] text-espresso/50 underline">🔒 Backoffice · Bestellungen verwalten</button>
-      </div>
+      <div class="mt-4 pt-3 border-t border-espresso/8"><button id="bo-entry" class="text-[11px] text-espresso/50 underline">🔒 Backoffice · Bestellungen verwalten</button></div>
     </div>
   </details>
 </section>
 
-<!-- CART SHEET -->
 <div id="cart-sheet" class="sheet">
   <div class="sheet-panel">
     <div class="flex items-center justify-between px-5 pt-4 pb-2">
-      <div>
-        <div class="w-10 h-1 rounded-full bg-espresso/15 mx-auto mb-3"></div>
-        <h3 class="font-display text-2xl font-semibold">Warenkorb</h3>
-      </div>
-      <button id="close-cart" class="w-10 h-10 rounded-full hover:bg-espresso/5 flex items-center justify-center" aria-label="Schliessen">
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
+      <div><div class="w-10 h-1 rounded-full bg-espresso/15 mx-auto mb-3"></div><h3 class="font-display text-2xl font-semibold">Warenkorb</h3></div>
+      <button id="close-cart" class="w-10 h-10 rounded-full hover:bg-espresso/5 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
     </div>
-
     <div class="scroll-y overflow-y-auto px-5 pb-6 flex-1">
       <div id="cart-empty" class="text-center py-10">
         <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i></div>
         <p class="mt-3 font-display text-lg">Noch leer.</p>
         <p class="text-sm text-espresso/60 mt-1">Wähle deine Pints – Rabatte werden automatisch angewendet.</p>
       </div>
-
       <div id="cart-detail" class="hidden">
         <div id="cart-items" class="space-y-2.5 mt-1"></div>
-
         <div id="guest-banner" class="hidden mt-4 rounded-2xl bg-blush/40 border border-berry/15 p-3 flex items-center gap-3">
           <div class="w-9 h-9 rounded-full bg-berry text-cream flex items-center justify-center shrink-0"><i data-lucide="zap" class="w-4 h-4"></i></div>
-          <div class="text-[13px] leading-tight">
-            <div class="font-semibold text-berryd">Express als Gast</div>
-            <div class="text-espresso/70 text-xs mt-0.5">In unter 60 Sek. bereit für TWINT ⚡</div>
-          </div>
+          <div class="text-[13px] leading-tight"><div class="font-semibold text-berryd">Express als Gast</div><div class="text-espresso/70 text-xs mt-0.5">In unter 60 Sek. bereit für TWINT ⚡</div></div>
         </div>
-
         <div id="protein-counter" class="hidden mt-4 grid grid-cols-2 gap-2">
-          <div class="rounded-2xl bg-white border border-espresso/8 p-3 text-center shadow-soft">
-            <div class="text-[10px] uppercase tracking-widest text-espresso/55">Protein im Korb</div>
-            <div class="font-display text-lg font-semibold mt-1"><span id="pc-protein">0</span><span class="text-xs text-espresso/55">&thinsp;g</span></div>
-          </div>
-          <div class="rounded-2xl bg-berry text-cream p-3 text-center shadow-soft">
-            <div class="text-[10px] uppercase tracking-widest text-cream/65">Du sparst</div>
-            <div class="font-display text-lg font-semibold mt-1"><span id="pc-savings">0.00</span><span class="text-xs text-cream/65">&thinsp;CHF</span></div>
-          </div>
+          <div class="rounded-2xl bg-white border border-espresso/8 p-3 text-center shadow-soft"><div class="text-[10px] uppercase tracking-widest text-espresso/55">Protein im Korb</div><div class="font-display text-lg font-semibold mt-1"><span id="pc-protein">0</span><span class="text-xs text-espresso/55">&thinsp;g</span></div></div>
+          <div class="rounded-2xl bg-berry text-cream p-3 text-center shadow-soft"><div class="text-[10px] uppercase tracking-widest text-cream/65">Du sparst</div><div class="font-display text-lg font-semibold mt-1"><span id="pc-savings">0.00</span><span class="text-xs text-cream/65">&thinsp;CHF</span></div></div>
         </div>
-
         <div class="pickup-notice mt-5 rounded-2xl p-4 flex gap-3 items-start">
           <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-blush"></i></div>
-          <div>
-            <div class="font-display text-base font-semibold">Abholung am Sanitas Hauptsitz</div>
-            <p class="text-xs text-cream/75 mt-1">Du wirst per SMS oder E-Mail informiert, sobald deine Bestellung abholbereit ist.</p>
-          </div>
+          <div><div class="font-display text-base font-semibold">Abholung am Sanitas Hauptsitz</div><p class="text-xs text-cream/75 mt-1">Du wirst per SMS oder E-Mail informiert, sobald deine Bestellung abholbereit ist.</p></div>
         </div>
-
-        <!-- Referral -->
         <div class="mt-5">
           <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Empfehlungscode (optional)</label>
           <div class="mt-2 flex gap-2">
@@ -337,30 +244,15 @@
             <button id="ref-apply" class="px-4 rounded-2xl bg-espresso text-cream font-medium">Einlösen</button>
           </div>
           <p id="ref-msg" class="text-xs mt-2 text-espresso/60"></p>
-          <!-- Honeypot -->
-          <input type="text" id="ref-honey" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true"
-                 style="position:absolute !important; left:-9999px !important; top:-9999px !important; opacity:0 !important; pointer-events:none !important; height:0 !important; width:0 !important;" />
+          <input type="text" id="ref-honey" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute !important;left:-9999px !important;top:-9999px !important;opacity:0 !important;pointer-events:none !important;height:0 !important;width:0 !important;" />
         </div>
-
-        <!-- Tip -->
         <div class="mt-5">
-          <div class="flex items-center justify-between">
-            <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Trinkgeld</label>
-            <span id="tip-amount" class="text-xs text-espresso/55">0.00 CHF</span>
-          </div>
+          <div class="flex items-center justify-between"><label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Trinkgeld</label><span id="tip-amount" class="text-xs text-espresso/55">0.00 CHF</span></div>
           <div class="mt-2 grid grid-cols-5 gap-2">
-            <button class="tip-pill" data-tip="0">0%</button>
-            <button class="tip-pill" data-tip="5">5%</button>
-            <button class="tip-pill" data-tip="10">10%</button>
-            <button class="tip-pill" data-tip="20">20%</button>
-            <button class="tip-pill" data-tip="custom">CHF</button>
+            <button class="tip-pill" data-tip="0">0%</button><button class="tip-pill" data-tip="5">5%</button><button class="tip-pill" data-tip="10">10%</button><button class="tip-pill" data-tip="20">20%</button><button class="tip-pill" data-tip="custom">CHF</button>
           </div>
-          <div id="tip-custom-wrap" class="hidden mt-2">
-            <input id="tip-custom" type="number" inputmode="decimal" min="0" step="0.5" class="input" placeholder="Betrag in CHF" />
-          </div>
+          <div id="tip-custom-wrap" class="hidden mt-2"><input id="tip-custom" type="number" inputmode="decimal" min="0" step="0.5" class="input" placeholder="Betrag in CHF" /></div>
         </div>
-
-        <!-- Summary -->
         <div class="mt-5 rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
           <div id="discount-lines" class="space-y-2 text-sm"></div>
           <div class="hairline my-3"></div>
@@ -371,8 +263,6 @@
           <div class="flex items-end justify-between"><span class="font-display text-lg">Total</span><span id="grand-total" class="font-display text-2xl font-semibold">0.00 CHF</span></div>
           <p id="save-note" class="hidden text-xs text-berry mt-1 text-right">Du sparst <span id="save-amount">0.00</span> CHF ✦</p>
         </div>
-
-        <!-- Form -->
         <h4 class="mt-6 font-display text-xl font-semibold">Deine Daten</h4>
         <p id="form-err" class="hidden text-sm text-berry mt-1"></p>
         <div class="mt-3 space-y-3">
@@ -381,56 +271,31 @@
           <input id="f-phone" class="input" type="tel"   placeholder="Handy +41 7X XXX XX XX" autocomplete="tel" inputmode="tel" />
           <textarea id="f-notes" class="input" placeholder="Besondere Hinweise zu deiner Bestellung oder Abholung (optional)"></textarea>
         </div>
-
-        <button id="pay-twint" class="mt-5 w-full btn-twint rounded-2xl py-4 flex items-center justify-center gap-3 font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed">
-          <span class="twint-mark"></span><span>Jetzt mit TWINT bezahlen</span>
-        </button>
+        <button id="pay-twint" class="mt-5 w-full btn-twint rounded-2xl py-4 flex items-center justify-center gap-3 font-medium tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"><span class="twint-mark"></span><span>Jetzt mit TWINT bezahlen</span></button>
         <p class="text-[11px] text-center text-espresso/50 mt-2">Öffnet die TWINT-App · Zahlung an +41 78 919 98 38</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PAYMENT OVERLAY -->
 <div id="pay-overlay" class="fixed inset-0 z-[80] hidden items-center justify-center bg-espresso/95 backdrop-blur-md">
   <div class="text-center px-6 max-w-sm">
-    <div id="pay-step-1" class="reveal">
-      <div class="flex items-center justify-center mb-6"><div class="spinner"></div></div>
-      <h3 class="font-display text-2xl font-semibold text-cream">Verbindung zu TWINT…</h3>
-      <p class="text-cream/60 mt-2 text-sm">Empfänger: <span class="text-cream font-medium">+41 78 919 98 38</span></p>
-      <div class="dots flex items-center justify-center gap-1.5 mt-6"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-    </div>
-    <div id="pay-step-2" class="reveal hidden">
-      <div class="flex items-center justify-center mb-6"><div class="spinner"></div></div>
-      <h3 class="font-display text-2xl font-semibold text-cream">Bestellung wird übermittelt…</h3>
-      <p class="text-cream/60 mt-2 text-sm">Bestätige in deiner TWINT-App.</p>
-    </div>
-    <div id="pay-step-3" class="reveal hidden">
-      <div class="flex items-center justify-center mb-4">
-        <svg class="check-circle check-cream" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"></circle><path d="M30 52 L45 67 L72 38"></path></svg>
-      </div>
-      <h3 class="font-display text-2xl font-semibold text-cream">Bestellung erfolgreich übermittelt</h3>
-      <p id="pay-step-3-amount" class="text-cream/70 mt-2 text-sm">Zahlung wird geprüft… ⏳</p>
-    </div>
+    <div id="pay-step-1" class="reveal"><div class="flex items-center justify-center mb-6"><div class="spinner"></div></div><h3 class="font-display text-2xl font-semibold text-cream">Verbindung zu TWINT…</h3><p class="text-cream/60 mt-2 text-sm">Empfänger: <span class="text-cream font-medium">+41 78 919 98 38</span></p><div class="dots flex items-center justify-center gap-1.5 mt-6"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+    <div id="pay-step-2" class="reveal hidden"><div class="flex items-center justify-center mb-6"><div class="spinner"></div></div><h3 class="font-display text-2xl font-semibold text-cream">Bestellung wird übermittelt…</h3><p class="text-cream/60 mt-2 text-sm">Bestätige in deiner TWINT-App.</p></div>
+    <div id="pay-step-3" class="reveal hidden"><div class="flex items-center justify-center mb-4"><svg class="check-circle check-cream" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"></circle><path d="M30 52 L45 67 L72 38"></path></svg></div><h3 class="font-display text-2xl font-semibold text-cream">Bestellung erfolgreich übermittelt</h3><p id="pay-step-3-amount" class="text-cream/70 mt-2 text-sm">Zahlung wird geprüft… ⏳</p></div>
   </div>
 </div>
 
-<!-- CONFIRMATION -->
 <div id="confirmation" class="hidden fixed inset-0 z-[70] bg-cream overflow-y-auto">
   <div class="max-w-xl mx-auto px-5 py-8 safe-top safe-bottom">
     <div class="flex items-center justify-center"><svg class="check-circle" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45"></circle><path d="M30 52 L45 67 L72 38"></path></svg></div>
     <h1 class="font-display text-3xl font-semibold text-center mt-4">Bestellung übermittelt</h1>
     <p class="text-center text-espresso/70 mt-2" id="conf-greeting">Vielen Dank!</p>
     <p class="text-center text-sm text-espresso/60 mt-1" id="conf-status"><span class="status-pill status-zahlung-ausstehend">Zahlung wird geprüft… ⏳</span></p>
-
     <div class="pickup-notice mt-6 rounded-2xl p-4 flex gap-3 items-start">
       <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-4 h-4 text-blush"></i></div>
-      <div>
-        <div class="font-display text-base font-semibold">Abholung am Sanitas Hauptsitz</div>
-        <p class="text-xs text-cream/75 mt-1">Du erhältst eine SMS &amp; E-Mail, sobald deine Bestellung abholbereit ist.</p>
-      </div>
+      <div><div class="font-display text-base font-semibold">Abholung am Sanitas Hauptsitz</div><p class="text-xs text-cream/75 mt-1">Du erhältst eine SMS &amp; E-Mail, sobald deine Bestellung abholbereit ist.</p></div>
     </div>
-
     <div class="mt-5 rounded-3xl bg-white border border-espresso/8 p-5 shadow-card">
       <div class="flex items-center justify-between"><span class="text-[11px] tracking-[.2em] uppercase text-espresso/60">Bestellung</span><span id="conf-orderid" class="text-[11px] tracking-[.2em] uppercase text-espresso/60">#000</span></div>
       <div id="conf-items" class="mt-4 space-y-2 text-sm"></div>
@@ -440,34 +305,28 @@
       <div class="flex items-center justify-between"><span class="font-display text-lg">Total</span><span id="conf-total" class="font-display text-2xl font-semibold">0.00 CHF</span></div>
       <div class="mt-3 flex items-center gap-2 text-sm text-espresso/70"><span class="twint-mark"></span><span>TWINT · +41 78 919 98 38</span></div>
     </div>
-
-    <!-- Feedback widget -->
     <div id="conf-feedback-wrap" class="hidden mt-5 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
       <h3 class="font-display text-base font-semibold">Wie hat dir der Bestellprozess gefallen?</h3>
       <p class="text-xs text-espresso/60 mt-1">Gib uns dein ehrliches Feedback — das hilft uns wirklich.</p>
       <textarea id="conf-feedback-text" class="input mt-2" placeholder="Deine Gedanken..."></textarea>
       <button id="conf-feedback-submit" class="mt-2 w-full btn-berry rounded-2xl py-3 text-sm font-medium">Feedback senden</button>
     </div>
-
     <button id="new-order" class="mt-5 w-full rounded-2xl py-3.5 border border-espresso/15 font-medium">Neue Bestellung</button>
   </div>
 </div>
 
-<!-- CUSTOMER AUTH MODAL -->
 <div id="cust-auth" class="hidden fixed inset-0 z-[92] bg-espresso/95 backdrop-blur-md overflow-y-auto">
   <div class="max-w-md mx-auto px-5 pt-10 pb-10 safe-top safe-bottom">
-    <button id="cust-auth-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center" aria-label="Schliessen"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <button id="cust-auth-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
     <div class="text-center mb-7">
       <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center"><i data-lucide="user" class="w-6 h-6"></i></div>
       <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Mein Konto</h2>
       <p class="text-cream/55 text-sm mt-1">Bestellungen, Wiederbestellung, Buddy-Codes</p>
     </div>
-
     <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-cream/5 mb-5">
       <button id="tab-login" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Anmelden</button>
       <button id="tab-register" class="cust-tab py-2 rounded-xl text-sm font-medium text-cream/60">Registrieren</button>
     </div>
-
     <form id="form-login" class="space-y-3">
       <input id="login-email" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
       <input id="login-pass"  type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
@@ -475,7 +334,6 @@
       <p id="login-err" class="hidden text-blush text-sm text-center"></p>
       <p id="login-not-verified" class="hidden text-cream/70 text-sm text-center">Konto noch nicht bestätigt. Schau in dein Postfach (auch Spam!).</p>
     </form>
-
     <form id="form-register" class="hidden space-y-3">
       <input id="reg-firstname" class="input" placeholder="Vorname (für deinen Buddy-Code)" />
       <input id="reg-email"  type="email" inputmode="email" class="input" placeholder="E-Mail" autocorrect="off" spellcheck="false" />
@@ -485,60 +343,32 @@
       <p id="reg-err" class="hidden text-blush text-sm text-center"></p>
       <p class="text-[11px] text-cream/50 text-center mt-1">Du erhältst einen Bestätigungslink per Mail. Erst nach Klick freigeschaltet.</p>
     </form>
-
     <div id="verify-prompt" class="hidden mt-6 p-4 rounded-2xl bg-cream/5 border border-cream/15">
       <p class="text-cream font-medium text-sm">Bestätigungsmail unterwegs ✓</p>
       <p class="text-cream/70 text-xs mt-1.5" id="verify-msg"></p>
-      <div id="verify-manual-wrap" class="hidden mt-3">
-        <p class="text-cream/60 text-[11px] mb-1.5">Aktivierungslink:</p>
-        <a id="verify-manual-link" href="#" class="text-blush text-xs underline break-all"></a>
-      </div>
+      <div id="verify-manual-wrap" class="hidden mt-3"><p class="text-cream/60 text-[11px] mb-1.5">Aktivierungslink:</p><a id="verify-manual-link" href="#" class="text-blush text-xs underline break-all"></a></div>
     </div>
   </div>
 </div>
 
-<!-- CUSTOMER PORTAL -->
 <div id="cust-portal" class="hidden fixed inset-0 z-[93] bg-cream overflow-y-auto">
   <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
     <header class="flex items-start justify-between mb-6">
-      <div>
-        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Mein Konto</p>
-        <h1 id="cust-greeting" class="font-display text-2xl font-semibold mt-0.5">Willkommen</h1>
-        <p id="cust-email" class="text-xs text-espresso/55 mt-1"></p>
-      </div>
-      <div class="flex flex-col gap-2 items-end">
-        <button id="cust-close" class="w-10 h-10 rounded-full border border-espresso/15 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
-        <button id="cust-logout" class="text-[11px] text-espresso/55 underline">Abmelden</button>
-      </div>
+      <div><p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Mein Konto</p><h1 id="cust-greeting" class="font-display text-2xl font-semibold mt-0.5">Willkommen</h1><p id="cust-email" class="text-xs text-espresso/55 mt-1"></p></div>
+      <div class="flex flex-col gap-2 items-end"><button id="cust-close" class="w-10 h-10 rounded-full border border-espresso/15 flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button><button id="cust-logout" class="text-[11px] text-espresso/55 underline">Abmelden</button></div>
     </header>
-
     <div class="grid grid-cols-2 gap-3 mb-3">
-      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Bestellungen</div>
-        <div id="cust-stat-count" class="font-display text-2xl font-semibold mt-1">0</div>
-      </div>
-      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
-        <div class="text-[10px] uppercase tracking-widest text-espresso/55">Dein Proteineis-Support</div>
-        <div id="cust-stat-support" class="font-display text-2xl font-semibold mt-1">0.00 CHF</div>
-      </div>
+      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft"><div class="text-[10px] uppercase tracking-widest text-espresso/55">Bestellungen</div><div id="cust-stat-count" class="font-display text-2xl font-semibold mt-1">0</div></div>
+      <div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft"><div class="text-[10px] uppercase tracking-widest text-espresso/55">Dein Proteineis-Support</div><div id="cust-stat-support" class="font-display text-2xl font-semibold mt-1">0.00 CHF</div></div>
     </div>
-    <div class="rounded-2xl bg-berry text-cream p-4 mb-5 shadow-card">
-      <div class="text-[10px] uppercase tracking-widest text-cream/65">Pint-Spar-Zähler</div>
-      <div class="font-display text-xl font-semibold mt-1">Bereits <span id="cust-stat-savings">0.00 CHF</span> gespart</div>
-      <p class="text-sm text-cream/85 mt-1">Das entspricht <strong><span id="cust-stat-pints">0.00 Gratis-Pints 🍦</span></strong> für deine Muskeln!</p>
-    </div>
-
-    <!-- Personal referral code + sharing -->
+    <div class="rounded-2xl bg-berry text-cream p-4 mb-5 shadow-card"><div class="text-[10px] uppercase tracking-widest text-cream/65">Pint-Spar-Zähler</div><div class="font-display text-xl font-semibold mt-1">Bereits <span id="cust-stat-savings">0.00 CHF</span> gespart</div><p class="text-sm text-cream/85 mt-1">Das entspricht <strong><span id="cust-stat-pints">0.00 Gratis-Pints 🍦</span></strong> für deine Muskeln!</p></div>
     <div class="mb-5 rounded-3xl p-5 shadow-card relative overflow-hidden" style="background: radial-gradient(120% 80% at 0% 0%, #F4C9D1 0%, transparent 60%), linear-gradient(180deg, #5C0E27 0%, #1A0E10 100%);">
       <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-gold/20 blur-2xl"></div>
       <span class="chip" style="background:rgba(250,246,239,.1); border-color:rgba(250,246,239,.2); color:#F4C9D1;"><i data-lucide="gift" class="w-3.5 h-3.5"></i> Dein Buddy-Code</span>
       <h2 class="font-display text-xl font-semibold text-cream mt-3">Teile &amp; Freunde sparen 5%</h2>
       <p id="cust-bonus" class="text-cream/75 text-sm mt-1"></p>
       <div class="mt-4 bg-cream rounded-2xl p-3.5 flex items-center justify-between gap-3">
-        <div class="min-w-0">
-          <div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div>
-          <div id="cust-refcode" class="font-display text-xl font-semibold tracking-wider mt-0.5 truncate">—</div>
-        </div>
+        <div class="min-w-0"><div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div><div id="cust-refcode" class="font-display text-xl font-semibold tracking-wider mt-0.5 truncate">—</div></div>
         <button id="cust-copy-code" class="px-3 py-2.5 rounded-xl btn-berry text-sm flex items-center gap-1.5 shrink-0"><i data-lucide="copy" class="w-4 h-4"></i> <span id="cust-copy-label">Kopieren</span></button>
       </div>
       <div class="mt-3 grid grid-cols-2 gap-2">
@@ -546,70 +376,33 @@
         <button id="share-instagram" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2 text-cream" style="background:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5 100%);"><i data-lucide="instagram" class="w-4 h-4"></i> Instagram</button>
       </div>
     </div>
-
     <div id="cust-list" class="space-y-3"></div>
-    <div id="cust-empty" class="hidden text-center py-12">
-      <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i></div>
-      <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
-      <p class="text-sm text-espresso/55 mt-1">Mach gleich los — deine Muskeln warten schon!</p>
-    </div>
+    <div id="cust-empty" class="hidden text-center py-12"><div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="ice-cream-cone" class="w-7 h-7 text-berryd"></i></div><p class="mt-3 font-display text-lg">Noch keine Bestellungen</p><p class="text-sm text-espresso/55 mt-1">Mach gleich los — deine Muskeln warten schon!</p></div>
   </div>
 </div>
 
-<!-- BACKOFFICE LOGIN -->
 <div id="bo-login" class="hidden fixed inset-0 z-[95] bg-espresso/95 backdrop-blur-md overflow-y-auto">
   <div class="max-w-md mx-auto px-5 pt-12 safe-top safe-bottom">
     <button id="bo-login-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-cream/10 text-cream flex items-center justify-center"><i data-lucide="x" class="w-5 h-5"></i></button>
-    <div class="text-center mb-8">
-      <div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center"><i data-lucide="lock" class="w-6 h-6"></i></div>
-      <h2 class="font-display text-2xl text-cream mt-4 font-semibold">Backoffice</h2>
-      <p class="text-cream/55 text-sm mt-1">Nur für Lucas</p>
-    </div>
-    <div class="space-y-3">
-      <input id="bo-user" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" />
-      <input id="bo-pass" type="password" class="input" placeholder="Passwort" autocomplete="current-password" />
-      <button id="bo-login-btn" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button>
-      <p id="bo-login-err" class="hidden text-blush text-sm text-center">Falsche Zugangsdaten</p>
-    </div>
+    <div class="text-center mb-8"><div class="w-14 h-14 mx-auto rounded-full bg-berry text-cream flex items-center justify-center"><i data-lucide="lock" class="w-6 h-6"></i></div><h2 class="font-display text-2xl text-cream mt-4 font-semibold">Backoffice</h2><p class="text-cream/55 text-sm mt-1">Nur für Lucas</p></div>
+    <div class="space-y-3"><input id="bo-user" type="email" inputmode="email" class="input" placeholder="E-Mail" autocomplete="email" autocorrect="off" spellcheck="false" /><input id="bo-pass" type="password" class="input" placeholder="Passwort" autocomplete="current-password" /><button id="bo-login-btn" class="w-full btn-berry rounded-2xl py-3.5 font-medium">Anmelden</button><p id="bo-login-err" class="hidden text-blush text-sm text-center">Falsche Zugangsdaten</p></div>
   </div>
 </div>
 
-<!-- BACKOFFICE PANEL -->
 <div id="backoffice" class="hidden fixed inset-0 z-[96] bg-cream overflow-y-auto">
   <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
-    <header class="flex items-center justify-between mb-6">
-      <div>
-        <p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Berry's Delights</p>
-        <h1 class="font-display text-2xl font-semibold">Backoffice</h1>
-      </div>
-      <button id="bo-logout" class="px-3 py-2 rounded-xl border border-espresso/15 text-xs font-medium">Abmelden</button>
-    </header>
-
-    <!-- Stats area -->
+    <header class="flex items-center justify-between mb-6"><div><p class="text-[10px] tracking-[.2em] uppercase text-espresso/55">Berry's Delights</p><h1 class="font-display text-2xl font-semibold">Backoffice</h1></div><button id="bo-logout" class="px-3 py-2 rounded-xl border border-espresso/15 text-xs font-medium">Abmelden</button></header>
     <div id="bo-stats"></div>
-
-    <!-- View tabs -->
-    <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-espresso/5 mt-5">
-      <button id="bo-tab-orders"   class="cust-tab active py-2 rounded-xl text-sm font-medium">Bestellungen</button>
-      <button id="bo-tab-feedback" class="cust-tab py-2 rounded-xl text-sm font-medium">Feedback</button>
-    </div>
-
+    <div class="grid grid-cols-2 gap-1 p-1 rounded-2xl bg-espresso/5 mt-5"><button id="bo-tab-orders"   class="cust-tab active py-2 rounded-xl text-sm font-medium">Bestellungen</button><button id="bo-tab-feedback" class="cust-tab py-2 rounded-xl text-sm font-medium">Feedback</button></div>
     <div id="bo-view-orders" class="mt-4">
       <div class="overflow-x-auto -mx-1 px-1 mb-3"><div id="bo-filters" class="flex gap-2 min-w-max"></div></div>
       <div id="bo-list" class="space-y-2.5"></div>
-      <div id="bo-empty" class="hidden text-center py-10">
-        <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="inbox" class="w-7 h-7 text-berryd"></i></div>
-        <p class="mt-3 font-display text-lg">Noch keine Bestellungen</p>
-      </div>
+      <div id="bo-empty" class="hidden text-center py-10"><div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center"><i data-lucide="inbox" class="w-7 h-7 text-berryd"></i></div><p class="mt-3 font-display text-lg">Noch keine Bestellungen</p></div>
     </div>
-
-    <div id="bo-view-feedback" class="hidden mt-4">
-      <div id="bo-feedback-list" class="space-y-2.5"></div>
-    </div>
+    <div id="bo-view-feedback" class="hidden mt-4"><div id="bo-feedback-list" class="space-y-2.5"></div></div>
   </div>
 </div>
 
-<!-- ORDER DETAIL -->
 <div id="bo-detail" class="hidden fixed inset-0 z-[97] bg-cream overflow-y-auto">
   <div class="max-w-2xl mx-auto px-5 py-5 safe-top safe-bottom">
     <button id="bo-detail-back" class="mb-4 inline-flex items-center gap-2 text-sm text-espresso/70"><i data-lucide="chevron-left" class="w-4 h-4"></i> Zurück zur Liste</button>
@@ -617,8 +410,1322 @@
   </div>
 </div>
 
-<!-- Single module entry — all logic lives in /js/* -->
-<script type="module" src="./js/app.js"></script>
+<!-- ═════════════════════════════════════════════════════════════════
+     SINGLE INLINE MODULE — alle Logik in einem Block.
+     Firebase v10 SDK wird direkt vom Google-CDN als ES-Module geladen.
+     ═════════════════════════════════════════════════════════════════ -->
+<script type="module">
+import { initializeApp, getApps }
+  from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import { getAuth, setPersistence, browserLocalPersistence,
+         createUserWithEmailAndPassword, signInWithEmailAndPassword,
+         sendEmailVerification, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+import { getDatabase, ref, onValue, set, update, get, push,
+         serverTimestamp, onDisconnect }
+  from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
+// ╔═══════════════ FIREBASE CONFIG (LIVE) ═══════════════╗
+const firebaseConfig = {
+  apiKey:            "AIzaSyC1kN3B7PKyzbTi3rwAkdw1wtXwWQViTII",
+  authDomain:        "berrys-delights.firebaseapp.com",
+  databaseURL:       "https://berrys-delights-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:         "berrys-delights",
+  storageBucket:     "berrys-delights.firebasestorage.app",
+  messagingSenderId: "158428724467",
+  appId:             "1:158428724467:web:f56e67d7f9e523aad90b86",
+  measurementId:     "G-W261HPJEF5"
+};
+
+// ════════════════════ KONSTANTEN ════════════════════
+const PRICE = 12.00;
+const PROTEIN_PER_PINT = 45;
+const REFERRAL_PCT = 5;
+const MERCHANT_TWINT = "+41 78 919 98 38";
+const PICKUP_LOCATION = "Sanitas Hauptsitz";
+const ADMIN_EMAIL = "beer.lucas@hotmail.com";
+const ADMIN_PASS  = "LuBe25031997.";
+const FLAVORS = [
+  { id:"chocolate", name:"Chocolate Fudge Brownie", tagline:"Dunkel · Brownie-Stücke",  gradient:"grad-chocolate", labelColor:"#1A0E10" },
+  { id:"vanilla",   name:"Vanilla Cookie Dough",    tagline:"Cremig · Cookie-Bites",     gradient:"grad-vanilla",   labelColor:"#1A0E10" },
+  { id:"caramel",   name:"Salted Caramel Toffee",   tagline:"Butterig · Fleur de Sel",   gradient:"grad-caramel",   labelColor:"#FAF6EF" },
+];
+const STATUSES = ["zahlung_ausstehend","offen","bezahlt","in_produktion","abholbereit","abgeschlossen","storniert"];
+const STATUS_LABELS = {
+  zahlung_ausstehend:"Zahlung ausstehend", offen:"Offen", bezahlt:"Bezahlt",
+  in_produktion:"In Produktion", abholbereit:"Abholbereit",
+  abgeschlossen:"Abgeschlossen", storniert:"Storniert"
+};
+const REF_PATTERN = /^[A-Z]{2,12}[0-9]{3}$/;
+const SK = {
+  cart:'bd_cart_v1', orders:'bd_orders_local_v1', customers:'bd_users_local_v1',
+  custSess:'bd_session_local_v1', adminSess:'bd_admin_session_v1',
+  refLock:'bd_ref_lock_v1', refCodes:'bd_ref_codes_v1',
+  feedbacks:'bd_feedbacks_local_v1', sessions:'bd_sessions_local_v1',
+};
+const ERR = {
+  emailFormat:  "Diese E-Mail sieht nicht echt aus — bitte nochmal checken. 📩",
+  phoneFormat:  "Bitte gib eine gültige Mobilnummer für den TWINT-Abgleich an! 📱",
+  passwordWeak: "Passwort min. 8 Zeichen — bisschen mehr Muskeln bitte! 🔒",
+  passwordsDiffer: "Die zwei Passwörter sind nicht identisch. Nochmal sauber tippen! 🔑",
+};
+
+// ════════════════════ FIREBASE INIT ════════════════════
+const FB_READY = !!firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("HIER_")
+  && !!firebaseConfig.databaseURL && !firebaseConfig.databaseURL.startsWith("HIER_");
+
+let app = null, auth = null, db = null;
+if (FB_READY) {
+  try {
+    app  = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db   = getDatabase(app);
+    setPersistence(auth, browserLocalPersistence).catch(e => console.warn("[fb] persistence:", e));
+    console.info("[Berry's Delights] Firebase Cloud aktiv ✓");
+  } catch (e) {
+    console.error("[Berry's Delights] Firebase init fehlgeschlagen:", e);
+  }
+} else {
+  console.info("[Berry's Delights] LOCAL-Modus (Firebase nicht konfiguriert).");
+}
+
+// Defensive: stub lucide if CDN failed
+if (!window.lucide || typeof window.lucide.createIcons !== "function") {
+  window.lucide = { createIcons:() => {} };
+}
+
+// ════════════════════ STATE ════════════════════
+const state = {
+  qty:       { chocolate:0, vanilla:0, caramel:0 },
+  referral:  null,
+  tip:       { type:"percent", value:0 },
+  customer:  { name:"", email:"", phone:"", notes:"" },
+};
+
+// ════════════════════ HELPERS ════════════════════
+const $  = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+const fmt = n => `${(Number(n)||0).toFixed(2)} CHF`;
+function show(el){ if(typeof el==='string') el=$(el); el && el.classList.remove("hidden"); }
+function hide(el){ if(typeof el==='string') el=$(el); el && el.classList.add("hidden"); }
+function toggle(el, vis){ if(typeof el==='string') el=$(el); el && el.classList.toggle("hidden", !vis); }
+function toast(html, color="#1A0E10", ms=2400){
+  const t = document.createElement("div");
+  t.className = "fixed top-0 inset-x-0 z-[300] text-cream px-4 py-3 text-sm text-center shadow-soft";
+  t.style.background = color;
+  t.innerHTML = html;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), ms);
+}
+function refreshIcons(){ try { window.lucide.createIcons(); } catch{} }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+// ════════════════════ VALIDATORS ════════════════════
+function isEmailValid(s){
+  s = String(s||"").trim();
+  if (!s || s.length > 254) return false;
+  return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(s);
+}
+function isObviousFakePhone(s){
+  if (typeof s !== "string" || s.length !== 9) return true;
+  const a = [...s].map(c => c.charCodeAt(0)-48);
+  if (a.every(x => x === a[0])) return true;
+  let r=1, mxR=1;
+  for (let i=1; i<a.length; i++){ r = a[i]===a[i-1] ? r+1 : 1; if (r>mxR) mxR=r; }
+  if (mxR >= 5) return true;
+  let u=1, d=1, mxS=1;
+  for (let i=1; i<a.length; i++){ u = a[i]-a[i-1]===1 ? u+1 : 1; d = a[i-1]-a[i]===1 ? d+1 : 1; mxS = Math.max(mxS, u, d); }
+  if (mxS >= 5) return true;
+  if (new Set(a).size < 4) return true;
+  return false;
+}
+function validateSwissMobile(raw){
+  let s = String(raw||"").replace(/[\s\-\(\)\.]/g, "");
+  if (!s) return { ok:false, error:ERR.phoneFormat };
+  if (s.startsWith("+41")) s = s.slice(3);
+  else if (s.startsWith("0041")) s = s.slice(4);
+  else if (s.startsWith("0")) s = s.slice(1);
+  else if (/^41[7]/.test(s)) s = s.slice(2);
+  if (!/^7[0-9]{8}$/.test(s)) return { ok:false, error:ERR.phoneFormat };
+  if (isObviousFakePhone(s)) return { ok:false, error:ERR.phoneFormat };
+  return { ok:true, formatted:`+41 ${s.slice(0,2)} ${s.slice(2,5)} ${s.slice(5,7)} ${s.slice(7,9)}`, digits:"+41"+s };
+}
+
+// ════════════════════ CART PERSISTENCE ════════════════════
+let _hydrating = false;
+function saveCart(){
+  if (_hydrating) return;
+  try { localStorage.setItem(SK.cart, JSON.stringify({ qty:state.qty, referral:state.referral, tip:state.tip, customer:state.customer })); } catch {}
+}
+function loadCart(){
+  _hydrating = true;
+  try {
+    const raw = localStorage.getItem(SK.cart);
+    if (raw) {
+      const d = JSON.parse(raw);
+      if (d.qty) Object.assign(state.qty, d.qty);
+      if ("referral" in d) state.referral = d.referral || null;
+      if (d.tip) state.tip = d.tip;
+      if (d.customer) state.customer = Object.assign({notes:""}, d.customer);
+    }
+  } catch {}
+  _hydrating = false;
+}
+function clearCartItems(){
+  state.qty = { chocolate:0, vanilla:0, caramel:0 };
+  state.referral = null;
+  state.tip = { type:"percent", value:0 };
+  saveCart();
+}
+
+// ════════════════════ PRICING ════════════════════
+function priceCart(){
+  const ids = ["chocolate","vanilla","caramel"];
+  const totalItems = ids.reduce((s,id) => s + (state.qty[id]||0), 0);
+  const subtotal = totalItems * PRICE;
+  const packs = {};
+  let tens=0, fives=0;
+  for (const id of ids) {
+    const n = state.qty[id]||0;
+    const t = Math.floor(n / 10);
+    const f = Math.floor((n - 10*t) / 5);
+    packs[id] = { tens:t, fives:f };
+    tens += t; fives += f;
+  }
+  const tenDiscount  = tens  * 10 * PRICE * 0.10;
+  const fiveDiscount = fives *  5 * PRICE * 0.05;
+  const refPct = state.referral ? (state.referral.percent / 100) : 0;
+  const refDiscount = subtotal * refPct;
+  const totalDiscount = tenDiscount + fiveDiscount + refDiscount;
+  const afterDiscount = Math.max(0, subtotal - totalDiscount);
+  let tipAmount = 0;
+  if (state.tip.type === "percent") tipAmount = afterDiscount * (state.tip.value / 100);
+  else if (state.tip.type === "fixed") tipAmount = Math.max(0, Number(state.tip.value) || 0);
+  const grandTotal = afterDiscount + tipAmount;
+  return { subtotal, totalDiscount, afterDiscount, tipAmount, grandTotal, tens, fives, packs, tenDiscount, fiveDiscount, refDiscount, totalItems, proteinG: totalItems * PROTEIN_PER_PINT };
+}
+const savingsToPints = saved => saved / PRICE;
+
+// ════════════════════ HASH (local fallback) ════════════════════
+async function sha256(str){
+  const enc = new TextEncoder().encode(str + "bd_salt_v1_change_for_prod");
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+// ════════════════════ REFERRAL ════════════════════
+function generateCode(firstName){
+  let p = String(firstName||"").trim().toUpperCase().replace(/[^A-Z]/g, "");
+  if (p.length < 2) p = "BERRY";
+  if (p.length > 12) p = p.slice(0,12);
+  return p + (100 + Math.floor(Math.random() * 900));
+}
+async function reserveCode(firstName, ownerUid, ownerEmail){
+  for (let i=0; i<8; i++){
+    const code = generateCode(firstName);
+    if (FB_READY && db){
+      try {
+        const snap = await get(ref(db, `referralCodes/${code}`));
+        if (snap.exists()) continue;
+        await set(ref(db, `referralCodes/${code}`), { ownerUid, ownerEmail, createdAt: serverTimestamp() });
+        return code;
+      } catch (e) { console.warn("[referral] reserve cloud:", e); }
+    }
+    const tab = loadLocalRefCodes();
+    if (tab[code]) continue;
+    tab[code] = { ownerUid, ownerEmail, createdAt: Date.now() };
+    saveLocalRefCodes(tab);
+    return code;
+  }
+  return generateCode(firstName + Math.floor(Math.random() * 100));
+}
+async function validateCode(code){
+  code = String(code||"").trim().toUpperCase();
+  if (!REF_PATTERN.test(code)) return { valid:false };
+  if (FB_READY && db){
+    try {
+      const snap = await get(ref(db, `referralCodes/${code}`));
+      if (!snap.exists()) return { valid:false };
+      const v = snap.val() || {};
+      return { valid:true, code, ownerUid:v.ownerUid, ownerEmail:v.ownerEmail };
+    } catch (e) { console.warn("[referral] validate cloud:", e); }
+  }
+  const tab = loadLocalRefCodes();
+  const v = tab[code];
+  if (!v) return { valid:false };
+  return { valid:true, code, ownerUid:v.ownerUid, ownerEmail:v.ownerEmail };
+}
+function loadLocalRefCodes(){ try { return JSON.parse(localStorage.getItem(SK.refCodes)) || {}; } catch { return {}; } }
+function saveLocalRefCodes(m){ try { localStorage.setItem(SK.refCodes, JSON.stringify(m)); } catch {} }
+
+function readLockState(){
+  let s = { attempts:0, lockedUntil:0 };
+  try { s = JSON.parse(localStorage.getItem(SK.refLock)) || s; } catch {}
+  try {
+    const ss = JSON.parse(sessionStorage.getItem(SK.refLock) || "null");
+    if (ss && ss.lockedUntil > s.lockedUntil) s = ss;
+  } catch {}
+  return s;
+}
+function writeLockState(s){
+  try { localStorage.setItem(SK.refLock, JSON.stringify(s)); } catch {}
+  try { sessionStorage.setItem(SK.refLock, JSON.stringify(s)); } catch {}
+}
+function isLocked(){ const s = readLockState(); return s.lockedUntil > Date.now() ? s.lockedUntil : 0; }
+function recordInvalidAttempt(){
+  const s = readLockState();
+  s.attempts = (s.attempts||0) + 1;
+  if (s.attempts >= 3) { s.lockedUntil = Date.now() + 10*60_000; s.attempts = 0; }
+  writeLockState(s);
+  return s;
+}
+function resetAttempts(){ writeLockState({ attempts:0, lockedUntil:0 }); }
+
+let _refLockTimer = null;
+function refreshRefLockUI(){
+  const input = $("#ref-input"), btn = $("#ref-apply"), msg = $("#ref-msg");
+  if (!input || !btn || !msg) return;
+  const until = isLocked();
+  if (until > 0){
+    input.disabled = btn.disabled = true;
+    input.classList.add("opacity-50"); btn.classList.add("opacity-50");
+    const t = new Date(until).toLocaleTimeString("de-CH", { hour:"2-digit", minute:"2-digit" });
+    msg.innerHTML = `<span class="text-berry font-medium">⛔ Code-Eingabe gesperrt</span> · Wieder verfügbar um ${t} Uhr`;
+    msg.className = "text-xs mt-2 text-berry";
+    if (!_refLockTimer) _refLockTimer = setInterval(refreshRefLockUI, 1000);
+  } else {
+    input.disabled = btn.disabled = false;
+    input.classList.remove("opacity-50"); btn.classList.remove("opacity-50");
+    if (_refLockTimer) { clearInterval(_refLockTimer); _refLockTimer = null; }
+  }
+}
+async function applyEnteredCode(opts={}){
+  const input = $("#ref-input"), msg = $("#ref-msg"), honey = $("#ref-honey");
+  if (!input || !msg) return;
+  if (honey && honey.value) { console.warn("Honeypot triggered"); return; }
+  if (isLocked()) { refreshRefLockUI(); return; }
+  const code = String(input.value||"").trim().toUpperCase();
+  if (!code) return;
+  if (!REF_PATTERN.test(code)) return failRef("Code-Format passt nicht. Beispiel: LUCAS842");
+  const res = await validateCode(code);
+  if (!res.valid) return failRef("Diesen Code kennen wir nicht. Tippfehler? Sonst sag deinem Buddy Bescheid.");
+  resetAttempts();
+  input.classList.remove("error");
+  state.referral = { code, percent: REFERRAL_PCT, ownerUid: res.ownerUid||null, ownerEmail: res.ownerEmail||null };
+  input.value = code;
+  saveCart();
+  msg.innerHTML = `<span class="text-berry font-medium">✦ Code ${code} aktiv</span> · ${REFERRAL_PCT}% Buddy-Rabatt${opts.fromUrl?" (via Link)":""}`;
+  msg.className = "text-xs mt-2 text-espresso/70";
+  if (!opts.fromUrl) input.blur();
+  renderAll();
+
+  function failRef(reason){
+    input.classList.add("error");
+    const s = recordInvalidAttempt();
+    if (s.lockedUntil > Date.now()) { refreshRefLockUI(); state.referral=null; saveCart(); renderAll(); return; }
+    const left = 3 - (s.attempts||0);
+    msg.textContent = `${reason} Noch ${left} Versuch${left===1?"":"e"} dann gibt's 10 Min Pause.`;
+    msg.className = "text-xs mt-2 text-berry";
+    state.referral=null; saveCart(); renderAll();
+  }
+}
+async function handleRefURLParam(){
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get("ref"); if (!raw) return;
+  const code = String(raw).trim().toUpperCase();
+  if (REF_PATTERN.test(code)){
+    const input = $("#ref-input"); if (input) input.value = code;
+    await applyEnteredCode({ fromUrl:true });
+    if (state.referral && state.referral.code === code) {
+      toast(`🎁 Code <strong>${code}</strong> aktiv · ${REFERRAL_PCT}% Buddy-Rabatt für dich!`, "#8B1A3B", 3600);
+    }
+  }
+  params.delete("ref");
+  const qs = params.toString();
+  window.history.replaceState({}, "", window.location.pathname + (qs?"?"+qs:""));
+}
+
+// ════════════════════ AUTH ════════════════════
+const _authListeners = new Set();
+function onAuthChange(cb){ _authListeners.add(cb); return () => _authListeners.delete(cb); }
+function emitAuth(u){ _authListeners.forEach(fn => { try { fn(u); } catch (e) { console.warn(e); } }); }
+
+function wrapUser(uid, email, verified){
+  if (!email) return null;
+  return {
+    uid, email, verified, firstName:"", refCode:null, referralBonusPercent:0,
+    isAdmin: email.toLowerCase() === ADMIN_EMAIL.toLowerCase(),
+  };
+}
+function currentUser(){
+  if (FB_READY && auth){
+    const u = auth.currentUser;
+    if (!u) return null;
+    return wrapUser(u.uid, u.email, !!u.emailVerified);
+  }
+  return localCurrent();
+}
+function localCurrent(){
+  const email = localStorage.getItem(SK.custSess);
+  if (!email) return null;
+  const u = loadLocalUsers()[email];
+  if (!u || !u.verified) return null;
+  return {
+    uid:"local:"+email, email, firstName:u.firstName||"",
+    verified:true, refCode:u.refCode||null, referralBonusPercent:u.referralBonusPercent||0,
+    isAdmin: email.toLowerCase() === ADMIN_EMAIL.toLowerCase(),
+  };
+}
+function loadLocalUsers(){ try { return JSON.parse(localStorage.getItem(SK.customers)) || {}; } catch { return {}; } }
+function saveLocalUsers(m){ try { localStorage.setItem(SK.customers, JSON.stringify(m)); } catch {} }
+
+async function initAuth(){
+  if (FB_READY && auth){
+    onAuthStateChanged(auth, async (u) => {
+      if (!u) return emitAuth(null);
+      const w = wrapUser(u.uid, u.email, !!u.emailVerified);
+      try {
+        const snap = await get(ref(db, `users/${u.uid}`));
+        if (snap.exists()) Object.assign(w, snap.val());
+      } catch (e) { console.warn("[auth] profile read:", e); }
+      w.isAdmin = w.email && w.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+      emitAuth(w);
+    });
+  } else {
+    setTimeout(() => emitAuth(localCurrent()), 0);
+  }
+}
+
+async function registerCustomer({ email, password, passwordConfirm, firstName }){
+  email = String(email||"").trim().toLowerCase();
+  if (!isEmailValid(email))           throw new Error(ERR.emailFormat);
+  if (!password || password.length<8) throw new Error(ERR.passwordWeak);
+  if (password !== passwordConfirm)   throw new Error(ERR.passwordsDiffer);
+  firstName = String(firstName||"").trim();
+
+  if (FB_READY && auth){
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const uid = cred.user.uid;
+    const refCode = await reserveCode(firstName || email.split("@")[0], uid, email);
+    await set(ref(db, `users/${uid}`), {
+      email, firstName, refCode, referralBonusPercent:0, role:"customer", createdAt: Date.now(),
+    });
+    await sendEmailVerification(cred.user, { url: window.location.origin + window.location.pathname });
+    await signOut(auth);
+    return { ok:true, verifyEmailSent:true, manualLink:null };
+  }
+  const users = loadLocalUsers();
+  if (users[email]) throw new Error("Diese E-Mail ist schon registriert. Logg dich ein!");
+  const refCode = await reserveCode(firstName || email.split("@")[0], "local:"+email, email);
+  const verifyToken = (crypto.randomUUID ? crypto.randomUUID() : Date.now()+"-"+Math.random());
+  users[email] = {
+    email, firstName, refCode, referralBonusPercent:0,
+    passwordHash: await sha256(password), verified:false, verifyToken, createdAt: Date.now(),
+  };
+  saveLocalUsers(users);
+  const manualLink = `${window.location.origin}${window.location.pathname}?verify=${encodeURIComponent(email)}&token=${encodeURIComponent(verifyToken)}`;
+  return { ok:true, verifyEmailSent:false, manualLink };
+}
+async function loginCustomer({ email, password }){
+  email = String(email||"").trim().toLowerCase();
+  if (!isEmailValid(email)) throw new Error(ERR.emailFormat);
+  if (FB_READY && auth){
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    if (!cred.user.emailVerified){
+      const e = new Error("Konto noch nicht bestätigt. Check dein Postfach (auch Spam!).");
+      e.code = "NOT_VERIFIED";
+      await signOut(auth); throw e;
+    }
+    return { uid: cred.user.uid, email: cred.user.email };
+  }
+  const users = loadLocalUsers();
+  const u = users[email];
+  if (!u){ const e = new Error("Kein Konto mit dieser E-Mail. Erst registrieren!"); e.code="NO_USER"; throw e; }
+  const hash = await sha256(password);
+  if (hash !== u.passwordHash){ const e = new Error("Passwort falsch. Nochmal sauber tippen."); e.code="BAD_PASS"; throw e; }
+  if (!u.verified){ const e = new Error("Konto noch nicht bestätigt. Bestätigungslink klicken!"); e.code="NOT_VERIFIED"; throw e; }
+  localStorage.setItem(SK.custSess, email);
+  emitAuth(localCurrent());
+  return { uid:"local:"+email, email };
+}
+async function logoutCustomer(){
+  if (FB_READY && auth){ try { await signOut(auth); } catch {} }
+  localStorage.removeItem(SK.custSess);
+  emitAuth(null);
+}
+function verifyFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("verify"), token = params.get("token");
+  if (!email || !token) return null;
+  if (FB_READY){
+    params.delete("verify"); params.delete("token");
+    const qs = params.toString();
+    window.history.replaceState({}, "", window.location.pathname + (qs?"?"+qs:""));
+    return null;
+  }
+  const e = String(email).trim().toLowerCase();
+  const users = loadLocalUsers();
+  const u = users[e];
+  if (u && !u.verified && u.verifyToken === token){
+    u.verified = true; delete u.verifyToken;
+    users[e] = u; saveLocalUsers(users);
+    toast(`Konto ${e} aktiviert ✓ — du kannst dich jetzt anmelden.`, "#8B1A3B");
+  }
+  params.delete("verify"); params.delete("token");
+  const qs = params.toString();
+  window.history.replaceState({}, "", window.location.pathname + (qs?"?"+qs:""));
+  return { ok: !!(u && u.verified), email:e };
+}
+async function getProfile(uid){
+  if (FB_READY && db && uid && !String(uid).startsWith("local:")){
+    try { const snap = await get(ref(db, `users/${uid}`)); return snap.val() || null; }
+    catch { return null; }
+  }
+  const email = String(uid||"").replace(/^local:/, "");
+  const u = loadLocalUsers()[email];
+  return u ? { email:u.email, firstName:u.firstName, refCode:u.refCode, referralBonusPercent:u.referralBonusPercent||0 } : null;
+}
+async function adjustReferralBonus(uid, deltaPct){
+  if (FB_READY && db && uid && !String(uid).startsWith("local:")){
+    try {
+      const snap = await get(ref(db, `users/${uid}/referralBonusPercent`));
+      const cur = Number(snap.val()) || 0;
+      await update(ref(db, `users/${uid}`), { referralBonusPercent: Math.max(0, cur + deltaPct) });
+    } catch (e) { console.warn("[auth] adjustReferralBonus:", e); }
+    return;
+  }
+  const email = String(uid||"").replace(/^local:/, "");
+  const users = loadLocalUsers();
+  if (!users[email]) return;
+  users[email].referralBonusPercent = Math.max(0, (Number(users[email].referralBonusPercent)||0) + deltaPct);
+  saveLocalUsers(users);
+}
+
+// ════════════════════ ORDERS ════════════════════
+function serializeOrder({ user, customer, pricing, qty, referral, tip, notes }){
+  const id = "BD-" + Math.floor(100000 + Math.random()*900000);
+  const userId = user && user.uid ? user.uid : "guest";
+  return {
+    id, userId,
+    name: customer.name, email: String(customer.email||"").toLowerCase(), phone: customer.phone,
+    notes: String(notes||""),
+    qty: { ...qty },
+    pricing: {
+      subtotal: pricing.subtotal, tenDiscount: pricing.tenDiscount, fiveDiscount: pricing.fiveDiscount,
+      refDiscount: pricing.refDiscount, totalDiscount: pricing.totalDiscount,
+      tipAmount: pricing.tipAmount, grandTotal: pricing.grandTotal,
+      tens: pricing.tens, fives: pricing.fives,
+    },
+    referral: referral ? { code: referral.code, percent: referral.percent, ownerUid: referral.ownerUid||null, bonusApplied:false } : null,
+    tip: { ...tip },
+    paymentStatus: "zahlung_ausstehend",
+    timestamp: new Date().toISOString(),
+  };
+}
+function loadOrdersLocal(){ try { return JSON.parse(localStorage.getItem(SK.orders)) || []; } catch { return []; } }
+function saveOrdersLocal(list){ try { localStorage.setItem(SK.orders, JSON.stringify(list)); } catch {} }
+
+async function saveOrder(order){
+  if (FB_READY && db){
+    try {
+      await set(ref(db, `orders/${order.id}`), { ...order, _ts: serverTimestamp() });
+      if (order.userId && order.userId !== "guest" && !String(order.userId).startsWith("local:")){
+        await set(ref(db, `userOrders/${order.userId}/${order.id}`), true);
+      }
+    } catch (e) { console.warn("[orders] cloud save:", e); }
+  }
+  const all = loadOrdersLocal(); all.push(order); saveOrdersLocal(all);
+}
+async function loadAllOrders(){
+  if (FB_READY && db){
+    try {
+      const snap = await get(ref(db, "orders"));
+      const v = snap.val() || {};
+      const list = Object.values(v);
+      list.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+      return list;
+    } catch (e) { console.warn("[orders] cloud read:", e); }
+  }
+  const l = loadOrdersLocal();
+  l.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+  return l;
+}
+async function loadOrdersForUser(emailOrUid){
+  const all = await loadAllOrders();
+  const e = String(emailOrUid||"").toLowerCase();
+  return all.filter(o => String(o.email||"").toLowerCase() === e || String(o.userId||"") === emailOrUid);
+}
+async function updateOrderStatus(orderId, newStatus){
+  if (!STATUSES.includes(newStatus)) throw new Error("Unbekannter Status: " + newStatus);
+  let order = null;
+  if (FB_READY && db){
+    try { const snap = await get(ref(db, `orders/${orderId}`)); order = snap.val(); } catch {}
+  }
+  if (!order) order = loadOrdersLocal().find(o => o.id === orderId) || null;
+  if (!order) throw new Error("Bestellung nicht gefunden.");
+
+  const wasPaid = order.paymentStatus === "bezahlt";
+  const willBePaid = newStatus === "bezahlt";
+
+  if (FB_READY && db){
+    try { await update(ref(db, `orders/${orderId}`), { paymentStatus: newStatus, _ts: serverTimestamp() }); }
+    catch (e) { console.warn(e); }
+  }
+  const list = loadOrdersLocal();
+  const idx = list.findIndex(o => o.id === orderId);
+  if (idx >= 0){ list[idx].paymentStatus = newStatus; saveOrdersLocal(list); }
+
+  if (!wasPaid && willBePaid && order.referral && order.referral.ownerUid && !order.referral.bonusApplied){
+    try {
+      await adjustReferralBonus(order.referral.ownerUid, +5);
+      if (FB_READY && db) await update(ref(db, `orders/${orderId}/referral`), { bonusApplied:true, bonusAppliedAt: serverTimestamp() });
+      else {
+        const l2 = loadOrdersLocal();
+        const i2 = l2.findIndex(o => o.id === orderId);
+        if (i2 >= 0 && l2[i2].referral){ l2[i2].referral.bonusApplied = true; saveOrdersLocal(l2); }
+      }
+    } catch (e) { console.warn(e); }
+  }
+  if (wasPaid && !willBePaid && order.referral && order.referral.ownerUid && order.referral.bonusApplied){
+    try {
+      await adjustReferralBonus(order.referral.ownerUid, -5);
+      if (FB_READY && db) await update(ref(db, `orders/${orderId}/referral`), { bonusApplied:false });
+      else {
+        const l2 = loadOrdersLocal();
+        const i2 = l2.findIndex(o => o.id === orderId);
+        if (i2 >= 0 && l2[i2].referral){ l2[i2].referral.bonusApplied = false; saveOrdersLocal(l2); }
+      }
+    } catch (e) { console.warn(e); }
+  }
+}
+
+async function submitFeedback({ orderId, email, text, rating }){
+  const item = {
+    orderId: orderId||null, email: String(email||"").toLowerCase()||null,
+    text: String(text||"").trim().slice(0,1000),
+    rating: rating != null ? Number(rating) : null,
+    createdAt: new Date().toISOString(),
+  };
+  if (!item.text && !item.rating) return false;
+  if (FB_READY && db){
+    try { await push(ref(db, "feedbacks"), item); }
+    catch (e) { console.warn("[feedback] cloud:", e); }
+  }
+  const list = loadFeedbacksLocal(); list.push(item); saveFeedbacksLocal(list);
+  return true;
+}
+async function loadFeedbacks(){
+  if (FB_READY && db){
+    try { const snap = await get(ref(db, "feedbacks")); return Object.values(snap.val()||{}); }
+    catch (e) { console.warn("[feedback] read:", e); }
+  }
+  return loadFeedbacksLocal();
+}
+function loadFeedbacksLocal(){ try { return JSON.parse(localStorage.getItem(SK.feedbacks))||[]; } catch { return []; } }
+function saveFeedbacksLocal(l){ try { localStorage.setItem(SK.feedbacks, JSON.stringify(l)); } catch {} }
+
+// Sessions + presence
+function getSessionId(){
+  let id = sessionStorage.getItem("bd_sid");
+  if (!id){
+    id = (crypto.randomUUID ? crypto.randomUUID() : Date.now()+"-"+Math.random().toString(36)).slice(0,20);
+    sessionStorage.setItem("bd_sid", id);
+  }
+  return id;
+}
+function startSessionTracking(){
+  const id = getSessionId();
+  const startedAt = Date.now();
+  const tickLocal = (dur) => {
+    let all = {};
+    try { all = JSON.parse(localStorage.getItem(SK.sessions)) || {}; } catch {}
+    const rec = all[id] || { startedAt, durationMs:0 };
+    rec.durationMs = Math.max(rec.durationMs||0, dur);
+    all[id] = rec;
+    try { localStorage.setItem(SK.sessions, JSON.stringify(all)); } catch {}
+  };
+  tickLocal(0);
+  if (FB_READY && db){
+    try { set(ref(db, `sessions/${id}`), { startedAt: serverTimestamp(), durationMs:0 }).catch(() => {}); } catch {}
+  }
+  const hb = setInterval(() => {
+    const dur = Date.now() - startedAt;
+    tickLocal(dur);
+    if (FB_READY && db){ try { update(ref(db, `sessions/${id}`), { durationMs: dur, lastSeen: serverTimestamp() }).catch(() => {}); } catch {} }
+  }, 20_000);
+  window.addEventListener("beforeunload", () => clearInterval(hb));
+}
+async function loadSessionsStats(){
+  if (FB_READY && db){
+    try {
+      const snap = await get(ref(db, "sessions"));
+      const v = snap.val() || {};
+      const arr = Object.values(v);
+      return { totalSessions: arr.length, avgDurationMs: arr.length ? arr.reduce((s,r) => s+(r.durationMs||0), 0)/arr.length : 0 };
+    } catch {}
+  }
+  let v = {}; try { v = JSON.parse(localStorage.getItem(SK.sessions)) || {}; } catch {}
+  const arr = Object.values(v);
+  return { totalSessions: arr.length, avgDurationMs: arr.length ? arr.reduce((s,r) => s+(r.durationMs||0), 0)/arr.length : 0 };
+}
+function startPresence(onChange){
+  if (!FB_READY || !db){ setTimeout(() => onChange && onChange(null), 0); return; }
+  try {
+    const sid = getSessionId();
+    const connRef = ref(db, ".info/connected");
+    const myRef   = ref(db, `presence/${sid}`);
+    const allRef  = ref(db, "presence");
+    onValue(connRef, (snap) => {
+      if (snap.val() === true){
+        onDisconnect(myRef).remove().catch(() => {});
+        set(myRef, { since: serverTimestamp() }).catch(() => {});
+      }
+    });
+    onValue(allRef, (snap) => {
+      const v = snap.val() || {};
+      onChange && onChange(Object.keys(v).length);
+    });
+  } catch (e) { console.warn("[presence]", e); }
+}
+
+// ════════════════════ FLAVOR RENDER ════════════════════
+function renderFlavors(){
+  const grid = $("#flavor-grid"); if (!grid) return;
+  grid.innerHTML = FLAVORS.map(f => `
+    <article class="bg-white rounded-3xl p-4 shadow-card border border-espresso/5">
+      <div class="flex gap-4 items-center">
+        <div class="${f.gradient} rounded-2xl w-24 h-28 shrink-0 relative overflow-hidden flex items-center justify-center"><div class="pint"><div class="pint-label" style="color:${f.labelColor}">Berry's<small>${f.id.toUpperCase()}</small></div></div></div>
+        <div class="flex-1 min-w-0">
+          <h3 class="font-display text-lg font-semibold leading-tight">${f.name}</h3>
+          <p class="text-xs text-espresso/55 mt-0.5">${f.tagline}</p>
+          <div class="mt-3 flex items-center justify-between gap-2">
+            <span class="font-display text-base font-semibold">${fmt(PRICE)}</span>
+            <div class="flex items-center gap-2">
+              <button class="qty-btn" data-act="dec" data-id="${f.id}"><i data-lucide="minus" class="w-4 h-4"></i></button>
+              <span class="count font-display text-lg font-semibold w-6 text-center" data-count="${f.id}">0</span>
+              <button class="qty-btn primary" data-act="inc" data-id="${f.id}"><i data-lucide="plus" class="w-4 h-4"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-3">
+        <button class="pack-btn" data-pack="${f.id}" data-size="5"><i data-lucide="plus" class="w-4 h-4"></i><span>5er-Pack</span><span class="save">−5%</span></button>
+        <button class="pack-btn" data-pack="${f.id}" data-size="10"><i data-lucide="plus" class="w-4 h-4"></i><span>10er-Pack</span><span class="save">−10%</span></button>
+      </div>
+    </article>`).join("");
+  refreshIcons();
+  grid.addEventListener("click", (e) => {
+    const q = e.target.closest("[data-act]");
+    const p = e.target.closest("[data-pack]");
+    if (q){
+      const id = q.dataset.id, act = q.dataset.act;
+      if (act === "inc") state.qty[id]++;
+      else if (act === "dec" && state.qty[id] > 0) state.qty[id]--;
+      bump(id); renderAll();
+    } else if (p){
+      state.qty[p.dataset.pack] += Number(p.dataset.size) || 5;
+      bump(p.dataset.pack); renderAll();
+    }
+  });
+}
+function bump(id){
+  $$(`[data-count="${id}"]`).forEach(el => { el.classList.add("bump"); setTimeout(() => el.classList.remove("bump"), 220); });
+}
+
+// ════════════════════ MAIN CART RENDER ════════════════════
+function renderAll(){
+  const p = priceCart();
+  FLAVORS.forEach(f => $$(`[data-count="${f.id}"]`).forEach(el => el.textContent = state.qty[f.id]));
+  toggle("#cart-bar", p.totalItems > 0);
+  if ($("#cart-count")) $("#cart-count").textContent = p.totalItems;
+  if ($("#cart-summary")) $("#cart-summary").textContent = `${p.totalItems} ${p.totalItems===1?"Pint":"Pints"}`;
+  if ($("#cart-total")) $("#cart-total").textContent = fmt(p.grandTotal);
+  toggle("#cart-badge", p.totalItems > 0);
+  if (p.totalItems > 0 && $("#cart-badge")) $("#cart-badge").textContent = p.totalItems;
+  toggle("#cart-empty", p.totalItems === 0);
+  toggle("#cart-detail", p.totalItems > 0);
+  if (p.totalItems > 0){
+    renderCartItems();
+    renderSummary(p);
+    renderExpress(p);
+    renderTip(p);
+  }
+  saveCart();
+}
+function renderCartItems(){
+  const wrap = $("#cart-items"); if (!wrap) return;
+  wrap.innerHTML = FLAVORS.filter(f => state.qty[f.id] > 0).map(f => `
+    <div class="flex items-center gap-3 bg-white rounded-2xl p-2.5 border border-espresso/8">
+      <div class="${f.gradient} w-12 h-14 rounded-xl shrink-0"></div>
+      <div class="flex-1 min-w-0"><div class="font-medium text-sm truncate">${f.name}</div><div class="text-xs text-espresso/55 mt-0.5">${fmt(PRICE)} · Pint</div></div>
+      <div class="flex items-center gap-2"><button class="qty-btn" data-act="dec" data-id="${f.id}"><i data-lucide="minus" class="w-4 h-4"></i></button><span class="count w-5 text-center text-sm font-semibold" data-count="${f.id}">${state.qty[f.id]}</span><button class="qty-btn primary" data-act="inc" data-id="${f.id}"><i data-lucide="plus" class="w-4 h-4"></i></button></div>
+    </div>`).join("");
+  refreshIcons();
+  wrap.querySelectorAll("[data-act]").forEach(b => b.addEventListener("click", () => {
+    const id = b.dataset.id, act = b.dataset.act;
+    if (act === "inc") state.qty[id]++;
+    else if (act === "dec" && state.qty[id] > 0) state.qty[id]--;
+    renderAll();
+  }));
+}
+function renderSummary(p){
+  const lines = [];
+  if (p.tens > 0)  lines.push(rowBadge("10er", `Choco ${p.packs.chocolate.tens}× · Vanilla ${p.packs.vanilla.tens}× · Caramel ${p.packs.caramel.tens}×`, "10%", -p.tenDiscount));
+  if (p.fives > 0) lines.push(rowBadge("5er",  `Choco ${p.packs.chocolate.fives}× · Vanilla ${p.packs.vanilla.fives}× · Caramel ${p.packs.caramel.fives}×`, "5%", -p.fiveDiscount));
+  if (p.refDiscount > 0 && state.referral) lines.push(rowBadge("Buddy", state.referral.code, REFERRAL_PCT+"%", -p.refDiscount));
+  const dl = $("#discount-lines"); if (dl){ dl.innerHTML = lines.join(""); dl.classList.toggle("hidden", lines.length === 0); }
+  $("#subtotal").textContent = fmt(p.subtotal);
+  $("#grand-total").textContent = fmt(p.grandTotal);
+  const dt = $("#discount-total-line");
+  if (p.totalDiscount > 0){
+    dt.classList.remove("hidden"); dt.classList.add("flex");
+    $("#discount-total").textContent = `−${p.totalDiscount.toFixed(2)} CHF`;
+    show("#save-note"); $("#save-amount").textContent = p.totalDiscount.toFixed(2);
+  } else { dt.classList.add("hidden"); dt.classList.remove("flex"); hide("#save-note"); }
+  const tl = $("#tip-line");
+  if (p.tipAmount > 0){ tl.classList.remove("hidden"); tl.classList.add("flex"); $("#tip-line-amount").textContent = fmt(p.tipAmount); }
+  else { tl.classList.add("hidden"); tl.classList.remove("flex"); }
+}
+function rowBadge(label, detail, pct, delta){
+  return `<div class="flex items-center justify-between"><span class="flex items-center gap-2 min-w-0"><span class="badge badge-bundle">${label}</span><span class="text-espresso/65 text-xs truncate">${detail} · ${pct}</span></span><span class="text-berry font-medium">${delta.toFixed(2)} CHF</span></div>`;
+}
+function renderExpress(p){
+  const banner = $("#guest-banner");
+  if (banner) banner.classList.toggle("hidden", !!currentUser() || p.totalItems === 0);
+  const c = $("#protein-counter"); if (c) c.classList.toggle("hidden", p.totalItems === 0);
+  if ($("#pc-protein")) $("#pc-protein").textContent = p.proteinG;
+  if ($("#pc-savings")) $("#pc-savings").textContent = (p.totalDiscount||0).toFixed(2);
+}
+function renderTip(p){
+  $("#tip-amount").textContent = fmt(p.tipAmount);
+  $$(".tip-pill").forEach(b => {
+    const v = b.dataset.tip;
+    let active = false;
+    if (v === "custom") active = state.tip.type === "fixed";
+    else active = state.tip.type === "percent" && state.tip.value === Number(v);
+    b.classList.toggle("active", active);
+  });
+}
+
+// ════════════════════ TIP HANDLERS ════════════════════
+document.addEventListener("click", (e) => {
+  const b = e.target.closest(".tip-pill"); if (!b) return;
+  const v = b.dataset.tip;
+  if (v === "custom"){
+    state.tip = { type:"fixed", value: Number($("#tip-custom").value)||0 };
+    $("#tip-custom-wrap").classList.remove("hidden");
+    setTimeout(() => $("#tip-custom") && $("#tip-custom").focus(), 50);
+  } else {
+    state.tip = { type:"percent", value: Number(v) };
+    $("#tip-custom-wrap").classList.add("hidden"); $("#tip-custom").value = "";
+  }
+  renderAll();
+});
+document.addEventListener("input", (e) => {
+  if (e.target.id === "tip-custom"){ state.tip = { type:"fixed", value: Number(e.target.value)||0 }; renderAll(); }
+});
+
+// ════════════════════ CART SHEET ════════════════════
+function openCart(){ $("#cart-sheet").classList.add("open"); document.body.style.overflow = "hidden"; }
+function closeCart(){ $("#cart-sheet").classList.remove("open"); document.body.style.overflow = ""; }
+$("#open-cart")?.addEventListener("click", openCart);
+$("#open-cart-top")?.addEventListener("click", openCart);
+$("#close-cart")?.addEventListener("click", closeCart);
+$("#cart-sheet")?.addEventListener("click", (e) => { if (e.target.id === "cart-sheet") closeCart(); });
+
+// Mirror form fields into state
+["f-name","f-email","f-phone","f-notes"].forEach(id => {
+  document.addEventListener("input", (e) => {
+    if (e.target && e.target.id === id){
+      const k = id === "f-name" ? "name" : id === "f-email" ? "email" : id === "f-phone" ? "phone" : "notes";
+      state.customer[k] = e.target.value;
+      saveCart();
+      e.target.classList.remove("error");
+    }
+  });
+});
+function hydrateForm(){
+  if (state.customer.name)  $("#f-name").value  = state.customer.name;
+  if (state.customer.email) $("#f-email").value = state.customer.email;
+  if (state.customer.phone) $("#f-phone").value = state.customer.phone;
+  if (state.customer.notes) $("#f-notes").value = state.customer.notes;
+  if (state.referral && state.referral.code) $("#ref-input").value = state.referral.code;
+  if (state.tip && state.tip.type === "fixed" && state.tip.value > 0){
+    $("#tip-custom").value = state.tip.value;
+    $("#tip-custom-wrap").classList.remove("hidden");
+  }
+}
+
+// Referral wiring
+$("#ref-apply")?.addEventListener("click", () => applyEnteredCode());
+$("#ref-input")?.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); applyEnteredCode(); } });
+
+// ════════════════════ CHECKOUT ════════════════════
+const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+function openTwintApp(){
+  if (!isMobile) return;
+  const a = document.createElement("a");
+  a.href = "twint://"; a.style.display = "none";
+  document.body.appendChild(a); a.click(); setTimeout(() => a.remove(), 100);
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+$("#pay-twint")?.addEventListener("click", async () => {
+  if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  const name  = state.customer.name  = ($("#f-name").value||"").trim();
+  const email = state.customer.email = ($("#f-email").value||"").trim().toLowerCase();
+  const phone = ($("#f-phone").value||"").trim();
+  const notes = state.customer.notes = ($("#f-notes").value||"").trim();
+
+  let ok = true; const fe = $("#form-err"); fe.classList.add("hidden");
+  if (!name)                { $("#f-name").classList.add("error");  ok = false; }
+  if (!isEmailValid(email)) { $("#f-email").classList.add("error"); fe.textContent = ERR.emailFormat; fe.classList.remove("hidden"); ok = false; }
+  const ph = validateSwissMobile(phone);
+  if (!ph.ok)               { $("#f-phone").classList.add("error"); fe.textContent = ph.error;       fe.classList.remove("hidden"); ok = false; }
+  if (!ok) return;
+  state.customer.phone = ph.formatted;
+  $("#f-phone").value = ph.formatted;
+  saveCart();
+
+  const p = priceCart(); if (p.totalItems === 0) return;
+
+  const btn = $("#pay-twint"); btn.disabled = true;
+  openTwintApp();
+  closeCart();
+  await runPaymentAnimation(p);
+
+  const user = currentUser();
+  const order = serializeOrder({ user, customer: state.customer, pricing: p, qty: state.qty, referral: state.referral, tip: state.tip, notes });
+  try { await saveOrder(order); } catch (e) { console.warn(e); }
+
+  if (user && user.uid && Number(user.referralBonusPercent) > 0 && state.referral && state.referral.code === user.refCode){
+    try { await adjustReferralBonus(user.uid, -Number(user.referralBonusPercent)); } catch {}
+  }
+
+  clearCartItems();
+  hydrateForm();
+  showConfirmation(order);
+  btn.disabled = false;
+});
+async function runPaymentAnimation(p){
+  const ov = $("#pay-overlay"); ov.classList.remove("hidden"); ov.classList.add("flex");
+  $("#pay-step-1").classList.remove("hidden"); $("#pay-step-2").classList.add("hidden"); $("#pay-step-3").classList.add("hidden");
+  $("#pay-step-3-amount").textContent = `Zahlung wird geprüft… ⏳`;
+  await sleep(1400); $("#pay-step-1").classList.add("hidden"); $("#pay-step-2").classList.remove("hidden");
+  await sleep(1500); $("#pay-step-2").classList.add("hidden"); $("#pay-step-3").classList.remove("hidden");
+  await sleep(1500); ov.classList.add("hidden"); ov.classList.remove("flex");
+}
+function showConfirmation(order){
+  show("#confirmation"); document.body.style.overflow = "hidden";
+  $("#conf-greeting").textContent = `Vielen Dank, ${(order.name||"").split(" ")[0] || "Champ"}!`;
+  $("#conf-orderid").textContent  = order.id;
+  $("#conf-items").innerHTML = FLAVORS.filter(f => order.qty[f.id] > 0).map(f => `<div class="flex items-center justify-between"><div class="flex items-center gap-3"><div class="${f.gradient} w-8 h-9 rounded-md"></div><span>${order.qty[f.id]}× ${f.name}</span></div><span class="text-espresso/70">${fmt(order.qty[f.id] * PRICE)}</span></div>`).join("");
+  const p = order.pricing; const disc = [];
+  disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Zwischensumme</span><span>${fmt(p.subtotal)}</span></div>`);
+  if (p.tenDiscount  > 0) disc.push(`<div class="flex justify-between text-berry"><span>10er-Pack (10%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
+  if (p.fiveDiscount > 0) disc.push(`<div class="flex justify-between text-berry"><span>5er-Pack (5%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
+  if (p.refDiscount  > 0 && order.referral) disc.push(`<div class="flex justify-between text-berry"><span>Empfehlung (${order.referral.percent}%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
+  if (p.tipAmount    > 0) disc.push(`<div class="flex justify-between"><span class="text-espresso/60">Trinkgeld</span><span>${fmt(p.tipAmount)}</span></div>`);
+  $("#conf-discounts").innerHTML = disc.join("");
+  $("#conf-total").textContent = fmt(p.grandTotal);
+  refreshIcons();
+  const fb = $("#conf-feedback-wrap");
+  if (fb){
+    fb.classList.remove("hidden"); $("#conf-feedback-text").value = "";
+    const sub = $("#conf-feedback-submit");
+    const handler = async () => {
+      const text = $("#conf-feedback-text").value;
+      const ok = await submitFeedback({ orderId: order.id, email: order.email, text });
+      if (ok) fb.innerHTML = `<div class="text-center text-sm text-berry py-3">💜 Merci fürs Feedback!</div>`;
+    };
+    sub.replaceWith(sub.cloneNode(true));
+    $("#conf-feedback-submit").addEventListener("click", handler, { once:true });
+  }
+}
+$("#new-order")?.addEventListener("click", () => {
+  hide("#confirmation"); document.body.style.overflow = "";
+  renderAll(); window.scrollTo({ top:0, behavior:"smooth" });
+});
+
+// ════════════════════ AUTH UI ════════════════════
+$("#open-account")?.addEventListener("click", () => {
+  if (currentUser()) openPortal();
+  else { show("#cust-auth"); switchAuthTab("login"); setTimeout(() => $("#login-email") && $("#login-email").focus(), 50); }
+});
+$("#cust-auth-close")?.addEventListener("click", () => hide("#cust-auth"));
+$("#cust-auth")?.addEventListener("click", (e) => { if (e.target.id === "cust-auth") hide("#cust-auth"); });
+$("#tab-login")?.addEventListener("click", () => switchAuthTab("login"));
+$("#tab-register")?.addEventListener("click", () => switchAuthTab("register"));
+function switchAuthTab(which){
+  const L = which === "login";
+  $("#tab-login").classList.toggle("active", L);
+  $("#tab-register").classList.toggle("active", !L);
+  $("#form-login").classList.toggle("hidden", !L);
+  $("#form-register").classList.toggle("hidden", L);
+  hide("#verify-prompt"); hide("#login-err"); hide("#login-not-verified"); hide("#reg-err");
+}
+
+$("#form-register")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const err = $("#reg-err"); hide(err);
+  try {
+    const res = await registerCustomer({
+      firstName:       $("#reg-firstname").value,
+      email:           $("#reg-email").value,
+      password:        $("#reg-pass").value,
+      passwordConfirm: $("#reg-pass2").value,
+    });
+    hide("#form-register"); show("#verify-prompt");
+    const msg = $("#verify-msg");
+    if (res.verifyEmailSent){
+      msg.textContent = `Bestätigungs-Mail an ${$("#reg-email").value} versendet. Klick den Link, dann kannst du dich anmelden.`;
+      hide("#verify-manual-wrap");
+    } else {
+      msg.innerHTML = `Lokaler Modus: keine echte E-Mail. Aktiviere mit diesem Link direkt:`;
+      $("#verify-manual-link").href = res.manualLink;
+      $("#verify-manual-link").textContent = res.manualLink;
+      show("#verify-manual-wrap");
+    }
+  } catch (e2){ err.textContent = e2.message || "Registrierung fehlgeschlagen."; show(err); }
+});
+$("#form-login")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const err = $("#login-err"); const nv = $("#login-not-verified"); hide(err); hide(nv);
+  try {
+    await loginCustomer({ email: $("#login-email").value, password: $("#login-pass").value });
+    hide("#cust-auth"); openPortal();
+  } catch (e2){
+    if (e2.code === "NOT_VERIFIED") show(nv);
+    else { err.textContent = e2.message || "Anmeldung fehlgeschlagen."; show(err); }
+  }
+});
+$("#cust-logout")?.addEventListener("click", async () => { await logoutCustomer(); hide("#cust-portal"); document.body.style.overflow = ""; });
+$("#cust-close")?.addEventListener("click", () => { hide("#cust-portal"); document.body.style.overflow = ""; });
+
+async function openPortal(){
+  const u = currentUser(); if (!u) return;
+  show("#cust-portal"); document.body.style.overflow = "hidden";
+  await renderPortal(u);
+  refreshIcons();
+}
+async function renderPortal(u){
+  const prof = await getProfile(u.uid) || {};
+  const firstName = prof.firstName || (state.customer.name||"").split(" ")[0] || "Champ";
+  $("#cust-greeting").textContent = `Hey ${firstName}!`;
+  $("#cust-email").textContent = u.email;
+  const orders = await loadOrdersForUser(u.uid !== "guest" ? u.uid : u.email) || [];
+  orders.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+  const paid = orders.filter(o => o.paymentStatus === "bezahlt");
+  const totalSaved = paid.reduce((s,o) => s+(o?.pricing?.totalDiscount||0), 0);
+  const support = orders.reduce((s,o) => s+(o?.pricing?.grandTotal||0), 0);
+  const freePints = savingsToPints(totalSaved);
+  $("#cust-stat-count").textContent = orders.length;
+  $("#cust-stat-support").textContent = fmt(support);
+  $("#cust-stat-savings").textContent = `${totalSaved.toFixed(2)} CHF`;
+  $("#cust-stat-pints").textContent = `${freePints.toFixed(2)} Gratis-Pints 🍦`;
+  const refCode = prof.refCode || "—";
+  $("#cust-refcode").textContent = refCode;
+  const bonus = Number(prof.referralBonusPercent || u.referralBonusPercent || 0);
+  $("#cust-bonus").innerHTML = bonus > 0
+    ? `🎉 Dein Buddy-Bonus: <strong>${bonus}%</strong> auf deine nächste Bestellung wartet!`
+    : `Lade Freunde ein — sobald sie mit deinem Code bezahlen, gibt's <strong>5%</strong> für dich obendrauf!`;
+  if (!orders.length){ show("#cust-empty"); hide("#cust-list"); }
+  else {
+    hide("#cust-empty"); show("#cust-list");
+    $("#cust-list").innerHTML = orders.map(o => {
+      const d = new Date(o.timestamp);
+      const dStr = d.toLocaleString("de-CH", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
+      const items = [];
+      if (o.qty?.chocolate) items.push(`${o.qty.chocolate}× Chocolate`);
+      if (o.qty?.vanilla)   items.push(`${o.qty.vanilla}× Vanilla`);
+      if (o.qty?.caramel)   items.push(`${o.qty.caramel}× Caramel`);
+      const st = o.paymentStatus || "zahlung_ausstehend";
+      const pendingPay = st === "zahlung_ausstehend" || st === "offen";
+      const isFinal = st === "abgeschlossen";
+      return `<div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+        <div class="flex items-start justify-between gap-3">
+          <div><div class="text-[10px] uppercase tracking-widest text-espresso/55">${dStr}</div><div class="font-display text-base font-semibold mt-0.5">${o.id}</div><div class="text-xs text-espresso/65 mt-1">${items.join(" · ")||"—"}</div></div>
+          <div class="text-right shrink-0"><div class="font-display text-lg font-semibold">${(o.pricing?.grandTotal||0).toFixed(2)} CHF</div><div class="mt-1 status-pill status-${st.replace(/_/g,"-")}">${STATUS_LABELS[st]||st}</div></div>
+        </div>
+        <div class="flex gap-2 mt-3">
+          <button class="flex-1 rounded-xl border border-espresso/15 py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-2 reorder-btn" data-id="${o.id}"><i data-lucide="rotate-ccw" class="w-4 h-4"></i> Nochmal bestellen</button>
+          ${pendingPay ? `<button class="flex-1 rounded-xl btn-twint py-2.5 px-3 text-xs font-medium flex items-center justify-center gap-2 repay-btn" data-id="${o.id}"><span class="twint-mark"></span> Jetzt bezahlen</button>` : ""}
+        </div>
+        ${isFinal ? `<div class="mt-3 pt-3 border-t border-espresso/8"><p class="text-[11px] text-espresso/55 mb-1">Wie hat dir der Bestellprozess gefallen?</p><div class="flex gap-2"><input class="input flex-1 fb-text" data-id="${o.id}" placeholder="Dein ehrliches Feedback..."/><button class="px-3 rounded-xl btn-berry text-sm font-medium fb-submit" data-id="${o.id}">Senden</button></div></div>` : ""}
+      </div>`;
+    }).join("");
+    $$(".reorder-btn").forEach(b => b.addEventListener("click", () => reorder(b.dataset.id, orders)));
+    $$(".repay-btn").forEach(b => b.addEventListener("click", () => repay(b.dataset.id, orders)));
+    $$(".fb-submit").forEach(b => b.addEventListener("click", async () => {
+      const id = b.dataset.id;
+      const txt = document.querySelector(`.fb-text[data-id="${id}"]`)?.value || "";
+      if (!txt.trim()) return;
+      await submitFeedback({ orderId:id, email:u.email, text:txt });
+      b.outerHTML = `<span class="text-xs text-berry font-medium">Merci 💜</span>`;
+    }));
+  }
+  // Sharing — re-bind each render
+  const wa = $("#share-whatsapp"); if (wa) { const c = wa.cloneNode(true); wa.replaceWith(c); $("#share-whatsapp").addEventListener("click", () => shareOn("whatsapp", refCode)); }
+  const ig = $("#share-instagram"); if (ig) { const c = ig.cloneNode(true); ig.replaceWith(c); $("#share-instagram").addEventListener("click", () => shareOn("instagram", refCode)); }
+  const cp = $("#cust-copy-code"); if (cp) { const c = cp.cloneNode(true); cp.replaceWith(c); $("#cust-copy-code").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(refCode); } catch {}
+    $("#cust-copy-label").textContent = "Kopiert ✓";
+    setTimeout(() => { $("#cust-copy-label").textContent = "Kopieren"; }, 1600);
+  }); }
+}
+function shareTextFor(code){
+  const url = `${window.location.origin}${window.location.pathname}?ref=${encodeURIComponent(code)}`;
+  return `Hey! Gönn dir mal das High-Protein Eis von Berry's Delights. Über meinen Link kriegst du direkt 5% Extra-Rabatt auf deine erste Bestellung: ${url} 🍦💪`;
+}
+async function shareOn(platform, code){
+  if (!code || code === "—") return;
+  const text = shareTextFor(code);
+  if (platform === "whatsapp") window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(text), "_blank");
+  else if (platform === "instagram"){
+    try { await navigator.clipboard.writeText(text); toast("✓ Text kopiert! Jetzt in Instagram einfügen.", "#25D366"); }
+    catch { toast("Konnte Text nicht kopieren — Browser blockt Clipboard.", "#8B1A3B"); }
+    setTimeout(() => {
+      const a = document.createElement("a"); a.href = "instagram://"; a.style.display = "none";
+      document.body.appendChild(a); a.click(); setTimeout(() => a.remove(), 100);
+    }, 300);
+  }
+}
+async function reorder(id, orders){
+  const o = orders.find(x => x.id === id); if (!o) return;
+  state.qty.chocolate += o.qty?.chocolate || 0;
+  state.qty.vanilla   += o.qty?.vanilla   || 0;
+  state.qty.caramel   += o.qty?.caramel   || 0;
+  saveCart();
+  hide("#cust-portal"); document.body.style.overflow = "";
+  renderAll(); openCart();
+}
+async function repay(id, orders){
+  const o = orders.find(x => x.id === id); if (!o) return;
+  const amount = (o.pricing?.grandTotal||0).toFixed(2);
+  const ok = confirm(`TWINT wird geöffnet.\n\nBitte ${amount} CHF an ${MERCHANT_TWINT} überweisen.\n\nFortfahren?`);
+  if (!ok) return;
+  openTwintApp();
+}
+function setAccountDot(){ $("#account-dot")?.classList.toggle("hidden", !currentUser()); }
+
+// ════════════════════ ADMIN / BACKOFFICE ════════════════════
+function isAdminAuthed(){ return localStorage.getItem(SK.adminSess) === "1"; }
+function setAdminAuthed(v){ if (v) localStorage.setItem(SK.adminSess, "1"); else localStorage.removeItem(SK.adminSess); }
+
+let _boFilter = "all", _boView = "orders";
+const MONTH_NAMES = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+const monthKey = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+const monthLabel = k => { const [y,m] = k.split("-"); return `${MONTH_NAMES[+m-1]} ${y}`; };
+
+$("#bo-entry")?.addEventListener("click", () => {
+  if (isAdminAuthed()) openBackoffice();
+  else { show("#bo-login"); setTimeout(() => $("#bo-user") && $("#bo-user").focus(), 50); }
+});
+$("#bo-login-close")?.addEventListener("click", () => { hide("#bo-login"); $("#bo-pass").value = ""; hide("#bo-login-err"); });
+$("#bo-login-btn")?.addEventListener("click", tryAdminLogin);
+$("#bo-pass")?.addEventListener("keydown", (e) => { if (e.key === "Enter") tryAdminLogin(); });
+$("#bo-logout")?.addEventListener("click", () => { setAdminAuthed(false); hide("#backoffice"); hide("#bo-detail"); document.body.style.overflow = ""; });
+$("#bo-detail-back")?.addEventListener("click", () => { hide("#bo-detail"); show("#backoffice"); });
+$("#bo-tab-orders")?.addEventListener("click", () => boSwitchView("orders"));
+$("#bo-tab-feedback")?.addEventListener("click", () => boSwitchView("feedback"));
+
+function tryAdminLogin(){
+  const u = ($("#bo-user").value||"").trim().toLowerCase();
+  const p = $("#bo-pass").value || "";
+  if (u === ADMIN_EMAIL.toLowerCase() && p === ADMIN_PASS){
+    setAdminAuthed(true); hide("#bo-login"); $("#bo-pass").value = ""; hide("#bo-login-err");
+    openBackoffice();
+  } else {
+    show("#bo-login-err");
+    $("#bo-pass").classList.add("error");
+    setTimeout(() => $("#bo-pass").classList.remove("error"), 1200);
+  }
+}
+async function openBackoffice(){
+  show("#backoffice"); document.body.style.overflow = "hidden";
+  await renderBO(); refreshIcons();
+}
+function boSwitchView(v){
+  _boView = v;
+  $("#bo-tab-orders").classList.toggle("active", v === "orders");
+  $("#bo-tab-feedback").classList.toggle("active", v === "feedback");
+  toggle("#bo-view-orders", v === "orders");
+  toggle("#bo-view-feedback", v === "feedback");
+  renderBO();
+}
+async function renderBO(){
+  const [orders, feedbacks, sessions] = await Promise.all([loadAllOrders(), loadFeedbacks(), loadSessionsStats()]);
+  renderBOStats(orders, sessions, feedbacks);
+  if (_boView === "orders") renderBOOrders(orders);
+  if (_boView === "feedback") renderBOFeedback(feedbacks);
+}
+function renderBOStats(orders, sessions, feedbacks){
+  const totalOrders = orders.length;
+  const totalRevenue = orders.reduce((s,o) => s+(o?.pricing?.grandTotal||0), 0);
+  const totalSavings = orders.reduce((s,o) => s+(o?.pricing?.totalDiscount||0), 0);
+  const flavorTotals = { chocolate:0, vanilla:0, caramel:0 };
+  orders.forEach(o => { flavorTotals.chocolate += o?.qty?.chocolate||0; flavorTotals.vanilla += o?.qty?.vanilla||0; flavorTotals.caramel += o?.qty?.caramel||0; });
+  const sorted = Object.entries(flavorTotals).sort((a,b) => b[1]-a[1]);
+  const topName = sorted[0]?.[0] ? (FLAVORS.find(f => f.id===sorted[0][0])?.name || "—") : "—";
+  const byStatus = {}; STATUSES.forEach(s => byStatus[s] = 0);
+  orders.forEach(o => { const k = o.paymentStatus||"zahlung_ausstehend"; byStatus[k] = (byStatus[k]||0)+1; });
+  const avgMin = sessions.avgDurationMs ? Math.round(sessions.avgDurationMs / 60_000 * 10)/10 : 0;
+  const totalVisits = sessions.totalSessions || 0;
+  const totalPints = flavorTotals.chocolate + flavorTotals.vanilla + flavorTotals.caramel;
+  const avgOV = totalOrders ? (totalRevenue / totalOrders) : 0;
+  const card = (t, v, ic) => `<div class="rounded-2xl bg-white border border-espresso/8 p-3 shadow-soft"><div class="flex items-center gap-2 text-[10px] uppercase tracking-widest text-espresso/55"><i data-lucide="${ic}" class="w-3 h-3"></i> ${t}</div><div class="font-display text-xl font-semibold mt-1">${v}</div></div>`;
+  $("#bo-stats").innerHTML = `
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      ${card("Bestellungen", totalOrders, "shopping-bag")}
+      ${card("Umsatz", fmt(totalRevenue), "trending-up")}
+      ${card("Rabatte ausgegeben", fmt(totalSavings), "percent")}
+      ${card("Ø Warenkorb", fmt(avgOV), "calculator")}
+      ${card("Besucher (Sessions)", totalVisits, "users")}
+      ${card("Ø Verweildauer", avgMin + " Min", "clock")}
+      ${card("Pints insgesamt", totalPints, "ice-cream-cone")}
+      ${card("Feedbacks", feedbacks.length, "message-square")}
+    </div>
+    <div class="mt-5 rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+      <div class="flex items-center justify-between mb-3"><h3 class="font-display text-base font-semibold">Renner-Penner Liste</h3><span class="text-[10px] uppercase tracking-widest text-espresso/55">Sorten</span></div>
+      <ol class="space-y-2">${sorted.map(([id,n], i) => `<li class="flex items-center justify-between text-sm"><span><strong class="text-berry">${i+1}.</strong> ${FLAVORS.find(f => f.id===id)?.name || id}</span><span class="font-semibold tabular-nums">${n}× verkauft</span></li>`).join("")}</ol>
+      <p class="mt-2 text-xs text-espresso/55">🏆 Top-Sorte: <strong>${topName}</strong></p>
+    </div>
+    <div class="mt-3 rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+      <h3 class="font-display text-base font-semibold mb-3">Status-Übersicht</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">${STATUSES.map(s => `<div class="flex justify-between rounded-xl bg-cream/40 px-3 py-2"><span>${STATUS_LABELS[s]}</span><span class="font-semibold tabular-nums">${byStatus[s]||0}</span></div>`).join("")}</div>
+    </div>`;
+}
+function renderBOOrders(orders){
+  const months = new Set();
+  orders.forEach(o => { try { months.add(monthKey(new Date(o.timestamp))); } catch {} });
+  const ms = [...months].sort().reverse();
+  const pills = [`<button class="filter-pill ${_boFilter==="all"?"active":""}" data-filter="all">Alle (${orders.length})</button>`];
+  ms.forEach(k => { const c = orders.filter(o => monthKey(new Date(o.timestamp))===k).length; pills.push(`<button class="filter-pill ${_boFilter===k?"active":""}" data-filter="${k}">${monthLabel(k)} (${c})</button>`); });
+  $("#bo-filters").innerHTML = pills.join("");
+  $("#bo-filters").querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => { _boFilter = b.dataset.filter; renderBO(); }));
+  let list = orders.slice();
+  if (_boFilter !== "all") list = list.filter(o => monthKey(new Date(o.timestamp))===_boFilter);
+  const wrap = $("#bo-list"), empty = $("#bo-empty");
+  if (!list.length){ hide(wrap); show(empty); return; }
+  show(wrap); hide(empty);
+  wrap.innerHTML = list.map(o => {
+    const d = new Date(o.timestamp);
+    const dStr = d.toLocaleString("de-CH", { day:"2-digit", month:"2-digit", year:"numeric", hour:"2-digit", minute:"2-digit" });
+    const totalItems = (o.qty?.chocolate||0) + (o.qty?.vanilla||0) + (o.qty?.caramel||0);
+    const st = o.paymentStatus || "zahlung_ausstehend";
+    return `<button class="order-card no-select w-full text-left" data-order-id="${o.id}">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0 flex-1"><div class="text-[10px] uppercase tracking-widest text-espresso/55">${dStr}</div><div class="font-display text-base font-semibold mt-0.5">${o.id} · ${o.name||"Gast"}</div><div class="text-xs text-espresso/60 mt-1 truncate">${totalItems} Pint${totalItems===1?"":"s"} · ${o.email||"—"}</div></div>
+        <div class="text-right shrink-0"><div class="font-display text-lg font-semibold">${(o.pricing?.grandTotal||0).toFixed(2)}</div><div class="text-[10px] uppercase tracking-widest text-espresso/55">CHF</div><div class="mt-1 status-pill status-${st.replace(/_/g,"-")}">${STATUS_LABELS[st]||st}</div></div>
+      </div>
+    </button>`;
+  }).join("");
+  wrap.querySelectorAll("[data-order-id]").forEach(b => b.addEventListener("click", () => showOrderDetail(b.dataset.orderId, orders)));
+}
+async function showOrderDetail(id, ordersCache){
+  const orders = ordersCache || await loadAllOrders();
+  const o = orders.find(x => x.id === id); if (!o) return;
+  const d = new Date(o.timestamp); const p = o.pricing||{};
+  const itemRows = FLAVORS.filter(f => (o.qty?.[f.id]||0) > 0).map(f => `<div class="flex justify-between text-sm py-1"><span>${o.qty[f.id]}× ${f.name}</span><span class="text-espresso/70">${(o.qty[f.id]*PRICE).toFixed(2)} CHF</span></div>`).join("");
+  const dRows = [];
+  if (p.tenDiscount  > 0) dRows.push(`<div class="flex justify-between text-sm text-berry"><span>10er-Pack (10%)</span><span>−${p.tenDiscount.toFixed(2)} CHF</span></div>`);
+  if (p.fiveDiscount > 0) dRows.push(`<div class="flex justify-between text-sm text-berry"><span>5er-Pack (5%)</span><span>−${p.fiveDiscount.toFixed(2)} CHF</span></div>`);
+  if (p.refDiscount  > 0 && o.referral) dRows.push(`<div class="flex justify-between text-sm text-berry"><span>Empfehlung ${o.referral.code} (5%)</span><span>−${p.refDiscount.toFixed(2)} CHF</span></div>`);
+  if (p.tipAmount    > 0) dRows.push(`<div class="flex justify-between text-sm"><span class="text-espresso/60">Trinkgeld</span><span>${p.tipAmount.toFixed(2)} CHF</span></div>`);
+  const opts = STATUSES.map(s => `<option value="${s}" ${o.paymentStatus===s?"selected":""}>${STATUS_LABELS[s]}</option>`).join("");
+  $("#bo-detail-content").innerHTML = `
+    <div class="rounded-2xl bg-white border border-espresso/8 p-5 shadow-card"><div class="text-[10px] uppercase tracking-widest text-espresso/55">${d.toLocaleString("de-CH")}</div><h2 class="font-display text-2xl font-semibold mt-1">${o.id}</h2><p class="text-espresso/70 text-sm mt-1">${o.name||"Gast"}</p></div>
+    <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
+      <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Kontakt</p>
+      <div class="space-y-1.5 text-sm">
+        <div class="flex items-center gap-2"><i data-lucide="user" class="w-4 h-4 text-espresso/55"></i><span>${o.name||"—"}</span></div>
+        <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-espresso/55"></i><a class="underline" href="mailto:${o.email}">${o.email||"—"}</a></div>
+        <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-espresso/55"></i><a class="underline" href="tel:${o.phone}">${o.phone||"—"}</a></div>
+        ${o.userId === "guest" ? '<div class="mt-1 text-[10px] uppercase tracking-widest text-espresso/55">Gast-Bestellung</div>' : ""}
+      </div>
+    </div>
+    ${o.notes ? `<div class="mt-4 rounded-2xl bg-blush/30 border border-berry/15 p-5 shadow-soft"><p class="text-[10px] uppercase tracking-widest text-berryd mb-2">Hinweise des Kunden</p><p class="text-sm text-espresso/85 whitespace-pre-line">${escapeHtml(o.notes)}</p></div>` : ""}
+    <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft"><p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Artikel</p>${itemRows || '<p class="text-sm text-espresso/55">Keine Artikel</p>'}</div>
+    <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
+      <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Abrechnung</p>
+      <div class="flex justify-between text-sm text-espresso/60"><span>Zwischensumme</span><span>${(p.subtotal||0).toFixed(2)} CHF</span></div>
+      ${dRows.join("")}
+      <div class="hairline my-3"></div>
+      <div class="flex justify-between"><span class="font-display text-base">Total</span><span class="font-display text-lg font-semibold">${(p.grandTotal||0).toFixed(2)} CHF</span></div>
+    </div>
+    ${o.referral ? `<div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft"><p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Empfehlung</p><div class="text-sm space-y-1"><div>Code: <strong>${o.referral.code}</strong> (${o.referral.percent}%)</div>${o.referral.ownerUid?`<div>Werber-UID: <code class="text-xs">${o.referral.ownerUid}</code></div>`:""}<div>Bonus an Werber: <strong>${o.referral.bonusApplied?"ausbezahlt ✓":"wartet auf 'bezahlt'"}</strong></div></div></div>` : ""}
+    <div class="mt-4 rounded-2xl bg-white border border-espresso/8 p-5 shadow-soft">
+      <p class="text-[10px] uppercase tracking-widest text-espresso/55 mb-2">Status</p>
+      <div class="flex gap-2 items-center"><select id="bo-status-select" class="input flex-1">${opts}</select><button id="bo-status-save" class="px-4 rounded-2xl btn-berry text-sm font-medium">Status Speichern</button></div>
+      <p id="bo-status-msg" class="hidden mt-2 text-xs text-berry"></p>
+    </div>`;
+  hide("#backoffice"); show("#bo-detail");
+  window.scrollTo && window.scrollTo({ top:0, behavior:"instant" });
+  refreshIcons();
+  $("#bo-status-save").addEventListener("click", async () => {
+    const sel = $("#bo-status-select"); const newS = sel.value;
+    sel.disabled = true;
+    try {
+      await updateOrderStatus(o.id, newS);
+      o.paymentStatus = newS;
+      $("#bo-status-msg").innerHTML = `<span class="text-berry font-medium">✓ Gespeichert</span> · Status ist jetzt <strong>${STATUS_LABELS[newS]}</strong>`;
+      show("#bo-status-msg");
+      toast(`Status gespeichert: ${STATUS_LABELS[newS]}`, "#8B1A3B");
+    } catch (e) { $("#bo-status-msg").textContent = "Speichern fehlgeschlagen: " + e.message; show("#bo-status-msg"); }
+    finally { sel.disabled = false; }
+  });
+}
+function renderBOFeedback(items){
+  const wrap = $("#bo-feedback-list"); if (!wrap) return;
+  if (!items.length){ wrap.innerHTML = `<div class="text-center py-10 text-sm text-espresso/55">Noch kein Feedback eingegangen.</div>`; return; }
+  items.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+  wrap.innerHTML = items.map(f => {
+    const d = new Date(f.createdAt);
+    return `<div class="rounded-2xl bg-white border border-espresso/8 p-4 shadow-soft">
+      <div class="flex items-start justify-between gap-3 mb-2"><div><div class="text-[10px] uppercase tracking-widest text-espresso/55">${d.toLocaleString("de-CH")}</div><div class="text-sm font-medium">${f.email || "Anonym"}</div>${f.orderId?`<div class="text-[10px] text-espresso/50">Bestellung ${f.orderId}</div>`:""}</div></div>
+      <p class="text-sm text-espresso/80 whitespace-pre-line">${escapeHtml(f.text||"")}</p>
+    </div>`;
+  }).join("");
+}
+
+// ════════════════════ LIVE COUNTER ════════════════════
+function startLiveCounter(){
+  startPresence((count) => {
+    const el = $("#live-users"); if (!el) return;
+    if (typeof count === "number" && count >= 3){
+      el.classList.remove("hidden");
+      $("#live-users-count").textContent = count;
+    } else el.classList.add("hidden");
+  });
+}
+
+// ════════════════════ QR CODE ════════════════════
+function renderQR(){
+  const wrap = $("#qrcode"); if (!wrap || !window.QRCode) return;
+  wrap.innerHTML = "";
+  const url = window.location.href;
+  new window.QRCode(wrap, { text:url, width:180, height:180, colorDark:"#1A0E10", colorLight:"#FFFFFF" });
+  $("#qr-url").textContent = url;
+}
+
+// ════════════════════ INIT ════════════════════
+loadCart();
+initAuth();
+onAuthChange(() => { setAccountDot(); renderAll(); });
+renderFlavors();
+renderAll();
+hydrateForm();
+refreshRefLockUI();
+handleRefURLParam();
+verifyFromURL();
+refreshIcons();
+const qrDetails = document.querySelector("details");
+qrDetails?.addEventListener("toggle", () => { if (qrDetails.open) renderQR(); });
+if (window.QRCode) renderQR();
+startSessionTracking();
+startLiveCounter();
+
+console.info(`[Berry's Delights] Modus: ${FB_READY ? "CLOUD (Firebase)" : "LOCAL (nur dieses Gerät)"}`);
+</script>
 </body>
 </html>

@@ -539,6 +539,33 @@
       </div>
     </div>
 
+    <!-- Personal referral code + native sharing -->
+    <div class="mb-5 rounded-3xl p-5 shadow-card relative overflow-hidden" style="background: radial-gradient(120% 80% at 0% 0%, #F4C9D1 0%, transparent 60%), linear-gradient(180deg, #5C0E27 0%, #1A0E10 100%);">
+      <div class="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-gold/20 blur-2xl"></div>
+      <span class="chip" style="background:rgba(250,246,239,.1); border-color:rgba(250,246,239,.2); color:#F4C9D1;">
+        <i data-lucide="gift" class="w-3.5 h-3.5"></i> Dein persönlicher Code
+      </span>
+      <h2 class="font-display text-xl font-semibold text-cream mt-3">Teile &amp; Freunde sparen 5%</h2>
+      <div class="mt-4 bg-cream rounded-2xl p-3.5 flex items-center justify-between gap-3">
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-widest text-espresso/60">Dein Code</div>
+          <div id="cust-refcode" class="font-display text-xl font-semibold tracking-wider mt-0.5 truncate">—</div>
+        </div>
+        <button id="cust-copy-code" class="px-3 py-2.5 rounded-xl btn-berry text-sm flex items-center gap-1.5 shrink-0">
+          <i data-lucide="copy" class="w-4 h-4"></i> <span id="cust-copy-label">Kopieren</span>
+        </button>
+      </div>
+      <div class="mt-3 grid grid-cols-2 gap-2">
+        <button id="share-whatsapp" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2" style="background:#25D366;color:#fff;">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+        </button>
+        <button id="share-instagram" class="rounded-xl py-2.5 text-sm font-medium flex items-center justify-center gap-2 text-cream" style="background:linear-gradient(135deg,#feda75 0%,#fa7e1e 25%,#d62976 50%,#962fbf 75%,#4f5bd5 100%);">
+          <i data-lucide="instagram" class="w-4 h-4"></i> Instagram
+        </button>
+      </div>
+      <p class="text-[10px] text-cream/55 mt-2 text-center">Instagram kopiert den Text und öffnet die App — dort einfach in deine Story oder DM einfügen.</p>
+    </div>
+
     <div id="cust-list" class="space-y-3"></div>
     <div id="cust-empty" class="hidden text-center py-12">
       <div class="w-14 h-14 mx-auto rounded-full bg-blush flex items-center justify-center">
@@ -616,10 +643,15 @@
         <div class="mt-5">
           <label class="text-[11px] tracking-[.2em] uppercase text-espresso/60 font-medium">Empfehlungscode</label>
           <div class="mt-2 flex gap-2">
-            <input id="ref-input" class="input" placeholder="BERRY-FRIEND-1A2B" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" autocapitalize="characters" />
+            <input id="ref-input" class="input" placeholder="z.B. LUCAS842" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="text" autocapitalize="characters" maxlength="20" />
             <button id="ref-apply" class="px-4 rounded-2xl bg-espresso text-cream font-medium">Einlösen</button>
           </div>
           <p id="ref-msg" class="text-xs mt-2 text-espresso/60"></p>
+          <!-- Honeypot: invisible to humans, bots typically fill all inputs.
+               Form is silently rejected when this contains anything. -->
+          <input type="text" id="ref-honey" name="website_url" tabindex="-1" autocomplete="off"
+                 aria-hidden="true"
+                 style="position:absolute !important; left:-9999px !important; top:-9999px !important; opacity:0 !important; pointer-events:none !important; height:0 !important; width:0 !important;" />
         </div>
 
         <!-- Tip -->
@@ -814,10 +846,21 @@
   }
 
   // ===== Constants =====
-  const PRICE = 11.90;
+  const PRICE = 12.00;
   const MERCHANT_TWINT = '+41 78 919 98 38';
   const PICKUP_LOCATION = 'Sanitas Hauptsitz';
   const ORDER_EMAIL = 'beer.lucas@hotmail.com';
+
+  // Referral system
+  const REF_PCT = 5; // 5% discount when a valid referral code is applied
+  // New format: [FIRSTNAME][3 digits]  e.g. LUCAS842 — memorable but not guessable
+  const REF_PATTERN_NEW    = /^[A-Z]{2,12}[0-9]{3}$/;
+  // Legacy formats kept for backward compat with codes already in circulation
+  const REF_PATTERN_LEGACY = /^BERRY-(FRIEND|EARN)-[A-Z0-9]{3,6}$/;
+  const REF_LOCK_KEY        = 'berrysdelights_ref_lock_v1';
+  const REF_CODES_KEY       = 'berrysdelights_ref_codes_v1'; // email -> code
+  const REF_LOCK_MAX_ATTEMPTS = 3;
+  const REF_LOCK_MINUTES      = 10;
 
   // ===== Firebase (Cloud Backend) =====
   // PASTE YOUR FIREBASE CONFIG HERE TO ENABLE CROSS-DEVICE SYNC.
@@ -866,8 +909,7 @@
     { id:'caramel',   name:'Salted Caramel Toffee',   tagline:'Butterig · Fleur de Sel',   gradient:'grad-caramel',   labelColor:'#FAF6EF' },
   ];
 
-  // Earner code only (15%)
-  const REF_PATTERN = /^BERRY-(FRIEND|EARN)-[A-Z0-9]{3,6}$/i;
+  // (Old single-pattern variable removed — superseded by REF_PATTERN_NEW + REF_PATTERN_LEGACY above.)
 
   // ===== State =====
   const state = {
@@ -907,12 +949,57 @@
   const $  = s => document.querySelector(s);
   const $$ = s => document.querySelectorAll(s);
 
-  function genCode() {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let s = '';
-    for (let i=0; i<4; i++) s += chars[Math.floor(Math.random()*chars.length)];
-    return `BERRY-FRIEND-${s}`;
+  function genCode(name) {
+    // [FIRSTNAME][3 digits], A-Z only, fallback to BERRY
+    let prefix = String(name || '').split(/\s+/)[0].toUpperCase().replace(/[^A-Z]/g, '');
+    if (prefix.length < 2) prefix = 'BERRY';
+    if (prefix.length > 12) prefix = prefix.slice(0, 12);
+    const num = 100 + Math.floor(Math.random() * 900);
+    return prefix + num;
   }
+
+  // Stable referral code per registered customer, persisted across sessions.
+  function getCustomerCode(email, fallbackName) {
+    if (!email) return null;
+    let map = {};
+    try { map = JSON.parse(localStorage.getItem(REF_CODES_KEY)) || {}; } catch {}
+    if (map[email]) return map[email];
+    // Find a name from recent orders
+    let name = fallbackName || '';
+    if (!name) {
+      const orders = Backend.loadOrdersLocal();
+      const mine = orders.filter(o => String(o.email || '').toLowerCase() === email).pop();
+      if (mine) name = mine.name || '';
+    }
+    const code = genCode(name);
+    map[email] = code;
+    try { localStorage.setItem(REF_CODES_KEY, JSON.stringify(map)); } catch {}
+    return code;
+  }
+
+  // Rate-limit storage (localStorage so the lock survives reload/tab-close)
+  function refLockState() {
+    try { return JSON.parse(localStorage.getItem(REF_LOCK_KEY)) || { attempts: 0, lockedUntil: 0 }; }
+    catch { return { attempts: 0, lockedUntil: 0 }; }
+  }
+  function setRefLockState(s) {
+    try { localStorage.setItem(REF_LOCK_KEY, JSON.stringify(s)); } catch {}
+  }
+  function refIsLocked() {
+    const s = refLockState();
+    return s.lockedUntil > Date.now() ? s.lockedUntil : 0;
+  }
+  function refRecordInvalid() {
+    const s = refLockState();
+    s.attempts = (s.attempts || 0) + 1;
+    if (s.attempts >= REF_LOCK_MAX_ATTEMPTS) {
+      s.lockedUntil = Date.now() + REF_LOCK_MINUTES * 60 * 1000;
+      s.attempts = 0; // reset for the next round after lock expires
+    }
+    setRefLockState(s);
+    return s;
+  }
+  function refResetAttempts() { setRefLockState({ attempts: 0, lockedUntil: 0 }); }
 
   // ===== Pricing =====
   // Per-flavor only (no cross-flavor bundles):
@@ -1216,24 +1303,103 @@
   $('#ref-apply').addEventListener('click', applyReferral);
   $('#ref-input').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); applyReferral(); } });
 
-  function applyReferral() {
+  // Renders the lock state every second while locked
+  let _refLockTimer = null;
+  function refreshRefLockUI() {
+    const input = $('#ref-input');
+    const btn   = $('#ref-apply');
+    const msg   = $('#ref-msg');
+    if (!input || !btn || !msg) return;
+    const until = refIsLocked();
+    if (until > 0) {
+      input.disabled = true;
+      btn.disabled = true;
+      input.classList.add('opacity-50');
+      btn.classList.add('opacity-50');
+      const t = new Date(until).toLocaleTimeString('de-CH', { hour:'2-digit', minute:'2-digit' });
+      msg.innerHTML = `<span class="text-berry font-medium">⛔ Code-Eingabe gesperrt</span> · Wieder verfügbar um ${t} Uhr`;
+      msg.className = 'text-xs mt-2 text-berry';
+      if (!_refLockTimer) _refLockTimer = setInterval(refreshRefLockUI, 1000);
+    } else {
+      input.disabled = false;
+      btn.disabled = false;
+      input.classList.remove('opacity-50');
+      btn.classList.remove('opacity-50');
+      if (_refLockTimer) { clearInterval(_refLockTimer); _refLockTimer = null; }
+    }
+  }
+
+  function applyReferral(opts = {}) {
     const input = $('#ref-input');
     const msg = $('#ref-msg');
+    const honey = $('#ref-honey');
+
+    // Honeypot: silent block (don't tip off bots)
+    if (honey && honey.value) {
+      console.warn('Honeypot triggered — referral rejected.');
+      return;
+    }
+
+    // Rate limit
+    const lockedUntil = refIsLocked();
+    if (lockedUntil > 0) { refreshRefLockUI(); return; }
+
     const code = input.value.trim().toUpperCase();
     if (!code) return;
-    if (!REF_PATTERN.test(code)) {
+
+    const valid = REF_PATTERN_NEW.test(code) || REF_PATTERN_LEGACY.test(code);
+    if (!valid) {
       input.classList.add('error');
-      msg.textContent = 'Code ungültig. Format: BERRY-FRIEND-XXXX';
-      msg.className = 'text-xs mt-2 text-berry';
-      state.referral = null; renderAll(); return;
+      const s = refRecordInvalid();
+      const left = REF_LOCK_MAX_ATTEMPTS - (s.attempts || 0);
+      if (s.lockedUntil > Date.now()) {
+        refreshRefLockUI();
+      } else {
+        msg.textContent = `Code ungültig. Format: VORNAME + 3 Ziffern (z.B. LUCAS842). Noch ${left} Versuch${left===1?'':'e'}.`;
+        msg.className = 'text-xs mt-2 text-berry';
+      }
+      state.referral = null;
+      renderAll();
+      return;
     }
+
+    // Valid format
+    refResetAttempts();
     input.classList.remove('error');
-    state.referral = { code, percent: 15 };
+    state.referral = { code, percent: REF_PCT };
     input.value = code;
-    msg.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · 15% additiv (10er-Pack → 25% gesamt)`;
+    const fromUrl = !!opts.fromUrl;
+    msg.innerHTML = `<span class="text-berry font-medium">✦ Code aktiv</span> · ${REF_PCT}% Rabatt${fromUrl ? ' (automatisch via Link)' : ''}`;
     msg.className = 'text-xs mt-2 text-espresso/70';
-    input.blur();
+    if (!opts.fromUrl) input.blur();
+    saveCart();
     renderAll();
+  }
+
+  // URL ?ref=CODE  -> auto-apply on page load
+  function handleRefParam() {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    if (!ref) return;
+    const code = String(ref).trim().toUpperCase();
+    // Validate format before doing anything
+    if (REF_PATTERN_NEW.test(code) || REF_PATTERN_LEGACY.test(code)) {
+      // Pre-fill the input so user sees it, then apply
+      const input = $('#ref-input');
+      if (input) input.value = code;
+      applyReferral({ fromUrl: true });
+      // Small toast at top
+      const t = document.createElement('div');
+      t.className = 'fixed top-0 inset-x-0 z-[200] bg-berry text-cream px-4 py-3 text-sm text-center shadow-soft';
+      t.innerHTML = `🎁 Empfehlungscode <strong>${code}</strong> aktiviert · ${REF_PCT}% Rabatt auf deine Bestellung`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 4000);
+    }
+    // Clean URL regardless to avoid re-triggering on refresh
+    const params2 = new URLSearchParams(window.location.search);
+    params2.delete('ref');
+    const qs = params2.toString();
+    window.history.replaceState({}, '', window.location.pathname + (qs ? '?' + qs : ''));
   }
 
   // ===== TWINT Deep Link =====
@@ -1291,7 +1457,8 @@
       pricing: p,
       referral: state.referral,
       tip: state.tip,
-      refCode: genCode(),
+      // For logged-in customers use their stable code; for guests derive from order name
+      refCode: (userId !== 'guest' && getCustomerCode(userId, state.customer.name)) || genCode(state.customer.name),
       // Treat as pending until admin confirms receipt — TWINT may have been cancelled
       paymentStatus: 'pending',
       timestamp: new Date(),
@@ -2124,6 +2291,10 @@
     $('#cust-stat-count').textContent = orders.length;
     $('#cust-stat-revenue').textContent = revenue.toFixed(2) + ' CHF';
 
+    // Customer's stable personal referral code
+    const refCode = getCustomerCode(cur.email, firstName || (orders[0] && orders[0].name));
+    $('#cust-refcode').textContent = refCode;
+
     if (orders.length === 0) {
       $('#cust-list').classList.add('hidden');
       $('#cust-empty').classList.remove('hidden');
@@ -2179,6 +2350,57 @@
     });
     lucide.createIcons();
   }
+
+  // Small toast (top, auto-fades after ~2s)
+  function showToast(html, color = '#1A0E10') {
+    const t = document.createElement('div');
+    t.className = 'fixed top-0 inset-x-0 z-[200] text-cream px-4 py-3 text-sm text-center shadow-soft';
+    t.style.background = color;
+    t.innerHTML = html;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2200);
+  }
+
+  function shareTextFor(code) {
+    const base = window.location.origin + window.location.pathname;
+    const url  = `${base}?ref=${encodeURIComponent(code)}`;
+    return `Hey! Gönn dir mal das High-Protein Eis von Berry's Delights. Über meinen Link kriegst du direkt 5% Extra-Rabatt auf deine erste Bestellung: ${url} 🍦💪`;
+  }
+
+  $('#cust-copy-code').addEventListener('click', async () => {
+    const code = $('#cust-refcode').textContent.trim();
+    if (!code || code === '—') return;
+    try { await navigator.clipboard.writeText(code); } catch {}
+    $('#cust-copy-label').textContent = 'Kopiert ✓';
+    setTimeout(() => { $('#cust-copy-label').textContent = 'Kopieren'; }, 1600);
+  });
+
+  $('#share-whatsapp').addEventListener('click', () => {
+    const code = $('#cust-refcode').textContent.trim();
+    if (!code || code === '—') return;
+    const text = shareTextFor(code);
+    // Opens the native WhatsApp app on mobile, web on desktop
+    window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(text), '_blank');
+  });
+
+  $('#share-instagram').addEventListener('click', async () => {
+    const code = $('#cust-refcode').textContent.trim();
+    if (!code || code === '—') return;
+    const text = shareTextFor(code);
+    let copied = false;
+    try { await navigator.clipboard.writeText(text); copied = true; } catch {}
+    if (copied) showToast('✓ Text kopiert! Jetzt in Instagram einfügen.', '#25D366');
+    else        showToast('Konnte Text nicht kopieren — Browser hat Clipboard blockiert.', '#8B1A3B');
+    // Deep link to Instagram app (silently fails on desktop / no-app)
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = 'instagram://';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => a.remove(), 100);
+    }, 300);
+  });
 
   async function reorderById(id) {
     const all = await Backend.loadAllOrders();
@@ -2285,6 +2507,8 @@
   hydrateForm();
   setAccountIndicator();
   handleVerifyURL();
+  refreshRefLockUI();   // pick up any persisted lock from previous session
+  handleRefParam();     // auto-apply ?ref= from URL
   lucide.createIcons();
 
   // QR renders on first details open (or immediately if details is open by default)

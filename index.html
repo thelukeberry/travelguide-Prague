@@ -578,6 +578,29 @@
       <div id="cart-detail" class="hidden">
         <div id="cart-items" class="space-y-2.5 mt-1"></div>
 
+        <!-- Guest express banner (shown only when NOT logged in) -->
+        <div id="guest-banner" class="hidden mt-4 rounded-2xl bg-blush/40 border border-berry/15 p-3 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-berry text-cream flex items-center justify-center shrink-0">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+          </div>
+          <div class="text-[13px] leading-tight">
+            <div class="font-semibold text-berryd">Express-Bestellung als Gast</div>
+            <div class="text-espresso/70 text-xs mt-0.5">In weniger als 60 Sekunden bereit für TWINT &nbsp;⚡</div>
+          </div>
+        </div>
+
+        <!-- Protein & Savings Counter — motivational live counter -->
+        <div id="protein-counter" class="hidden mt-4 grid grid-cols-2 gap-2">
+          <div class="rounded-2xl bg-white border border-espresso/8 p-3 text-center shadow-soft">
+            <div class="text-[10px] uppercase tracking-widest text-espresso/55">Protein im Korb</div>
+            <div class="font-display text-lg font-semibold mt-1"><span id="pc-protein">0</span><span class="text-xs text-espresso/55">&thinsp;g</span></div>
+          </div>
+          <div class="rounded-2xl bg-berry text-cream p-3 text-center shadow-soft">
+            <div class="text-[10px] uppercase tracking-widest text-cream/65">Du sparst</div>
+            <div class="font-display text-lg font-semibold mt-1"><span id="pc-savings">0.00</span><span class="text-xs text-cream/65">&thinsp;CHF</span></div>
+          </div>
+        </div>
+
         <!-- Pickup notice -->
         <div class="pickup-notice mt-5 rounded-2xl p-4 flex gap-3 items-start">
           <div class="w-9 h-9 rounded-full bg-cream/15 flex items-center justify-center shrink-0">
@@ -1022,9 +1045,30 @@
       renderCartItems();
       renderDiscountLines(p);
       renderTip(p);
+      renderExpressUI(p);
     }
 
     saveCart();
+  }
+
+  // Guest banner + live Protein/Savings counter
+  // Each pint = ~40g protein; savings = discount (excl. tip)
+  function renderExpressUI(p) {
+    // Guest banner: show only when NOT logged in
+    const guestBanner = $('#guest-banner');
+    if (guestBanner) {
+      const cur = Backend.currentCustomer();
+      if (!cur && p.totalItems > 0) guestBanner.classList.remove('hidden');
+      else guestBanner.classList.add('hidden');
+    }
+    // Counter
+    const counter = $('#protein-counter');
+    if (counter) {
+      if (p.totalItems > 0) counter.classList.remove('hidden');
+      else counter.classList.add('hidden');
+      $('#pc-protein').textContent = Math.round(p.totalItems * 40);
+      $('#pc-savings').textContent = (p.totalDiscount || 0).toFixed(2);
+    }
   }
 
   // Hydrate form inputs from saved state (called on init AND after login)
@@ -1235,9 +1279,14 @@
     closeCart();
     await runPayment(p);
 
+    // Identify guest vs registered customer for ordering schema
+    const cur = Backend.currentCustomer();
+    const userId = cur ? cur.email : 'guest';
+
     const order = {
       id: '#' + Math.floor(100000 + Math.random()*900000),
       ...state.customer,
+      userId,
       qty: { ...state.qty },
       pricing: p,
       referral: state.referral,
@@ -1703,6 +1752,7 @@
   function serializeOrder(order) {
     return {
       id: order.id,
+      userId: order.userId || 'guest',
       name: order.name,
       email: String(order.email || '').toLowerCase(),
       phone: order.phone,
@@ -1928,6 +1978,8 @@
     if (!dot) return;
     if (Backend.currentCustomer()) dot.classList.remove('hidden');
     else dot.classList.add('hidden');
+    // Re-render cart UI so guest banner shows/hides correctly on auth changes
+    if (typeof renderAll === 'function') renderAll();
   }
 
   function openAccount() {

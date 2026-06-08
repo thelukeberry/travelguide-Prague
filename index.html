@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coiffeur Ayan Dietikon · Herren · Kinder · Barbershop</title>
+<meta name="description" content="Coiffeur Ayan in Dietikon – moderner Barbershop für Herren, Kinder & Jugendliche. Haarschnitt, Bartrasur, Färben & mehr. Mit und ohne Voranmeldung. 4.8★ bei Google.">
+<meta name="theme-color" content="#0a0a0a">
+<meta property="og:title" content="Coiffeur Ayan Dietikon">
+<meta property="og:description" content="Dein Look. Dein Style. Dietikon. Moderner Barbershop für Herren, Kinder & Jugendliche.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0a0a0a;
+  --black-soft:#121212;
+  --black-card:#181818;
+  --gold:#C9A84C;
+  --gold-bright:#e3c674;
+  --white:#ffffff;
+  --grey:#a8a8a8;
+  --line:rgba(201,168,76,.18);
+  --max:1180px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--black);
+  color:var(--white);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;letter-spacing:.3px}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:var(--max);margin:0 auto;padding:0 22px}
+.gold{color:var(--gold)}
+section{position:relative}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 30px;border-radius:50px;
+  font-weight:600;font-size:.95rem;letter-spacing:.5px;
+  cursor:pointer;border:none;transition:.25s ease;
+  text-transform:uppercase;
+}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-bright));color:#000;box-shadow:0 8px 24px rgba(201,168,76,.28)}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(201,168,76,.45)}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid var(--gold)}
+.btn-outline:hover{background:var(--gold);color:#000;transform:translateY(-3px)}
+
+/* ---------- Header ---------- */
+header{
+  position:fixed;top:0;left:0;width:100%;z-index:100;
+  transition:.35s ease;padding:18px 0;
+}
+header.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);padding:12px 0;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 30% 30%,#1c1c1c,#000);
+  flex-shrink:0;
+}
+.logo-mark svg{width:26px;height:26px}
+.logo-text{line-height:1.1}
+.logo-text b{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--white);display:block;letter-spacing:1px}
+.logo-text span{font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{font-size:.86rem;font-weight:500;letter-spacing:.6px;color:var(--grey);transition:.2s;text-transform:uppercase}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{display:inline-flex}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px}
+.burger span{width:26px;height:2px;background:var(--gold);transition:.3s}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(rgba(8,8,8,.78),rgba(8,8,8,.92)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h40v40H0z' fill='%230d0d0d'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='%23161616' stroke-width='1'/%3E%3C/svg%3E");
+}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 75% 30%,rgba(201,168,76,.12),transparent 55%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:2;max-width:760px;padding:120px 0 80px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.74rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:26px;font-weight:600;
+}
+.eyebrow::before{content:'';width:38px;height:1px;background:var(--gold)}
+.hero h1{
+  font-size:clamp(2.7rem,8vw,5.4rem);
+  line-height:1.02;font-weight:700;margin-bottom:24px;
+}
+.hero h1 .gold{display:block}
+.hero p{font-size:1.12rem;color:var(--grey);max-width:540px;margin-bottom:38px;font-weight:300}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap}
+.hero-meta{display:flex;gap:34px;margin-top:48px;flex-wrap:wrap}
+.hero-meta .item{border-left:2px solid var(--gold);padding-left:16px}
+.hero-meta .item b{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--white);display:block}
+.hero-meta .item span{font-size:.78rem;letter-spacing:1px;color:var(--grey);text-transform:uppercase}
+.stars{color:var(--gold);letter-spacing:2px}
+
+/* ---------- Section heading ---------- */
+.sec-head{text-align:center;max-width:640px;margin:0 auto 60px}
+.sec-head .eyebrow{justify-content:center}
+.sec-head .eyebrow::before{display:none}
+.sec-head h2{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin-bottom:14px}
+.sec-head p{color:var(--grey);font-weight:300}
+.pad{padding:100px 0}
+
+/* ---------- Services / Features ---------- */
+.features{background:var(--black-soft)}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.feat{
+  background:var(--black-card);padding:38px 30px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.05);transition:.3s;position:relative;overflow:hidden;
+}
+.feat::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:.35s}
+.feat:hover{transform:translateY(-8px);border-color:var(--line)}
+.feat:hover::before{transform:scaleX(1)}
+.feat-icon{width:54px;height:54px;border-radius:12px;background:rgba(201,168,76,.1);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.feat-icon svg{width:28px;height:28px;stroke:var(--gold)}
+.feat h3{font-size:1.5rem;margin-bottom:10px}
+.feat p{color:var(--grey);font-size:.95rem;font-weight:300}
+
+/* ---------- Pricing ---------- */
+.price-wrap{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+.price-card{background:var(--black-card);border:1px solid var(--line);border-radius:18px;padding:40px 34px}
+.price-card h3{font-size:1.9rem;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+.price-card .sub{color:var(--gold);font-size:.74rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:26px;display:block}
+.price-table{width:100%;border-collapse:collapse}
+.price-table tr{border-bottom:1px dashed rgba(255,255,255,.08)}
+.price-table tr:last-child{border-bottom:none}
+.price-table td{padding:15px 0;font-size:1rem}
+.price-table td:first-child{color:#e8e8e8;font-weight:400}
+.price-table td:last-child{text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:700;color:var(--gold);white-space:nowrap}
+.price-note{margin-top:26px;font-size:.85rem;color:var(--grey);font-style:italic}
+.extra-tags{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:50px}
+.tag{
+  padding:11px 22px;border:1px solid var(--line);border-radius:50px;
+  font-size:.85rem;letter-spacing:.5px;color:#ddd;background:var(--black-card);transition:.25s;
+}
+.tag:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+
+/* ---------- Hours + Map ---------- */
+.info{background:var(--black-soft)}
+.info-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:stretch}
+.hours-card{background:var(--black-card);border:1px solid var(--line);border-radius:18px;padding:40px 36px}
+.hours-card h3{font-size:1.8rem;margin-bottom:24px}
+.hours-list{list-style:none}
+.hours-list li{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.97rem}
+.hours-list li:last-child{border:none}
+.hours-list li span:first-child{color:#ddd}
+.hours-list li span:last-child{color:var(--gold);font-weight:500}
+.hours-list li.today{background:rgba(201,168,76,.07);margin:0 -14px;padding:13px 14px;border-radius:8px}
+.contact-block{margin-top:28px;padding-top:26px;border-top:1px solid var(--line)}
+.contact-row{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;font-size:.97rem}
+.contact-row svg{width:20px;height:20px;stroke:var(--gold);flex-shrink:0;margin-top:3px}
+.contact-row a:hover{color:var(--gold)}
+.map-card{border-radius:18px;overflow:hidden;border:1px solid var(--line);min-height:440px}
+.map-card iframe{width:100%;height:100%;min-height:440px;border:0;filter:grayscale(.4) contrast(1.05)}
+
+/* ---------- CTA band ---------- */
+.cta-band{
+  text-align:center;padding:90px 0;
+  background:linear-gradient(rgba(8,8,8,.85),rgba(8,8,8,.9)),radial-gradient(ellipse at center,rgba(201,168,76,.18),transparent 60%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.cta-band h2{font-size:clamp(2rem,5vw,3.4rem);margin-bottom:16px}
+.cta-band p{color:var(--grey);max-width:520px;margin:0 auto 34px;font-weight:300}
+.cta-band .hero-actions{justify-content:center}
+
+/* ---------- Footer ---------- */
+footer{background:#070707;padding:60px 0 30px}
+.foot-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;margin-bottom:40px}
+.foot-col{max-width:320px}
+.foot-col h4{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);margin-bottom:14px;letter-spacing:1px}
+.foot-col p,.foot-col a{color:var(--grey);font-size:.92rem;font-weight:300;display:block;margin-bottom:8px}
+.foot-col a:hover{color:var(--gold)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;text-align:center;color:#666;font-size:.82rem}
+
+/* ---------- Reveal animation ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- Sticky mobile call bar ---------- */
+.call-bar{
+  position:fixed;bottom:0;left:0;width:100%;z-index:90;
+  display:none;background:rgba(10,10,10,.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);padding:10px 14px;gap:10px;
+}
+.call-bar a{flex:1;justify-content:center;padding:13px}
+
+/* ---------- Responsive ---------- */
+@media(max-width:900px){
+  .price-wrap{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+  .map-card{min-height:340px}
+}
+@media(max-width:760px){
+  .nav-links{
+    position:fixed;top:0;right:-100%;height:100vh;width:78%;max-width:320px;
+    background:#0d0d0d;flex-direction:column;justify-content:center;gap:30px;
+    transition:.4s ease;border-left:1px solid var(--line);z-index:99;
+  }
+  .nav-links.open{right:0}
+  .nav-links a{font-size:1.1rem}
+  .nav-cta{display:none}
+  .burger{display:flex;z-index:101}
+  .burger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  .burger.active span:nth-child(2){opacity:0}
+  .burger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+  .call-bar{display:flex}
+  body{padding-bottom:70px}
+  .hero-meta{gap:22px}
+  .pad{padding:70px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="header">
+  <div class="container nav">
+    <a href="#top" class="logo" aria-label="Coiffeur Ayan Startseite">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+      </span>
+      <span class="logo-text"><b>AYAN</b><span>Coiffeur · Dietikon</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#services" onclick="closeMenu()">Leistungen</a>
+      <a href="#preise" onclick="closeMenu()">Preise</a>
+      <a href="#zeiten" onclick="closeMenu()">Öffnungszeiten</a>
+      <a href="#kontakt" onclick="closeMenu()">Kontakt</a>
+    </nav>
+    <a href="tel:0791527453" class="btn btn-gold nav-cta">Jetzt anrufen</a>
+    <button class="burger" id="burger" aria-label="Menü öffnen" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="container hero-inner reveal">
+    <span class="eyebrow">Barbershop · Herren · Kinder</span>
+    <h1>Dein Look.<br><span class="gold">Dein Style.</span> Dietikon.</h1>
+    <p>Präziser Schnitt, scharfe Konturen und das gewisse Etwas. Bei Coiffeur Ayan verlässt du den Stuhl, wie du dich fühlen willst – top gestylt.</p>
+    <div class="hero-actions">
+      <a href="tel:0791527453" class="btn btn-gold">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Jetzt anrufen
+      </a>
+      <a href="#preise" class="btn btn-outline">Preise ansehen</a>
+    </div>
+    <div class="hero-meta">
+      <div class="item">
+        <b>4.8 <span class="stars">★</span></b>
+        <span>64 Google-Bewertungen</span>
+      </div>
+      <div class="item">
+        <b>Walk-In</b>
+        <span>Mit & ohne Voranmeldung</span>
+      </div>
+      <div class="item">
+        <b>ab 20.–</b>
+        <span>Faire Preise</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="features pad" id="services">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Was wir können</span>
+      <h2>Handwerk mit <span class="gold">Charakter</span></h2>
+      <p>Vom klassischen Herrenschnitt bis zur kreativen Flechtfrisur – bei uns sitzt jeder Schnitt.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat reveal">
+        <div class="feat-icon"><svg fill="none" stroke-width="1.6" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+        <h3>Herrenschnitt</h3>
+        <p>Moderne Cuts, saubere Übergänge und scharfe Konturen – exakt auf deinen Stil abgestimmt.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-icon"><svg fill="none" stroke-width="1.6" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12c0 3 2 5 5 5s5-2 5-5"/><circle cx="9" cy="9" r="1"/><circle cx="15" cy="9" r="1"/></svg></div>
+        <h3>Bartrasur & Pflege</h3>
+        <p>Klassische Rasur mit heissem Tuch und präziser Bartkontur für den perfekten Auftritt.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-icon"><svg fill="none" stroke-width="1.6" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/><path d="M12 14v7"/><path d="M5 21h14"/><path d="M8 5c1-2 7-2 8 0"/></svg></div>
+        <h3>Kinder & Jugend</h3>
+        <p>Entspannte Schnitte für die Kleinen und Coolen – geduldig, schnell und kindgerecht.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-icon"><svg fill="none" stroke-width="1.6" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 6 6 9 6 13a6 6 0 0 0 12 0c0-4-2-7-6-11z"/></svg></div>
+        <h3>Färben & Styling</h3>
+        <p>Highlights, Färben, Styling und Föhnen – für einen Look, der wirklich auffällt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pad" id="preise">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Preisliste</span>
+      <h2>Transparente <span class="gold">Preise</span></h2>
+      <p>Alle Preise in CHF. Kein Kleingedrucktes – nur faire Konditionen.</p>
+    </div>
+    <div class="price-wrap">
+      <div class="price-card reveal">
+        <h3>Herren</h3>
+        <span class="sub">Schnitt · Bart · Style</span>
+        <table class="price-table">
+          <tr><td>Haarschnitt</td><td>25.–</td></tr>
+          <tr><td>Schneiden &amp; Waschen</td><td>30.–</td></tr>
+          <tr><td>Bartrasur</td><td>20.–</td></tr>
+          <tr><td>Kinder bis 12 Jahre</td><td>20.–</td></tr>
+          <tr><td>Augenbrauen</td><td>10.–</td></tr>
+          <tr><td>Schneiden &amp; Waschen (Premium)</td><td>50.–</td></tr>
+          <tr><td>Färben / Föhnen</td><td>ab 50.–</td></tr>
+        </table>
+      </div>
+      <div class="price-card reveal">
+        <h3>Damen</h3>
+        <span class="sub">Pflege · Beauty</span>
+        <table class="price-table">
+          <tr><td>Augenbrauen</td><td>15.–</td></tr>
+          <tr><td>Gesicht Zupfen</td><td>25.–</td></tr>
+        </table>
+        <p class="price-note">Für Haarefärben, Highlights, Braids &amp; Brautfrisuren erstellen wir dir gerne ein individuelles Angebot – ruf uns einfach an.</p>
+      </div>
+    </div>
+    <div class="extra-tags reveal">
+      <span class="tag">Haarefärben</span>
+      <span class="tag">Haarstyling</span>
+      <span class="tag">Braids</span>
+      <span class="tag">Brautfrisuren</span>
+      <span class="tag">Flechtfrisuren</span>
+      <span class="tag">Haar-Highlights</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOURS + MAP ============ -->
+<section class="info pad" id="zeiten">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Besuch uns</span>
+      <h2>Öffnungszeiten &amp; <span class="gold">Standort</span></h2>
+      <p>Mit und ohne Voranmeldung – schau einfach vorbei.</p>
+    </div>
+    <div class="info-grid" id="kontakt">
+      <div class="hours-card reveal">
+        <h3>Öffnungszeiten</h3>
+        <ul class="hours-list" id="hoursList">
+          <li data-day="1"><span>Montag</span><span>09:00 – 19:00</span></li>
+          <li data-day="2"><span>Dienstag</span><span>09:00 – 19:00</span></li>
+          <li data-day="3"><span>Mittwoch</span><span>09:00 – 19:00</span></li>
+          <li data-day="4"><span>Donnerstag</span><span>09:00 – 19:00</span></li>
+          <li data-day="5"><span>Freitag</span><span>09:00 – 19:00</span></li>
+          <li data-day="6"><span>Samstag</span><span>08:00 – 18:00</span></li>
+          <li data-day="0"><span>Sonntag</span><span>Geschlossen</span></li>
+        </ul>
+        <div class="contact-block">
+          <div class="contact-row">
+            <svg fill="none" stroke-width="1.7" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Ueberlandstrasse 18<br>8953 Dietikon</span>
+          </div>
+          <div class="contact-row">
+            <svg fill="none" stroke-width="1.7" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span><a href="tel:0791527453">079 152 74 53</a><br><a href="tel:0445579880">044 557 98 80</a></span>
+          </div>
+        </div>
+        <a href="tel:0791527453" class="btn btn-gold" style="width:100%;justify-content:center;margin-top:24px">Jetzt anrufen</a>
+      </div>
+      <div class="map-card reveal">
+        <iframe
+          title="Standort Coiffeur Ayan Dietikon"
+          src="https://www.google.com/maps?q=Ueberlandstrasse+18,+8953+Dietikon&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="cta-band">
+  <div class="container reveal">
+    <h2>Bereit für deinen <span class="gold">neuen Look?</span></h2>
+    <p>Ruf jetzt an oder komm spontan vorbei. Wir freuen uns auf dich.</p>
+    <div class="hero-actions">
+      <a href="tel:0791527453" class="btn btn-gold">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        079 152 74 53
+      </a>
+      <a href="tel:0445579880" class="btn btn-outline">044 557 98 80</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>Coiffeur Ayan</h4>
+        <p>Dein moderner Barbershop in Dietikon für Herren, Kinder und Jugendliche. Mit und ohne Voranmeldung.</p>
+        <p class="stars">★★★★★ <span style="color:var(--grey)">4.8 · 64 Bewertungen</span></p>
+      </div>
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <a href="https://www.google.com/maps?q=Ueberlandstrasse+18,+8953+Dietikon" target="_blank" rel="noopener">Ueberlandstrasse 18, 8953 Dietikon</a>
+        <a href="tel:0791527453">079 152 74 53</a>
+        <a href="tel:0445579880">044 557 98 80</a>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <a href="#services">Leistungen</a>
+        <a href="#preise">Preise</a>
+        <a href="#zeiten">Öffnungszeiten</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      © <span id="year"></span> Coiffeur Ayan · Ueberlandstrasse 18, 8953 Dietikon · Alle Rechte vorbehalten
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY MOBILE CALL BAR ============ -->
+<div class="call-bar">
+  <a href="tel:0791527453" class="btn btn-gold">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Jetzt anrufen
+  </a>
+  <a href="https://www.google.com/maps?q=Ueberlandstrasse+18,+8953+Dietikon" target="_blank" rel="noopener" class="btn btn-outline">Route</a>
+</div>
+
+<script>
+// Header shadow on scroll
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>40)});
+
+// Mobile menu
+const navLinks=document.getElementById('navLinks');
+const burger=document.getElementById('burger');
+function toggleMenu(){navLinks.classList.toggle('open');burger.classList.toggle('active')}
+function closeMenu(){navLinks.classList.remove('open');burger.classList.remove('active')}
+
+// Highlight today's opening hours
+const today=new Date().getDay();
+document.querySelectorAll('#hoursList li').forEach(li=>{
+  if(parseInt(li.dataset.day,10)===today)li.classList.add('today');
+});
+
+// Current year
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// Scroll reveal
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

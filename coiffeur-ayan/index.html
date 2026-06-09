@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coiffeur Ayan · Barbier & Herrensalon</title>
+  <style>
+    :root {
+      --gold:#c9a24b; --gold-l:#e7c97a; --gold-d:#9c7a2e;
+      --bg:#0c0c0e; --bg2:#141417; --line:#2a2620; --ink:#e9e4d8; --muted:#9b9486;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: radial-gradient(120% 80% at 50% -10%, #1b1813 0%, var(--bg) 55%) fixed;
+      color: var(--ink); margin: 0; line-height: 1.7;
+    }
+    .wrap { max-width: 880px; margin: auto; padding: 2.5rem 1.2rem 4rem; }
+    header { text-align: center; }
+    header img {
+      width: 180px; height: auto; border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    h1 {
+      font-size: 2.2rem; letter-spacing: .22em; text-transform: uppercase;
+      margin: 1rem 0 .2rem;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-d));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .tagline { color: var(--muted); letter-spacing: .12em; text-transform: uppercase; font-size: .85rem; }
+    .rule { width: 90px; height: 1px; margin: 1.6rem auto; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    h2 {
+      color: var(--gold-l); font-weight: normal; letter-spacing: .1em;
+      text-transform: uppercase; font-size: 1.2rem; margin-top: 3rem;
+      border-bottom: 1px solid var(--line); padding-bottom: .5rem;
+    }
+    .lead { text-align: center; color: var(--ink); max-width: 620px; margin: 1.2rem auto 0; font-size: 1.05rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+    .card {
+      background: linear-gradient(180deg, var(--bg2), #0e0e10);
+      border: 1px solid var(--line); border-radius: 12px; padding: 1.3rem;
+    }
+    .card h3 { margin: 0 0 .3rem; color: var(--gold-l); font-weight: normal; letter-spacing: .03em; }
+    .card .price { color: var(--gold); font-size: 1.4rem; }
+    .card p { color: var(--muted); margin: .3rem 0 0; font-size: .92rem; }
+    .hours { max-width: 420px; margin: 1.2rem auto 0; }
+    .hours-row { display: flex; justify-content: space-between; padding: .55rem 0; border-bottom: 1px solid var(--line); }
+    .hours-row span:last-child { color: var(--gold-l); }
+    .cta { text-align: center; margin-top: 1.6rem; }
+    .cta a {
+      display: inline-block; padding: .9rem 2.2rem; border-radius: 10px;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-d));
+      color: #14110a; font-weight: bold; text-decoration: none;
+      letter-spacing: .12em; text-transform: uppercase;
+    }
+    .cta a:hover { filter: brightness(1.08); }
+    .contact { text-align: center; color: var(--muted); margin-top: 1rem; }
+    .contact a { color: var(--gold-l); text-decoration: none; }
+    footer { text-align: center; margin-top: 3.5rem; font-size: .78rem; color: #6a6457; letter-spacing: .06em; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="assets/coiffeur-ayan-logo.png" alt="Coiffeur Ayan Logo">
+      <h1>Coiffeur Ayan</h1>
+      <p class="tagline">Barbier · Herrensalon · Handwerk</p>
+    </header>
+    <div class="rule"></div>
+
+    <p class="lead">
+      Präziser Schnitt, gepflegter Bart, klare Linien. Bei Coiffeur Ayan trifft
+      klassisches Barbier-Handwerk auf modernen Stil – mit Ruhe, Sorgfalt und
+      einem Auge fürs Detail.
+    </p>
+
+    <h2>Leistungen</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Herrenhaarschnitt</h3>
+        <div class="price">35 €</div>
+        <p>Beratung, Waschen, Schnitt und Styling.</p>
+      </div>
+      <div class="card">
+        <h3>Bartrasur & Konturen</h3>
+        <div class="price">25 €</div>
+        <p>Heisse Tücher, klassische Rasur, präzise Konturen.</p>
+      </div>
+      <div class="card">
+        <h3>Schnitt & Bart</h3>
+        <div class="price">55 €</div>
+        <p>Die komplette Behandlung – Haar und Bart in einem Termin.</p>
+      </div>
+      <div class="card">
+        <h3>Kinderschnitt</h3>
+        <div class="price">20 €</div>
+        <p>Geduldig und entspannt, bis 12 Jahre.</p>
+      </div>
+    </div>
+
+    <h2>Öffnungszeiten</h2>
+    <div class="hours">
+      <div class="hours-row"><span>Montag</span><span>geschlossen</span></div>
+      <div class="hours-row"><span>Dienstag – Freitag</span><span>09:00 – 19:00</span></div>
+      <div class="hours-row"><span>Samstag</span><span>09:00 – 17:00</span></div>
+      <div class="hours-row"><span>Sonntag</span><span>geschlossen</span></div>
+    </div>
+
+    <h2>Termin & Kontakt</h2>
+    <p class="lead">Termine nach Vereinbarung – am besten kurz anrufen oder vorbeikommen.</p>
+    <div class="cta"><a href="tel:+410000000000">Termin anrufen</a></div>
+    <p class="contact">
+      Musterstrasse 1, 8000 Musterstadt · <a href="tel:+410000000000">+41 00 000 00 00</a>
+    </p>
+
+    <footer>© Coiffeur Ayan · Barbier & Herrensalon</footer>
+  </div>
+</body>
+</html>

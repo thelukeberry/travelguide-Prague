@@ -1,7 +1,8 @@
 # Seelenformel
 
-Eigenständiger, vollständig unabhängiger Numerologie-Rechner in hellem
-Pergament-/Indigo-Look mit eigenem Branding, eigenem Stil und ohne Logo.
+Eigenständiger, vollständig unabhängiger Numerologie-Rechner in einem
+dunklen, mystischen Premium-Look (Mitternachts-Indigo, Amethyst, Sternenhimmel)
+mit eigenem Branding, eigenem Stil und ohne Logo.
 
 Aus Name, Geburtsdatum, Geschlecht und Körperziel berechnet die Seite alle neun
 Werte (Lebens-, Seelen-, Persönlichkeits-, Schicksals-, Kraft- und Schattenzahl

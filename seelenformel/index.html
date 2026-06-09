@@ -6,91 +6,141 @@
   <title>Seelenformel · Numerologie</title>
   <style>
     :root {
-      --ink:#2b2540; --accent:#5b4b9a; --accent-l:#8a76c9; --accent-soft:#efeaf8;
-      --bg:#f6f3ec; --paper:#fffdf8; --line:#e2dcd0; --muted:#7a7390;
+      --bg:#0a0717; --bg2:#15102b;
+      --amethyst:#a78bfa; --amethyst-l:#c9b8ff; --amethyst-d:#7c5cd6;
+      --moon:#e9e2ff; --silver:#cfc8e8;
+      --ink:#e7e1ff; --muted:#9d94c4; --line:rgba(167,139,250,0.22);
+      --glass:rgba(30,22,58,0.55);
     }
     * { box-sizing: border-box; }
     body {
-      font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-      background:
-        radial-gradient(130% 90% at 50% -20%, #ece6f6 0%, var(--bg) 60%) fixed;
+      font-family: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
       color: var(--ink);
-      max-width: 760px;
+      max-width: 780px;
       margin: auto;
-      padding: 2.5rem 1.2rem 4rem;
-      line-height: 1.75;
+      padding: 3rem 1.2rem 4.5rem;
+      line-height: 1.8;
+      position: relative;
+      background:
+        radial-gradient(120% 70% at 50% -10%, #2a1d52 0%, rgba(42,29,82,0) 55%),
+        radial-gradient(90% 60% at 85% 20%, rgba(124,92,214,0.25) 0%, rgba(124,92,214,0) 50%),
+        radial-gradient(80% 60% at 10% 30%, rgba(80,120,220,0.18) 0%, rgba(80,120,220,0) 50%),
+        linear-gradient(180deg, #0a0717 0%, #0c0820 100%) fixed;
     }
-    .crest {
-      width: 64px; height: 64px; margin: 0 auto .6rem; display: block;
+    /* Sternenhimmel */
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        radial-gradient(1.4px 1.4px at 20% 30%, #fff 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 70% 18%, #e9e2ff 50%, transparent 51%),
+        radial-gradient(1px 1px at 40% 70%, #fff 50%, transparent 51%),
+        radial-gradient(1.6px 1.6px at 88% 60%, #cdbcff 50%, transparent 51%),
+        radial-gradient(1px 1px at 12% 80%, #fff 50%, transparent 51%),
+        radial-gradient(1.3px 1.3px at 55% 45%, #fff 50%, transparent 51%),
+        radial-gradient(1px 1px at 30% 12%, #d9ccff 50%, transparent 51%),
+        radial-gradient(1.2px 1.2px at 78% 85%, #fff 50%, transparent 51%);
+      opacity: .55;
     }
+    .crest { width: 78px; height: 78px; margin: 0 auto .8rem; display: block;
+      filter: drop-shadow(0 0 10px rgba(167,139,250,0.7)); }
     h1 {
-      text-align: center; font-size: 2.3rem; font-weight: normal;
-      letter-spacing: .02em; margin: .2rem 0 .15rem; color: var(--accent);
+      text-align: center; font-size: 2.9rem; font-weight: normal;
+      letter-spacing: .14em; margin: .3rem 0 .2rem;
+      background: linear-gradient(180deg, var(--moon), var(--amethyst) 70%, var(--amethyst-d));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 32px rgba(167,139,250,0.35);
     }
-    .sub { text-align: center; color: var(--muted); font-style: italic; margin-top: 0; }
+    .sub { text-align: center; color: var(--silver); font-style: italic; margin-top: 0; letter-spacing: .08em; }
     .rule {
-      width: 70px; height: 2px; margin: 1.4rem auto; border-radius: 2px;
-      background: var(--accent-l);
+      width: 120px; height: 1px; margin: 1.6rem auto;
+      background: linear-gradient(90deg, transparent, var(--amethyst), transparent);
+      position: relative;
+    }
+    .rule::after {
+      content: "✦"; position: absolute; top: -.85rem; left: 50%; transform: translateX(-50%);
+      color: var(--amethyst-l); font-size: .9rem; text-shadow: 0 0 10px var(--amethyst);
     }
     h2 {
-      margin-top: 2.6rem; color: var(--accent); font-weight: normal;
-      font-size: 1.4rem; border-bottom: 1px solid var(--line); padding-bottom: .4rem;
+      margin-top: 3rem; color: var(--amethyst-l); font-weight: normal;
+      letter-spacing: .12em; text-transform: uppercase; font-size: 1.2rem;
+      border-bottom: 1px solid var(--line); padding-bottom: .5rem;
     }
     form {
-      background: var(--paper); border: 1px solid var(--line);
-      padding: 1.6rem; border-radius: 6px; box-shadow: 0 6px 24px rgba(91,75,154,0.08);
-      margin-top: 1.6rem;
+      background: var(--glass); border: 1px solid var(--line);
+      padding: 1.8rem; border-radius: 16px;
+      box-shadow: 0 12px 50px rgba(80,40,160,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+      backdrop-filter: blur(8px); margin-top: 1.8rem;
     }
-    label { display: block; color: var(--accent); margin: .9rem 0 .3rem; font-size: .95rem; }
+    label { display: block; color: var(--amethyst-l); letter-spacing: .06em; margin: 1rem 0 .35rem; font-size: .95rem; }
     input, select {
-      width: 100%; padding: .7rem .8rem; border: 1px solid var(--line);
-      border-radius: 5px; font-size: 1rem; background: #fff; color: var(--ink);
+      width: 100%; padding: .75rem .85rem; border: 1px solid var(--line);
+      border-radius: 9px; font-size: 1rem; background: rgba(10,7,23,0.6); color: var(--ink);
       font-family: inherit;
     }
-    input:focus, select:focus { outline: none; border-color: var(--accent-l); }
-    input::placeholder { color: #b7b0a2; }
+    input:focus, select:focus { outline: none; border-color: var(--amethyst);
+      box-shadow: 0 0 0 3px rgba(167,139,250,0.18); }
+    input::placeholder { color: #6f679a; }
     button {
-      margin-top: 1.6rem; width: 100%; padding: .9rem; border: none;
-      background: var(--accent); color: #fff; font-size: 1.05rem;
-      letter-spacing: .04em; border-radius: 6px; cursor: pointer; font-family: inherit;
+      margin-top: 1.8rem; width: 100%; padding: .95rem; border: 1px solid var(--amethyst-d);
+      background: linear-gradient(180deg, var(--amethyst-l), var(--amethyst-d));
+      color: #18102e; font-size: 1.1rem; font-weight: bold; letter-spacing: .16em;
+      text-transform: uppercase; border-radius: 11px; cursor: pointer; font-family: inherit;
+      box-shadow: 0 8px 30px rgba(124,92,214,0.45);
     }
-    button:hover { background: #4a3c82; }
+    button:hover { filter: brightness(1.1); }
     .numbers {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-      gap: .8rem; margin-top: 1rem;
+      gap: .9rem; margin-top: 1.1rem;
     }
     .num-card {
-      background: var(--accent-soft); border: 1px solid #e0d9f1;
-      border-radius: 6px; padding: .9rem; text-align: center;
+      background: var(--glass); border: 1px solid var(--line);
+      border-radius: 12px; padding: 1rem; text-align: center; backdrop-filter: blur(6px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
-    .num-card .v { font-size: 1.9rem; display: block; color: var(--accent); }
-    .num-card .k { font-size: .78rem; color: var(--muted); letter-spacing: .04em; }
+    .num-card .v {
+      font-size: 2.1rem; display: block;
+      background: linear-gradient(180deg, var(--moon), var(--amethyst));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 18px rgba(167,139,250,0.4);
+    }
+    .num-card .k { font-size: .76rem; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
     .section {
-      background: var(--paper); border: 1px solid var(--line);
-      border-left: 3px solid var(--accent-l);
-      border-radius: 0 6px 6px 0; padding: 1rem 1.2rem; margin-bottom: 1rem;
+      background: var(--glass); border: 1px solid var(--line);
+      border-left: 2px solid var(--amethyst);
+      border-radius: 0 12px 12px 0; padding: 1.1rem 1.3rem; margin-bottom: 1rem;
+      backdrop-filter: blur(6px);
     }
-    .section h3 { margin: 0 0 .45rem; color: var(--accent); font-weight: normal; }
+    .section h3 { margin: 0 0 .5rem; color: var(--amethyst-l); font-weight: normal; letter-spacing: .05em; }
     .list-item {
-      background: var(--paper); border: 1px solid var(--line);
-      padding: .9rem 1.1rem; border-radius: 6px; margin-bottom: .7rem;
+      background: var(--glass); border: 1px solid var(--line);
+      padding: .95rem 1.15rem; border-radius: 12px; margin-bottom: .75rem; backdrop-filter: blur(6px);
     }
     .botschaft {
-      background: linear-gradient(135deg, #5b4b9a, #8a76c9); color: #fff;
-      padding: 1.8rem; border-radius: 8px; font-size: 1.2rem; font-style: italic;
-      text-align: center; margin-top: 1.5rem; line-height: 1.6;
+      background:
+        radial-gradient(140% 120% at 50% 0%, rgba(124,92,214,0.45) 0%, rgba(10,7,23,0.2) 70%),
+        linear-gradient(135deg, #2a1d52, #4a338f);
+      border: 1px solid var(--amethyst); color: var(--moon);
+      padding: 2rem; border-radius: 16px; font-size: 1.3rem; font-style: italic;
+      text-align: center; margin-top: 1.6rem; line-height: 1.65;
+      box-shadow: 0 0 50px rgba(124,92,214,0.4);
     }
-    .saboteur { color: var(--accent); font-style: italic; }
-    .greeting { text-align: center; color: var(--muted); font-style: italic; }
+    .saboteur { color: var(--amethyst-l); font-style: italic; }
+    .greeting { text-align: center; color: var(--silver); font-style: italic; letter-spacing: .04em; }
     #report { display: none; margin-top: 2rem; }
-    footer { text-align: center; margin-top: 3.5rem; font-size: .8rem; color: var(--muted); }
+    footer { text-align: center; margin-top: 3.5rem; font-size: .8rem; color: var(--muted); letter-spacing: .05em; }
   </style>
 </head>
 <body>
-  <svg class="crest" viewBox="0 0 64 64" fill="none" stroke="#8a76c9" stroke-width="1.3" aria-hidden="true">
-    <circle cx="32" cy="32" r="22"/>
-    <path d="M32 10 L32 54 M10 32 L54 32 M16 16 L48 48 M48 16 L16 48"/>
-    <circle cx="32" cy="32" r="6" fill="#efeaf8"/>
+  <svg class="crest" viewBox="0 0 64 64" fill="none" stroke="url(#g)" stroke-width="1.2" aria-hidden="true">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#e9e2ff"/><stop offset="1" stop-color="#7c5cd6"/>
+      </linearGradient>
+    </defs>
+    <circle cx="32" cy="32" r="26"/>
+    <circle cx="32" cy="32" r="20"/>
+    <path d="M32 6 L36 28 L58 32 L36 36 L32 58 L28 36 L6 32 L28 28 Z" fill="rgba(167,139,250,0.18)"/>
+    <circle cx="32" cy="32" r="4" fill="#c9b8ff"/>
   </svg>
   <h1>Seelenformel</h1>
   <p class="sub">Deine persönliche Numerologie-Resonanz</p>

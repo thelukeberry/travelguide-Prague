@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seelenformel · Coiffeur Ayan</title>
+  <style>
+    :root {
+      --gold:#c9a24b; --gold-l:#e7c97a; --gold-d:#9c7a2e;
+      --bg:#0c0c0e; --bg2:#141417; --line:#2a2620; --ink:#e9e4d8; --muted:#9b9486;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background:
+        radial-gradient(120% 80% at 50% -10%, #1b1813 0%, var(--bg) 55%) fixed;
+      color: var(--ink);
+      max-width: 860px;
+      margin: auto;
+      padding: 2rem 1.2rem 4rem;
+      line-height: 1.7;
+    }
+    .brand { text-align: center; margin-bottom: 1.5rem; }
+    .brand img {
+      width: 150px; height: auto; border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    h1 {
+      text-align: center; font-size: 2rem; letter-spacing: .14em;
+      text-transform: uppercase; margin: .6rem 0 .1rem;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-d));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .sub { text-align: center; color: var(--muted); font-style: italic; margin-top: 0; letter-spacing: .04em; }
+    .rule {
+      width: 90px; height: 1px; margin: 1.2rem auto;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    h2 {
+      margin-top: 2.6rem; color: var(--gold-l); font-weight: normal;
+      letter-spacing: .08em; text-transform: uppercase; font-size: 1.15rem;
+      border-bottom: 1px solid var(--line); padding-bottom: .45rem;
+    }
+    form {
+      background: linear-gradient(180deg, var(--bg2), #0e0e10);
+      border: 1px solid var(--line); padding: 1.6rem; border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5); margin-top: 1.6rem;
+    }
+    label { display: block; color: var(--gold-l); letter-spacing: .05em; margin: .9rem 0 .3rem; font-size: .95rem; }
+    input, select {
+      width: 100%; padding: .7rem .8rem; border: 1px solid var(--line);
+      border-radius: 8px; font-size: 1rem; background: #0b0b0d; color: var(--ink);
+      font-family: inherit;
+    }
+    input:focus, select:focus { outline: none; border-color: var(--gold); }
+    input::placeholder { color: #5f5a4f; }
+    button {
+      margin-top: 1.6rem; width: 100%; padding: .95rem; border: 1px solid var(--gold-d);
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-d));
+      color: #14110a; font-size: 1.05rem; font-weight: bold; letter-spacing: .14em;
+      text-transform: uppercase; border-radius: 10px; cursor: pointer; font-family: inherit;
+    }
+    button:hover { filter: brightness(1.08); }
+    .numbers {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: .8rem; margin-top: 1rem;
+    }
+    .num-card {
+      background: linear-gradient(180deg, var(--bg2), #0e0e10);
+      border: 1px solid var(--line); border-radius: 10px; padding: .9rem; text-align: center;
+    }
+    .num-card .v {
+      font-size: 1.9rem; font-weight: bold; display: block;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-d));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .num-card .k { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .section {
+      background: linear-gradient(180deg, var(--bg2), #0e0e10);
+      border: 1px solid var(--line); border-left: 3px solid var(--gold);
+      border-radius: 0 10px 10px 0; padding: 1rem 1.2rem; margin-bottom: 1rem;
+    }
+    .section h3 { margin: 0 0 .45rem; color: var(--gold-l); font-weight: normal; letter-spacing: .04em; }
+    .list-item {
+      background: linear-gradient(180deg, var(--bg2), #0e0e10);
+      border: 1px solid var(--line); padding: .9rem 1.1rem; border-radius: 10px; margin-bottom: .7rem;
+    }
+    .botschaft {
+      background:
+        radial-gradient(140% 120% at 50% 0%, #20190d 0%, #0b0b0d 70%);
+      border: 1px solid var(--gold-d); color: var(--gold-l);
+      padding: 1.8rem; border-radius: 14px; font-size: 1.22rem; font-style: italic;
+      text-align: center; margin-top: 1.5rem; line-height: 1.6;
+    }
+    .saboteur { color: var(--gold-l); font-style: italic; }
+    .greeting { text-align: center; color: var(--muted); font-style: italic; letter-spacing: .04em; }
+    #report { display: none; margin-top: 2rem; }
+    footer { text-align: center; margin-top: 3.5rem; font-size: .78rem; color: #6a6457; letter-spacing: .05em; }
+    footer .name { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <div class="brand">
+    <img src="assets/coiffeur-ayan-logo.png" alt="Coiffeur Ayan">
+  </div>
+  <h1>Seelenformel</h1>
+  <p class="sub">Numerologie-Resonanz · präsentiert von Coiffeur Ayan</p>
+  <div class="rule"></div>
+
+  <form id="form">
+    <label for="name">Vollständiger Name</label>
+    <input type="text" id="name" placeholder="z. B. Anna Maria Beispiel" required>
+
+    <label for="datum">Geburtsdatum</label>
+    <input type="date" id="datum" required>
+
+    <label for="geschlecht">Geschlecht</label>
+    <select id="geschlecht">
+      <option value="weiblich">weiblich</option>
+      <option value="männlich">männlich</option>
+      <option value="divers">divers</option>
+    </select>
+
+    <label for="ziel">Körperziel</label>
+    <input type="text" id="ziel" placeholder="z. B. mehr Energie, innere Ruhe, Gewicht halten" required>
+
+    <button type="submit">Seelenformel berechnen</button>
+  </form>
+
+  <div id="report"></div>
+
+  <footer>Berechnung erfolgt vollständig im Browser – nichts wird gesendet. · <span class="name">Coiffeur Ayan</span></footer>
+
+<script>
+"use strict";
+
+/* ============================================================
+   NUMEROLOGIE-BERECHNUNG (exakt nach den Seelenformel-Regeln)
+   ============================================================ */
+
+const VOWELS = { A:1, E:5, I:9, O:6, U:3, "Ä":1, "Ö":6, "Ü":3 };
+const CONSONANTS = {
+  B:2, C:3, D:4, F:6, G:7, H:8, J:1, K:2, L:3, M:4,
+  N:5, P:7, Q:8, R:9, S:1, T:2, V:4, W:5, X:6, Y:7, Z:8
+};
+const MASTERS = new Set([11, 22, 33]);
+
+function reduce(n, keepMaster = true) {
+  while (n > 9 && !(keepMaster && MASTERS.has(n))) {
+    n = String(n).split("").reduce((s, d) => s + (+d), 0);
+  }
+  return n;
+}
+
+function sumDigits(str) {
+  return String(str).split("").reduce((s, c) => /\d/.test(c) ? s + (+c) : s, 0);
+}
+
+function lebenszahl(date) { // date = "YYYY-MM-DD"
+  return reduce(sumDigits(date.replace(/-/g, "")));
+}
+
+function nameNumbers(name) {
+  const clean = name.toUpperCase().replace(/ß/g, "S");
+  let soul = 0, pers = 0;
+  for (const ch of clean) {
+    if (VOWELS[ch] !== undefined) soul += VOWELS[ch];
+    else if (CONSONANTS[ch] !== undefined) pers += CONSONANTS[ch];
+  }
+  return { seele: reduce(soul), persoenlichkeit: reduce(pers), seeleRaw: soul, persRaw: pers };
+}
+
+function persoenlichesJahr(date, year) {
+  const [, mm, dd] = date.split("-");
+  return reduce(sumDigits(dd) + sumDigits(mm) + sumDigits(String(year)), false);
+}
+
+function schattenzahl(lz) {
+  const base = reduce(lz, false); // auf eine Stelle für die Formel
+  return 9 - (base - 1); // = 10 - base
+}
+
+/* ============================================================
+   ARCHETYPEN-MATRIX
+   ============================================================ */
+
+const MATRIX = {
+  1:  { a:"Pionierin",      el:"Feuer",        kw:"Unabhängigkeit, Führung, Originalität",   koerper:"Yang-dominant, schneller Stoffwechsel, Neigung zur Überaktivierung", sh:"Isolation, Kontrollzwang" },
+  2:  { a:"Weberin",        el:"Wasser",       kw:"Empathie, Verbindung, Intuition",         koerper:"sensitiv, dessen Nervensystem stark reagiert",                       sh:"Selbstaufgabe, Grenzverlust" },
+  3:  { a:"Schöpferin",     el:"Luft",         kw:"Kreativität, Ausdruck, Freude",           koerper:"Luft-Typ, unregelmässig, der Erdung braucht",                        sh:"Zerstreuung, Oberflächlichkeit" },
+  4:  { a:"Baumeisterin",   el:"Erde",         kw:"Struktur, Beständigkeit, Präzision",      koerper:"Erde-Typ, robust, der Abwechslung braucht",                          sh:"Rigidität, Kontrollverlustangst" },
+  5:  { a:"Wandlerin",      el:"Äther",        kw:"Freiheit, Transformation, Sinnlichkeit",  koerper:"wechselhaft, der auf jede Emotion reagiert",                         sh:"Ruhelosigkeit, Bindungsvermeidung" },
+  6:  { a:"Hüterin",        el:"Erde+Wasser",  kw:"Fürsorge, Schönheit, Harmonie",           koerper:"hormonell sensibel, der Rhythmus braucht",                           sh:"Aufopferung, Schuldgefühle" },
+  7:  { a:"Seherin",        el:"Luft+Wasser",  kw:"Tiefe, Analyse, Spiritualität",           koerper:"Nervensystem-Typ, der zur Überanalyse neigt",                        sh:"Rückzug, Misstrauen" },
+  8:  { a:"Meisterin",      el:"Feuer+Erde",   kw:"Manifestation, Macht, Materie",           koerper:"stark, der gut regeneriert, aber zu Overload neigt",                 sh:"Kontrollsucht, Erschöpfung" },
+  9:  { a:"Vollenderin",    el:"Alle",         kw:"Weisheit, Mitgefühl, Vollendung",         koerper:"ein Körper, der Fremdenergien absorbiert",                           sh:"Märtyrertum, Auflösung" },
+  11: { a:"Leuchtturm",     el:"Licht",        kw:"Inspiration, Intuition, Brücke",          koerper:"hypersensibel, dessen Energiemanagement entscheidend ist",           sh:"Angst, Überforderung" },
+  22: { a:"Weltenbauerin",  el:"Alle",         kw:"Transformation, Vermächtnis",             koerper:"mit überdurchschnittlicher Kapazität",                               sh:"Hybris, Burnout" },
+  33: { a:"Lehrmeisterin",  el:"Reinheit",     kw:"Liebe, Erleuchtung, Dienst",              koerper:"ein Träger fremder Lasten",                                          sh:"Selbstverleugnung" }
+};
+
+const ELEMENT_BODY = {
+  Feuer:  "schnellem Stoffwechsel, Entzündungsneigung und dem Bedürfnis nach kühlender Nahrung",
+  Wasser: "langsamem Stoffwechsel, lymphatischer Sensibilität und dem Bedürfnis nach wärmender Nahrung",
+  Luft:   "unregelmässigem Stoffwechsel, einem betonten Nervensystem und dem Bedürfnis nach erdender Nahrung",
+  Erde:   "stabilem Stoffwechsel, Verdauungsstärke und dem Bedürfnis nach leichter, abwechslungsreicher Nahrung",
+  "Äther":"adaptivem Stoffwechsel, intuitionsgesteuertem Hunger und dem Bedürfnis nach Bewusstheit"
+};
+
+// Mehrelement-Typen auf ein Basiselement für Ernährung/Bewegung mappen
+function baseElement(el) {
+  const first = el.split("+")[0];
+  const map = { "Alle":"Äther", "Licht":"Feuer", "Reinheit":"Wasser" };
+  return map[first] || first;
+}
+
+const NUTRITION = {
+  Feuer: {
+    items: [
+      "Beginne den Tag mit Kokoswasser oder einem Gurken-Minz-Wasser, NAME, bevor du zu Koffein greifst — es kühlt das innere Feuer, das morgens am heissesten brennt.",
+      "Bittere Grüns wie Rucola, Löwenzahn und Chicorée zähmen die Entzündungsneigung, die NAMEs Feuer-Stoffwechsel mit sich bringt.",
+      "Süsse, wasserreiche Früchte — Melone, Birne, Granatapfel — am Nachmittag, wenn NAMEs Energie zu kippen droht.",
+      "Reduziere Scharfes und stark Gebratenes am Abend; es hält NAMEs Nervensystem wach, gerade wenn es ruhen will."
+    ],
+    sab: "NAME überspringt Mahlzeiten, wenn sie im Fokus brennt — und merkt erst beim Crash, dass der Tank längst leer war."
+  },
+  Wasser: {
+    items: [
+      "Eine warme Ingwer-Zitronen-Infusion am Morgen weckt den langsameren Stoffwechsel, der NAMEs Wasser-Natur eigen ist.",
+      "Gekochtes statt Rohes — Suppen, Eintöpfe, gedünstetes Wurzelgemüse — entlasten NAMEs lymphatisches System.",
+      "Wärmende Gewürze wie Zimt, Kreuzkümmel und Fenchel bewegen die Verdauung, die bei NAME gern träge wird.",
+      "Halte Salz und stark Verarbeitetes niedrig — NAMEs Körper speichert Wasser schneller, als sie denkt."
+    ],
+    sab: "NAME isst aus Gefühl statt aus Hunger — und verwechselt das Bedürfnis nach Trost mit dem nach Nahrung."
+  },
+  Luft: {
+    items: [
+      "Warme, geerdete Mahlzeiten zu festen Zeiten — Haferbrei, Wurzelgemüse, Nussmus — geben NAMEs unregelmässigem Stoffwechsel einen Anker.",
+      "Gute Fette wie Avocado, Olivenöl und Mandeln nähren das Nervensystem, das bei NAME immer auf Empfang steht.",
+      "Magnesiumreiches — Kürbiskerne, dunkle Schokolade, Blattgrün — beruhigt NAMEs innere Unruhe am Abend.",
+      "Iss nie im Stehen oder zwischen zwei Aufgaben — NAMEs Luft-Natur verdaut nur, was in Ruhe ankommt."
+    ],
+    sab: "NAME vergisst zu essen, bis der Körper rebelliert — und greift dann zu schnellem Zucker statt zu echter Nahrung."
+  },
+  Erde: {
+    items: [
+      "Variiere die Küche bewusst — NAMEs Erde-Stoffwechsel ist stark, doch er stumpft bei Routine ab und blüht in Vielfalt auf.",
+      "Leichte, bittere und scharfe Noten — Rettich, Senf, frischer Ingwer — halten NAMEs Verdauungsfeuer wach.",
+      "Halte die Abendmahlzeit klein und früh; NAMEs robuster Körper trägt sonst über Nacht, was er nicht braucht.",
+      "Frische Kräuter und Fermentiertes bringen Bewegung in eine Verdauung, die bei NAME zur Schwere neigt."
+    ],
+    sab: "NAME bleibt bei dem, was schmeckt und sättigt — und merkt nicht, dass derselbe Teller sie langsam beschwert."
+  },
+  "Äther": {
+    items: [
+      "Iss bewusst und ohne Ablenkung — NAMEs Hunger ist intuitionsgesteuert, und nur in Stille hört sie, was der Körper wirklich braucht.",
+      "Wähle einfache, klare Speisen, wenn das Leben turbulent ist — NAMEs adaptiver Stoffwechsel folgt der Emotion.",
+      "Trinke vor jeder Mahlzeit ein Glas Wasser — NAME verwechselt Durst leicht mit Hunger, wenn sie im Fluss ist.",
+      "Eine warme, immer gleiche Morgenmahlzeit gibt NAMEs wandelbarem System einen festen Bezugspunkt."
+    ],
+    sab: "NAME folgt jeder neuen Idee von Ernährung — und keine bleibt lang genug, um wirklich zu wirken."
+  }
+};
+
+const MOVEMENT = {
+  Feuer: [
+    "Intervall-Training oder schnelles Laufen am frühen Morgen — NAMEs Feuer will brennen, bevor es sich gegen sie wendet.",
+    "Schwimmen in kühlem Wasser kühlt nicht nur den Körper, sondern auch den Kontrollzwang, den NAMEs Feuer manchmal nährt.",
+    "Unerwartet: Tanz ohne Choreografie — NAME führt im Leben so oft, dass es sie befreit, sich der Musik einfach zu überlassen."
+  ],
+  Wasser: [
+    "Sanftes, fliessendes Yoga oder Qi Gong — Bewegung, die NAMEs Wasser-Natur trägt, statt sie zu treiben.",
+    "Lange Spaziergänge am Wasser regulieren NAMEs lymphatisches System und ihr Gefühlsleben zugleich.",
+    "Unerwartet: Krafttraining mit Gewichten — NAMEs sanfte Natur braucht die Erdung und Grenze, die Muskeln geben."
+  ],
+  Luft: [
+    "Bewegung mit Rhythmus und Boden — Tanz, Pilates, Barfusslaufen — gibt NAMEs Luft-Energie die Erdung, die sie sucht.",
+    "Klettern oder Bouldern zwingt NAMEs wandernden Geist in den gegenwärtigen Moment, an einen einzigen Griff.",
+    "Unerwartet: langsames Gehen ohne Ziel — es lehrt NAME, dass nicht jede Energie verbraucht werden muss."
+  ],
+  Erde: [
+    "Abwechslungsreiches Training — heute Wandern, morgen Tanz, übermorgen Rad — hält NAMEs Erde-Körper wach und neugierig.",
+    "Wandern in hügeligem Gelände gibt NAMEs Beständigkeit ein Ziel und ihren Beinen die Kraft, die sie lieben.",
+    "Unerwartet: schnelle, spielerische Sportarten wie Tischtennis — NAMEs Struktur löst sich, wo das Spiel keine Pläne erlaubt."
+  ],
+  "Äther": [
+    "Bewegung, die sich täglich ändern darf — NAMEs Äther-Natur folgt dem Impuls, nicht dem Plan.",
+    "Atem-zentrierte Praxis wie Vinyasa verbindet NAMEs Körper mit dem Bewusstsein, aus dem ihre Kraft kommt.",
+    "Unerwartet: Bewegung in der Natur ohne App und ohne Messung — NAME blüht, wo nichts gezählt wird."
+  ]
+};
+
+const YEAR_THEME = {
+  1: "Neuanfang. Ein Samen wird gelegt, den NAME in neun Jahren ernten wird — alles, was jetzt beginnt, trägt weit.",
+  2: "Geduld und Verbindung. Was NAME gesät hat, wächst im Verborgenen; sichtbar wird es noch nicht, doch es wächst.",
+  3: "Ausdruck und Wachstum. NAMEs Kreativität drängt ans Licht — dies ist ein Jahr des Zeigens, nicht des Versteckens.",
+  4: "Fundament und Arbeit. NAME baut in diesem Jahr die Struktur, auf der alles Kommende ruhen wird.",
+  5: "Wandel und Freiheit. Eine Tür öffnet sich; NAMEs Aufgabe ist, hindurchzugehen, statt im Türrahmen zu zögern.",
+  6: "Verantwortung und Liebe. Das Jahr ruft NAME zu den Menschen und Räumen, die ihre Fürsorge brauchen.",
+  7: "Einkehr und Wahrheit. NAME wird nach innen gezogen, um zu finden, was der Lärm bisher verdeckt hat.",
+  8: "Ernte und Macht. Was NAME aufgebaut hat, zahlt sich aus — Materie und Wille treffen sich in diesem Jahr.",
+  9: "Vollendung und Loslassen. Ein Kapitel schliesst sich, damit NAME Raum für das ganz Neue schafft."
+};
+
+const MONTHS = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+
+const TENSIONS = {
+  "1+2":"Unabhängigkeit gegen Verbindung — der stille Konflikt zwischen Führen und Folgen.",
+  "1+6":"Eigenständigkeit gegen Fürsorge — die Frage, ob Hingabe Opfer ist oder Kraft.",
+  "2+8":"Sensibilität gegen Macht — eine Stärke, die sich gern versteckt.",
+  "3+4":"Kreativität gegen Struktur — das kreative Gefängnis, das auch ein Atelier sein kann.",
+  "4+5":"Beständigkeit gegen Freiheit — der innere Ausbruch, der an die Tür klopft.",
+  "5+7":"Erfahrung gegen Erkenntnis — eine Suche, die sich vor der Ankunft fürchtet.",
+  "6+9":"Fürsorge gegen Weisheit — die alte Frage: wer pflegt die Pflegerin?",
+  "3+7":"Tiefe gegen Ausdruck — ein Wissen, das nicht immer Worte findet.",
+  "1+9":"Vollendung gegen Anfang — der ewige Neustart, der nie ganz endet."
+};
+
+/* ============================================================
+   REPORT-GENERIERUNG
+   ============================================================ */
+
+function firstName(full) {
+  return full.trim().split(/\s+/)[0] || full.trim();
+}
+function N(text, name) { return text.replace(/NAME/g, name); }
+
+function tensionText(lz, sz, name) {
+  const a = reduce(lz, false), b = reduce(sz, false);
+  if (a === b) {
+    return `Bei ${name} ziehen Lebenszahl und Seelenzahl am selben Strang — Weg und Sehnsucht sprechen dieselbe Sprache. Das ist selten, und es ist eine Gnade: ${name} muss sich nicht gegen sich selbst entscheiden.`;
+  }
+  const key = [Math.min(a,b), Math.max(a,b)].join("+");
+  if (TENSIONS[key]) {
+    return `In ${name} lebt ein Spannungsfeld: ${TENSIONS[key]} Es ist kein Fehler im System — es ist der Motor. ${name} ist nicht trotz dieser Spannung stark, sondern wegen ihr.`;
+  }
+  const elA = MATRIX[lz].el, elB = MATRIX[sz].el;
+  if (elA !== elB) {
+    return `${name}s Weg (${elA}) und ${name}s Sehnsucht (${elB}) sprechen aus verschiedenen Elementen. Diese Reibung erzeugt Wärme — und Wärme ist, woraus ${name} ihre Tiefe schöpft.`;
+  }
+  return `${name} trägt zwei Zahlen, die einander ergänzen statt bekämpfen — eine leise, beständige Harmonie zwischen dem, was ${name} tut, und dem, was ${name} ersehnt.`;
+}
+
+function buildReport(d) {
+  const name = firstName(d.name);
+  const lz = lebenszahl(d.datum);
+  const nn = nameNumbers(d.name);
+  const sz = nn.seele, pz = nn.persoenlichkeit;
+  const schicksal = reduce(nn.seeleRaw + nn.persRaw);
+  const kraft = reduce(reduce(lz,false) + reduce(sz,false));
+  const schatten = schattenzahl(lz);
+  const [yy, mm, dd] = d.datum.split("-");
+  const jahr = persoenlichesJahr(d.datum, d.jahr);
+  const monatszahl = reduce(sumDigits(mm), false);
+  const tagszahl = reduce(sumDigits(dd), false);
+
+  const lzM = MATRIX[lz], szM = MATRIX[sz], pzM = MATRIX[pz], skM = MATRIX[schicksal];
+  const kraftM = MATRIX[kraft], schM = MATRIX[reduce(schatten,false)] || MATRIX[schatten];
+  const el = lzM.el;
+  const base = baseElement(el);
+  const monthName = MONTHS[parseInt(mm,10)-1];
+
+  const nut = NUTRITION[base], mov = MOVEMENT[base];
+
+  return {
+    name, ziel: d.ziel, geschlecht: d.geschlecht, jahr_kalender: d.jahr,
+    numbers: { lz, sz, pz, schicksal, kraft, schatten, jahr, monatszahl, tagszahl },
+    el, lzM,
+    brief: `${name}. Es gibt eine Stunde am Tag, in der du am meisten du selbst bist — und es ist nicht die, in der dich andere sehen. ${reduce(lz,false) <= 4 ? "Du beginnst Dinge mit einer Kraft, die andere für Selbstverständlichkeit halten, und beendest sie still, ohne Applaus." : "Du spürst Stimmungen in einem Raum, bevor ein Wort fällt, und hältst diese Gabe oft für eine Last."} Dieser Brief ist kein Horoskop. Er ist ein Spiegel, ${name} — und er kennt dein Gesicht schon, bevor du hineinsiehst.`,
+    sections: [
+      ["Die Lebenszahl — dein Weg", `${name}, deine Lebenszahl ${lz} ist die ${lzM.a}, getragen vom Element ${el}. Sie steht für ${lzM.kw}. Das ist der Pfad, der in deinem Leben immer wiederkehrt — die Lektion, die in verschiedenen Kostümen anklopft, bis du sie umarmst. Wo andere geradeaus gehen, geht ${name} in Spiralen: immer dasselbe Thema, immer eine Windung höher.`],
+      ["Die Seelenzahl — deine Sehnsucht", `Unter allem, was ${name} zeigt, sehnt sich die Seelenzahl ${sz} nach ${szM.kw}. Das ist, was du wirklich willst, ${name}, aber selten laut aussprichst. Es ist die Melodie, die du summst, wenn niemand zuhört — und das, wonach du dich zurücksehnst, kaum dass du es einmal berührt hast.`],
+      ["Die Persönlichkeitszahl — deine Maske", `Was die Welt von ${name} sieht, trägt die Handschrift der ${pz} (${pzM.a}): ${pzM.kw}. Es ist die Tür, durch die andere eintreten — nicht das Haus dahinter. Manchmal, ${name}, fühlst du dich nicht wie das Bild, das andere von dir tragen. Genau diese Lücke zwischen Maske und Sehnsucht ist kein Makel; sie ist der Ort, an dem du wächst.`],
+      ["Die Schicksalszahl — dein roter Faden", `Alle Buchstaben deines Namens zusammen ergeben die Schicksalszahl ${schicksal} (${skM.a}): ${skM.kw}. Das ist das Thema, dem ${name} nicht entkommt — der rote Faden, der sich durch jede Phase deines Lebens zieht, ob du ihn nun siehst oder nicht.`],
+      ["Die Kraftzahl — dein verborgenes Geschenk", `Aus Lebenszahl und Seelenzahl entsteht deine Kraftzahl ${kraft} (${kraftM.a}). Sie ist die Synergie, die kaum jemand kennt — auch du nicht ganz, ${name}. Wenn dein Weg (${lz}) und deine Sehnsucht (${sz}) sich treffen, entsteht eine stille Vollmacht: ${kraftM.kw}. Das ist die Tür, die nur du öffnen kannst.`],
+      ["Die Schattenzahl — dein blinder Fleck", `Deine Schattenzahl ist ${schatten}. Sie zeigt das Muster, das ${name} am meisten vermeidet — und am dringendsten braucht. ${schM ? "Im Gewand der "+schM.a+" verbirgt sich hier "+schM.sh+"." : ""} Nicht, um dich zu beschämen, ${name}, sondern um dich freizulassen: Was du im Schatten lässt, regiert dich. Was du anschaust, beginnt dir zu dienen.`],
+      ["Das Spannungsfeld", tensionText(lz, sz, name)]
+    ],
+    koerper: {
+      titel: `${name} — ${lzM.a} im Körper`,
+      element: el,
+      text: `${name}, dein Körper ist ein ${lzM.koerper}. Als ${el}-Wesen lebst du mit ${ELEMENT_BODY[base]}. Darum verhält sich dein Körper manchmal anders, als du erwartest: Er folgt nicht den Regeln, die für andere gelten, sondern dem Element, aus dem er gemacht ist. Dein Ziel — „${d.ziel}" — erreichst du nicht gegen diese Natur, ${name}, sondern mit ihr. Was wie ein Widerstand aussieht, ist oft nur dein ${el}, das nach seiner eigenen Sprache verlangt.`
+    },
+    ernaehrung: nut.items.map(t => N(t, name)),
+    saboteur: N(nut.sab, name),
+    bewegung: mov.map(t => N(t, name)),
+    rhythmus: {
+      morgen: `${name}, bevor du das erste Gerät berührst: zehn Minuten nur für deinen Körper. ${base==="Feuer"?"Etwas Kühles trinken, ein Fenster öffnen, drei tiefe Atemzüge in die Weite.":base==="Wasser"?"Etwas Warmes trinken, die Füsse auf den Boden, dem Körper Zeit zum Erwachen geben.":base==="Luft"?"Erst essen, dann denken — etwas Warmes, Geerdetes, bevor der Geist abhebt.":base==="Erde"?"Bewegung vor dem Frühstück, damit der stabile Stoffwechsel den Tag wach beginnt.":"In Stille spüren, was der Körper heute braucht, bevor die Welt es dir sagt."}`,
+      mittag: `Deine energetisch stärkste Stunde liegt um die Mittagszeit, ${name}. Lege hierhin, was Mut verlangt — das schwierige Gespräch, die kreative Arbeit, die Entscheidung. Dein ${el} brennt jetzt am klarsten; verschwende diese Stunde nicht an Routine.`,
+      abend: `Am Abend regeneriert ${name}s Kombination aus ${lz} und ${sz} am besten in ${base==="Feuer"?"bewusster Abkühlung — kein Bildschirm-Feuer mehr, sondern Wasser, Dämmerung, Stille.":base==="Wasser"?"Wärme und Rückzug — ein Bad, ein Buch, das langsame Loslassen des Tages.":base==="Luft"?"Erdung — Beine hoch, Magnesium, etwas, das den wandernden Geist landen lässt.":base==="Erde"?"leichter Bewegung und einer kleinen, frühen Mahlzeit, damit die Nacht wirklich Ruhe wird.":"einem festen kleinen Ritual, das deinem wandelbaren System sagt: Der Tag ist vollbracht."}`
+    },
+    prophezeiung: {
+      thema: `Für ${name} steht ${d.jahr} im Zeichen des Persönlichen Jahres ${jahr}. ${N(YEAR_THEME[jahr], name)}`,
+      detail: `Ein Kapitel endet, ${name}, und ein anderes hebt an. ${jahr<=3?"Was in den letzten Jahren schwer war, darf jetzt leichter werden — nicht weil die Last verschwindet, sondern weil du gewachsen bist.":jahr<=6?"Die Mitte eines Zyklus verlangt von dir Treue zu dem, was du begonnen hast — auch wenn der erste Glanz verflogen ist.":"Du stehst am Ende eines neunjährigen Bogens; was du jetzt loslässt, macht Platz für ein Leben, das dir ähnlicher sieht."}`,
+      chance: `Die grösste Chance liegt dort, wo dein Ziel „${d.ziel}" und das Thema dieses Jahres sich berühren — und der entscheidende Moment naht um deinen Geburtsmonat ${monthName} herum, wenn dein persönlicher Rhythmus und das Jahr in Resonanz treten. Verpasse ihn nicht, ${name}: Was du in diesen Wochen säst, bestimmt die Ernte.`
+    },
+    geheime_staerke: `${name}, deine geheime Stärke ist die Verbindung von ${lzM.a} und ${szM.a}: Du kannst ${lzM.kw.split(",")[0].toLowerCase()} und ${szM.kw.split(",")[0].toLowerCase()} in derselben Hand halten, ohne dass eines das andere erdrückt. Kaum jemand sieht das. Du selbst manchmal auch nicht.`,
+    botschaft: `Manches wartet ein Leben lang darauf, gesehen zu werden — und nennt sich erst dann beim Namen, wenn jemand hinschaut. ${name}, das Universum hat lange geschwiegen, um dir genau diesen einen Satz aufzuheben: Du warst nie zu viel und nie zu wenig — du warst immer genau die Frequenz, auf die alles andere noch wartet.`
+  };
+}
+
+/* ============================================================
+   RENDERING
+   ============================================================ */
+
+function esc(s){ return String(s).replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+function render(r) {
+  const n = r.numbers;
+  const cards = [
+    ["Lebenszahl", n.lz], ["Seelenzahl", n.sz], ["Persönlichkeit", n.pz],
+    ["Schicksal", n.schicksal], ["Kraftzahl", n.kraft], ["Schatten", n.schatten],
+    [`Pers. Jahr ${r.jahr_kalender}`, n.jahr], ["Monatszahl", n.monatszahl], ["Geburtstag", n.tagszahl]
+  ].map(([k,v]) => `<div class="num-card"><span class="v">${v}</span><span class="k">${esc(k)}</span></div>`).join("");
+
+  const sections = r.sections.map(([h, t]) =>
+    `<div class="section"><h3>${esc(h)}</h3><p>${esc(t)}</p></div>`).join("");
+
+  const ern = r.ernaehrung.map(t => `<div class="list-item">${esc(t)}</div>`).join("");
+  const bew = r.bewegung.map(t => `<div class="list-item">${esc(t)}</div>`).join("");
+
+  return `
+    <p class="greeting">Für ${esc(r.name)} · ${esc(r.geschlecht)} · Ziel: ${esc(r.ziel)}</p>
+    <h2>Deine Zahlen</h2>
+    <div class="numbers">${cards}</div>
+
+    <h2>Dein Brief</h2>
+    <div class="section"><p>${esc(r.brief)}</p></div>
+
+    <h2>Die Bedeutung deiner Zahlen</h2>
+    ${sections}
+
+    <h2>Dein Körper</h2>
+    <div class="section">
+      <h3>${esc(r.koerper.titel)} · Element ${esc(r.koerper.element)}</h3>
+      <p>${esc(r.koerper.text)}</p>
+    </div>
+
+    <h2>Ernährung</h2>
+    ${ern}
+    <p class="saboteur"><strong>Dein stiller Saboteur:</strong> ${esc(r.saboteur)}</p>
+
+    <h2>Bewegung</h2>
+    ${bew}
+
+    <h2>Dein Tagesrhythmus</h2>
+    <div class="section"><h3>Morgen</h3><p>${esc(r.rhythmus.morgen)}</p></div>
+    <div class="section"><h3>Mittag</h3><p>${esc(r.rhythmus.mittag)}</p></div>
+    <div class="section"><h3>Abend</h3><p>${esc(r.rhythmus.abend)}</p></div>
+
+    <h2>Die Prophezeiung · ${esc(String(r.jahr_kalender))}</h2>
+    <div class="section"><h3>Das Thema des Jahres</h3><p>${esc(r.prophezeiung.thema)}</p></div>
+    <div class="section"><h3>Was endet, was beginnt</h3><p>${esc(r.prophezeiung.detail)}</p></div>
+    <div class="section"><h3>Deine grösste Chance</h3><p>${esc(r.prophezeiung.chance)}</p></div>
+
+    <h2>Deine geheime Stärke</h2>
+    <div class="section"><p>${esc(r.geheime_staerke)}</p></div>
+
+    <h2>Die Botschaft</h2>
+    <div class="botschaft">${esc(r.botschaft)}</div>
+  `;
+}
+
+/* ============================================================
+   FORM-HANDLING
+   ============================================================ */
+
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();
+  const data = {
+    name: document.getElementById("name").value.trim(),
+    datum: document.getElementById("datum").value,
+    geschlecht: document.getElementById("geschlecht").value,
+    ziel: document.getElementById("ziel").value.trim(),
+    jahr: new Date().getFullYear()
+  };
+  if (!data.name || !data.datum || !data.ziel) return;
+  const report = buildReport(data);
+  const out = document.getElementById("report");
+  out.innerHTML = render(report);
+  out.style.display = "block";
+  out.scrollIntoView({ behavior: "smooth" });
+});
+</script>
+</body>
+</html>
